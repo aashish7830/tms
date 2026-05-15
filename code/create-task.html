@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TMS | Create New Task</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
+    <style>
+        body { font-family: 'Inter', sans-serif; background-color: #f8f9fc; }
+        .form-card { border: none; border-radius: 15px; box-shadow: 0 0.15rem 1.75rem 0 rgba(58, 59, 69, 0.1); }
+        .form-label { font-weight: 600; font-size: 0.9rem; color: #4e73df; }
+        .btn-create { background: #4e73df; color: white; padding: 10px 30px; border-radius: 8px; font-weight: 600; transition: 0.3s; }
+        .btn-create:hover { background: #2e59d9; color: white; transform: translateY(-2px); }
+    </style>
+</head>
+<body>
+
+<div class="container py-5">
+    <div class="row justify-content-center">
+        <div class="col-lg-8">
+            <a href="task.html" class="text-decoration-none small mb-3 d-inline-block text-muted">
+                <i class="bi bi-arrow-left me-1"></i> Back to Dashboard
+            </a>
+
+            <div class="card form-card p-4 p-md-5">
+                <div class="d-flex align-items-center mb-4">
+                    <div class="bg-primary text-white rounded-circle p-3 me-3">
+                        <i class="bi bi-journal-plus fs-4"></i>
+                    </div>
+                    <div>
+                        <h3 class="fw-bold mb-0">Create New Task</h3>
+                        <p class="text-muted small">Fill in the details to assign a new task to your team.</p>
+                    </div>
+                </div>
+
+                <form action="/api/task/create" method="POST" enctype="multipart/form-data">
+                    <div class="row g-4">
+                        <div class="col-12">
+                            <label class="form-label">Task Title</label>
+                            <input type="text" class="form-control" name="title" placeholder="e.g., Login Page Design" required>
+                        </div>
+
+                        <div class="col-12">
+                            <label class="form-label">Description</label>
+                            <textarea class="form-control" name="description" rows="3" placeholder="Explain the task requirements..."></textarea>
+                        </div>
+
+                        <div class="col-md-6">
+                            <label class="form-label">Project Name</label>
+                            <select class="form-select" name="project_name">
+                                <option selected>Select Project</option>
+                                <option value="twodots">TwoDots Films</option>
+                                <option value="jnrs">JNRS Hotels</option>
+                            </select>
+                        </div>
+                        <div class="col-md-6">
+                            <label class="form-label">Priority Level</label>
+                            <select class="form-select text-danger fw-bold" name="priority">
+                                <option value="Low">Low</option>
+                                <option value="Medium">Medium</option>
+                                <option value="High" selected>High</option>
+                                <option value="Urgent">Urgent 🔥</option>
+                            </select>
+                        </div>
+
+                        <div class="col-md-6">
+                            <label class="form-label">Assign To (User)</label>
+                            <div class="input-group">
+                                <span class="input-group-text bg-light"><i class="bi bi-person"></i></span>
+                                <select class="form-select" name="assign_user">
+                                    <option value="aashish">Aashish</option>
+                                    <option value="rahul">Rahul K.</option>
+                                    <option value="priya">Priya S.</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <label class="form-label">Team</label>
+                            <select class="form-select" name="team">
+                                <option value="frontend">Frontend Team</option>
+                                <option value="backend">Backend Team</option>
+                                <option value="design">UI/UX Design</option>
+                            </select>
+                        </div>
+
+                        <div class="col-md-6">
+                            <label class="form-label">Start Date</label>
+                            <input type="date" class="form-control" name="start_date">
+                        </div>
+                        <div class="col-md-6">
+                            <label class="form-label">Deadline</label>
+                            <input type="date" class="form-control border-danger" name="deadline" required>
+                        </div>
+
+                        <div class="col-12">
+                            <label class="form-label">Attachments (Optional)</label>
+                            <input type="file" class="form-control" name="files" multiple>
+                            <div class="form-text text-muted">Aap multiple files select kar sakte hain.</div>
+                        </div>
+
+                        <div class="col-md-6">
+                            <label class="form-label">Tags</label>
+                            <input type="text" class="form-control" name="tags" placeholder="UI, Bug, Research">
+                        </div>
+                        <div class="col-md-6">
+                            <label class="form-label">Estimated Time (Hours)</label>
+                            <input type="number" class="form-control" name="est_time" placeholder="e.g., 5">
+                        </div>
+
+                        <input type="hidden" name="status" value="To Do">
+
+                        <div class="col-12 mt-5 text-end">
+                            <button type="reset" class="btn btn-light px-4 me-2">Clear Form</button>
+                            <button type="submit" class="btn btn-create shadow">
+                                <i class="bi bi-cloud-upload me-2"></i>Create & Assign Task
+                            </button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

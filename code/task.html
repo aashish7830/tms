@@ -1,0 +1,355 @@
+ <!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TMS Pro | Comprehensive Dashboard</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
+    <style>
+        :root {
+            --primary-color: #4e73df;
+            --sidebar-width: 260px;
+            --bg-light: #f8f9fc;
+            --transition: all 0.3s ease;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--bg-light);
+            overflow-x: hidden;
+        }
+
+        /* Sidebar Styling */
+        .sidebar {
+            width: var(--sidebar-width);
+            height: 100vh;
+            position: fixed;
+            left: 0;
+            top: 0;
+            background: #ffffff;
+            z-index: 1050;
+            border-right: 1px solid #e3e6f0;
+            transition: var(--transition);
+        }
+
+        .main-content {
+            margin-left: var(--sidebar-width);
+            min-height: 100vh;
+            transition: var(--transition);
+        }
+
+        .nav-link {
+            color: #5a5c69;
+            padding: 12px 20px;
+            border-radius: 10px;
+            margin: 4px 15px;
+            font-weight: 500;
+            transition: 0.2s;
+        }
+
+        .nav-link:hover, .nav-link.active {
+            background: #f0f2f9;
+            color: var(--primary-color);
+        }
+
+        /* Overlay for Mobile */
+        .sidebar-overlay {
+            display: none;
+            position: fixed;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background: rgba(0,0,0,0.5);
+            z-index: 1040;
+        }
+
+        /* Status Badges */
+        .badge-todo { background: #858796; }
+        .badge-progress { background: #4e73df; }
+        .badge-review { background: #f6c23e; }
+        .badge-completed { background: #1cc88a; }
+
+        .stat-card {
+            border: none;
+            border-radius: 12px;
+            transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            cursor: pointer;
+        }
+
+        .stat-card:hover { 
+            transform: translateY(-8px);
+            box-shadow: 0 10px 20px rgba(0,0,0,0.08) !important;
+        }
+
+        /* Responsive Logic */
+        @media (max-width: 992px) {
+            .sidebar {
+                left: calc(var(--sidebar-width) * -1);
+            }
+            .main-content {
+                margin-left: 0;
+            }
+            .sidebar.active {
+                left: 0;
+            }
+            .sidebar-overlay.active {
+                display: block;
+            }
+        }
+
+        @media (max-width: 576px) {
+            .stat-card h3 { font-size: 1.5rem; }
+            .header-buttons { width: 100%; margin-top: 15px; }
+            .btn-mobile-full { width: 100%; margin-bottom: 10px; }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="sidebar-overlay" id="overlay"></div>
+
+    <div class="sidebar shadow-sm" id="sidebar">
+        <div class="p-4 mb-2 d-flex justify-content-between align-items-center">
+            <h4 class="text-primary fw-bold mb-0"><i class="bi bi-rocket-takeoff-fill me-2"></i>TMS Pro</h4>
+            <button class="btn d-lg-none" id="closeSidebar"><i class="bi bi-x-lg"></i></button>
+        </div>
+        <nav class="nav flex-column h-100">
+            <a href="javascript:void(0)" class="nav-link active"><i class="bi bi-grid-1x2 me-3"></i>Dashboard</a>
+            <a href="create-task.html" class="nav-link" onclick="handleBtnClick('Create Task')"><i class="bi bi-plus-square me-3"></i>Create Task</a>
+            <a href="taskflow.html" class="nav-link"><i class="bi bi-kanban me-3"></i>Task Flow</a>
+            <a href="Completed_Tasks.html" class="nav-link"><i class="bi bi-folder-check me-3"></i>Completed</a>
+            <hr class="mx-3">
+            <a href="javascript:void(0)" class="nav-link"><i class="bi bi-graph-up-arrow me-3"></i>Analytics</a>
+            <a href="javascript:void(0)" class="nav-link"><i class="bi bi-people me-3"></i>Team Members</a>
+            <a href="javascript:void(0)" class="nav-link mt-auto mb-5 text-danger" onclick="confirmLogout()"><i class="bi bi-box-arrow-left me-3"></i>Logout</a>
+        </nav>
+    </div>
+
+    <div class="main-content">
+        <nav class="navbar navbar-expand-lg navbar-light bg-white border-bottom px-4 sticky-top shadow-sm">
+            <div class="container-fluid p-0">
+                <button class="btn btn-light d-lg-none me-2" id="toggleSidebar">
+                    <i class="bi bi-list fs-4"></i>
+                </button>
+                
+                <form class="d-flex d-none d-md-flex">
+                    <div class="input-group">
+                        <span class="input-group-text bg-light border-0"><i class="bi bi-search"></i></span>
+                        <input class="form-control form-control-sm border-0 bg-light" type="search" placeholder="Search tasks..." style="width: 250px;">
+                    </div>
+                </form>
+                
+                <div class="ms-auto d-flex align-items-center">
+                    <div class="dropdown me-3">
+                        <div class="position-relative cursor-pointer" data-bs-toggle="dropdown">
+                            <i class="bi bi-bell fs-5"></i>
+                            <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger" style="font-size: 0.6rem;">
+                                5+
+                            </span>
+                        </div>
+                        <ul class="dropdown-menu dropdown-menu-end shadow border-0 mt-3 p-2">
+                            <li><h6 class="dropdown-header">Recent Alerts</h6></li>
+                            <li><a class="dropdown-item rounded" href="#">New task assigned</a></li>
+                            <li><a class="dropdown-item rounded" href="#">Deadline approaching!</a></li>
+                        </ul>
+                    </div>
+                    
+                    <div class="d-flex align-items-center border-start ps-3">
+                        <div class="text-end me-2 d-none d-sm-block">
+                            <p class="mb-0 fw-bold small">Amit Sharma</p>
+                            <span class="user-role-tag">Admin Role</span>
+                        </div>
+                        <img src="https://i.pravatar.cc/150?u=admin" class="rounded-circle border" width="40" alt="Admin">
+                    </div>
+                </div>
+            </div>
+        </nav>
+
+        <div class="container-fluid p-4">
+            <div class="row align-items-center mb-4">
+                <div class="col-12 col-md">
+                    <h3 class="fw-bold mb-0">Project Performance</h3>
+                    <p class="text-muted small">Welcome back! Here's what's happening today.</p>
+                </div>
+                <div class="col-12 col-md-auto header-buttons">
+                    <!-- <button   class="btn btn-primary shadow-sm btn-mobile-full" onclick="handleBtnClick('Create Task')"  window.location.href='create-task.html';">
+                        <i class="bi bi-plus-lg me-2"></i>Create New Task
+                    </button> -->
+                    <button class="btn btn-primary shadow-sm btn-mobile-full"
+onclick="handleBtnClick('Create Task'); window.location.href='create-task.html';">
+    <i class="bi bi-plus-lg me-2"></i>Create New Task
+</button>
+                    <button class="btn btn-outline-secondary btn-sm ms-md-2 btn-mobile-full" onclick="window.print()">
+                        <i class="bi bi-download me-2"></i>Download Report
+                    </button>
+                </div>
+            </div>
+
+            <div class="row g-3 mb-4">
+                <div class="col-6 col-md-3">
+                    <div class="card stat-card bg-white shadow-sm p-3 border-start border-secondary border-4">
+                        <div class="d-flex justify-content-between align-items-center">
+                            <div>
+                                <small class="text-uppercase fw-bold text-muted d-block" style="font-size: 0.65rem;">To Do</small>
+                                <h3 class="fw-bold mb-0">24</h3>
+                            </div>
+                            <i class="bi bi-list-task fs-3 text-secondary opacity-50"></i>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-6 col-md-3">
+                    <div class="card stat-card bg-white shadow-sm p-3 border-start border-primary border-4">
+                        <div class="d-flex justify-content-between align-items-center">
+                            <div>
+                                <small class="text-uppercase fw-bold text-primary d-block" style="font-size: 0.65rem;">In Progress</small>
+                                <h3 class="fw-bold mb-0">12</h3>
+                            </div>
+                            <i class="bi bi-gear-wide-connected fs-3 text-primary opacity-50"></i>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-6 col-md-3">
+                    <div class="card stat-card bg-white shadow-sm p-3 border-start border-warning border-4">
+                        <div class="d-flex justify-content-between align-items-center">
+                            <div>
+                                <small class="text-uppercase fw-bold text-warning d-block" style="font-size: 0.65rem;">Review</small>
+                                <h3 class="fw-bold mb-0">08</h3>
+                            </div>
+                            <i class="bi bi-eye fs-3 text-warning opacity-50"></i>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-6 col-md-3">
+                    <div class="card stat-card bg-white shadow-sm p-3 border-start border-success border-4">
+                        <div class="d-flex justify-content-between align-items-center">
+                            <div>
+                                <small class="text-uppercase fw-bold text-success d-block" style="font-size: 0.65rem;">Completed</small>
+                                <h3 class="fw-bold mb-0">142</h3>
+                            </div>
+                            <i class="bi bi-check-circle fs-3 text-success opacity-50"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-lg-8">
+                    <div class="card border-0 shadow-sm p-3 p-md-4 mb-4">
+                        <div class="d-flex justify-content-between align-items-center mb-4">
+                            <h5 class="fw-bold mb-0">Active Assignments</h5>
+                            <button class="btn btn-light btn-sm text-primary fw-bold" onclick="handleBtnClick('View All')">View All</button>
+                        </div>
+                        <div class="table-responsive">
+                            <table class="table table-hover align-middle">
+                                <thead class="table-light text-muted small text-uppercase">
+                                    <tr>
+                                        <th>Task Name</th>
+                                        <th>Assignee</th>
+                                        <th>Priority</th>
+                                        <th>Deadline</th>
+                                        <th>Status</th>
+                                    </tr>
+                                </thead>
+                                <tbody class="small">
+                                    <tr>
+                                        <td><strong>Website UI Redesign</strong></td>
+                                        <td><img src="https://i.pravatar.cc/30?u=1" class="rounded-circle me-2"> Rahul K.</td>
+                                        <td><span class="badge bg-danger">Urgent</span></td>
+                                        <td>20 May</td>
+                                        <td><span class="badge badge-progress px-3 py-2">In Progress</span></td>
+                                    </tr>
+                                    <tr>
+                                        <td><strong>API Documentation</strong></td>
+                                        <td><img src="https://i.pravatar.cc/30?u=2" class="rounded-circle me-2"> Priya S.</td>
+                                        <td><span class="badge bg-warning text-dark">Medium</span></td>
+                                        <td>22 May</td>
+                                        <td><span class="badge badge-todo px-3 py-2">To Do</span></td>
+                                    </tr>
+                                    <tr>
+                                        <td><strong>Client Feedback Fixes</strong></td>
+                                        <td><img src="https://i.pravatar.cc/30?u=3" class="rounded-circle me-2"> Team Dev</td>
+                                        <td><span class="badge bg-info text-dark">High</span></td>
+                                        <td>18 May</td>
+                                        <td><span class="badge badge-review px-3 py-2">Review</span></td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-lg-4">
+                    <div class="card border-0 shadow-sm p-4">
+                        <h5 class="fw-bold mb-3">Task Breakdown</h5>
+                        <div style="height: 200px; position: relative;">
+                            <canvas id="taskBreakdownChart"></canvas>
+                        </div>
+                        <hr class="my-4">
+                        <div>
+                            <div class="d-flex justify-content-between small mb-1 fw-bold">
+                                <span>Overall Efficiency</span>
+                                <span class="text-success">75%</span>
+                            </div>
+                            <div class="progress rounded-pill" style="height: 10px;">
+                                <div class="progress-bar bg-success progress-bar-striped progress-bar-animated" style="width: 75%"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script>
+        // --- SIDEBAR TOGGLE LOGIC ---
+        const sidebar = document.getElementById('sidebar');
+        const overlay = document.getElementById('overlay');
+        const toggleBtn = document.getElementById('toggleSidebar');
+        const closeBtn = document.getElementById('closeSidebar');
+
+        function toggleSidebar() {
+            sidebar.classList.toggle('active');
+            overlay.classList.toggle('active');
+        }
+
+        toggleBtn.addEventListener('click', toggleSidebar);
+        closeBtn.addEventListener('click', toggleSidebar);
+        overlay.addEventListener('click', toggleSidebar);
+
+        // --- BUTTON HANDLERS ---
+        function handleBtnClick(action) {
+            alert(action + " functionality working! Linking to your system...");
+        }
+
+        function confirmLogout() {
+            if(confirm("Are you sure you want to logout?")) {
+                alert("Redirecting to login...");
+                // window.location.href = "login.html";
+            }
+        }
+
+        // --- CHART CONFIGURATION ---
+        const ctx = document.getElementById('taskBreakdownChart').getContext('2d');
+        new Chart(ctx, {
+            type: 'doughnut',
+            data: {
+                labels: ['Pending', 'In Progress', 'Completed'],
+                datasets: [{
+                    data: [15, 25, 60],
+                    backgroundColor: ['#858796', '#4e73df', '#1cc88a'],
+                    borderWidth: 0,
+                    hoverOffset: 15
+                }]
+            },
+            options: {
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: { position: 'bottom', labels: { usePointStyle: true, padding: 20 } }
+                }
+            }
+        });
+    </script>
+</body>
+</html>

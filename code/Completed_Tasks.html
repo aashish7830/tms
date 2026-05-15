@@ -1,0 +1,499 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Completed Tasks | TMS Pro</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
+    <style>
+        :root {
+            --sidebar-bg: #fff;
+            --main-bg: #f0f2f5;
+            --primary-blue: #007bff;
+            --card-border: #e0e0e0;
+            --success-green: #28a745;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--main-bg);
+            overflow-x: hidden;
+        }
+
+        /* Sidebar Styling (Same as before) */
+        .sidebar {
+            width: 240px;
+            height: 100vh;
+            background: var(--sidebar-bg);
+            border-right: 1px solid var(--card-border);
+            position: fixed;
+            padding: 20px;
+            z-index: 1050;
+            transition: transform 0.3s ease-in-out;
+        }
+
+        .brand-name {
+            font-size: 22px;
+            font-weight: 700;
+            color: var(--primary-blue);
+            margin-bottom: 40px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .nav-link {
+            color: #6c757d;
+            font-weight: 500;
+            padding: 12px 15px;
+            border-radius: 8px;
+            margin-bottom: 5px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            transition: all 0.2s;
+            text-decoration: none;
+        }
+
+        .nav-link:hover {
+            background: #f8f9fa;
+            color: #333;
+        }
+
+        .nav-link.active {
+            background: #eef4ff;
+            color: var(--primary-blue);
+        }
+
+        /* Main Content */
+        .main-content {
+            margin-left: 240px;
+            padding: 0;
+            transition: margin-left 0.3s ease-in-out;
+        }
+
+        /* Top Header */
+        .top-header {
+            background: #fff;
+            padding: 15px 30px;
+            border-bottom: 1px solid var(--card-border);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 15px;
+        }
+
+        .header-left {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            width: 100%;
+            max-width: 400px;
+        }
+
+        .menu-toggle {
+            display: none;
+            background: none;
+            border: none;
+            font-size: 24px;
+            color: #333;
+            cursor: pointer;
+        }
+
+        .search-box {
+            background: #f8f9fa;
+            border: 1px solid #ddd;
+            border-radius: 6px;
+            padding: 8px 15px;
+            flex-grow: 1;
+            display: flex;
+            align-items: center;
+        }
+
+        .search-box input {
+            border: none;
+            outline: none;
+            background: transparent;
+            width: 100%;
+        }
+
+        .user-profile-top {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 14px;
+        }
+
+        .user-profile-top img {
+            width: 35px;
+            height: 35px;
+            border-radius: 50%;
+        }
+
+        /* Completed Tasks Specific Styles */
+        .page-wrapper {
+            padding: 30px;
+        }
+
+        .page-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 25px;
+        }
+
+        .completed-card {
+            background: #fff;
+            border-radius: 10px;
+            padding: 20px;
+            margin-bottom: 15px;
+            border: 1px solid var(--card-border);
+            box-shadow: 0 2px 4px rgba(0,0,0,0.02);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            transition: all 0.3s ease;
+        }
+
+        .completed-card:hover {
+            box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+            transform: translateY(-2px);
+        }
+
+        .task-info-grid {
+            display: grid;
+            grid-template-columns: 2fr 1fr 1fr 1fr 1fr;
+            gap: 20px;
+            align-items: center;
+            flex-grow: 1;
+        }
+
+        .task-detail-item {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .detail-label {
+            font-size: 11px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            color: #888;
+            margin-bottom: 4px;
+            font-weight: 600;
+        }
+
+        .detail-value {
+            font-size: 14px;
+            font-weight: 500;
+            color: #333;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .status-badge {
+            background: #e6f4ea;
+            color: var(--success-green);
+            padding: 5px 12px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 600;
+            display: inline-flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        .action-buttons {
+            display: flex;
+            gap: 10px;
+            margin-left: 20px;
+        }
+
+        .btn-action {
+            width: 36px;
+            height: 36px;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border: 1px solid #ddd;
+            background: #fff;
+            color: #555;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .btn-action:hover { background: #f8f9fa; color: var(--primary-blue); border-color: var(--primary-blue); }
+        .btn-delete:hover { background: #fee2e2; color: #dc3545; border-color: #dc3545; }
+
+        /* Mobile Adjustments */
+        .sidebar-overlay {
+            display: none;
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0,0,0,0.5);
+            z-index: 1040;
+        }
+
+        @media (max-width: 1200px) {
+            .task-info-grid {
+                grid-template-columns: 1.5fr 1fr 1fr;
+                gap: 15px;
+            }
+        }
+
+        @media (max-width: 992px) {
+            .sidebar { transform: translateX(-100%); }
+            .sidebar.show { transform: translateX(0); }
+            .main-content { margin-left: 0; }
+            .menu-toggle { display: block; }
+            .sidebar-overlay.show { display: block; }
+        }
+
+        @media (max-width: 768px) {
+            .completed-card {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 20px;
+            }
+            .task-info-grid {
+                grid-template-columns: 1fr 1fr;
+                width: 100%;
+            }
+            .task-title-full {
+                grid-column: span 2;
+            }
+            .action-buttons {
+                margin-left: 0;
+                width: 100%;
+                justify-content: flex-end;
+                border-top: 1px solid #eee;
+                padding-top: 15px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="sidebar-overlay" id="sidebarOverlay"></div>
+
+    <div class="sidebar" id="sidebar">
+        <div class="brand-name">
+            <i class="bi bi-rocket-takeoff-fill"></i> TMS Pro
+        </div>
+        <nav class="nav flex-column">
+            <a class="nav-link" href="index.html"><i class="bi bi-grid-1x2"></i> Dashboard</a>
+            <a class="nav-link" href="create-task.html"><i class="bi bi-plus-square"></i> Create Task</a>
+            <a class="nav-link" href="taskflow.html"><i class="bi bi-kanban"></i> Task Flow</a>
+            <a class="nav-link active" href="#"><i class="bi bi-folder-check"></i> Completed</a>
+            <hr>
+            <a class="nav-link" href="#"><i class="bi bi-graph-up"></i> Analytics</a>
+            <a class="nav-link" href="#"><i class="bi bi-people"></i> Team Members</a>
+        </nav>
+    </div>
+
+    <div class="main-content">
+        
+        <header class="top-header">
+            <div class="header-left">
+                <button class="menu-toggle" id="menuToggle"><i class="bi bi-list"></i></button>
+                <div class="search-box">
+                    <i class="bi bi-search text-muted me-2"></i>
+                    <input type="text" id="searchInput" placeholder="Search completed tasks...">
+                </div>
+            </div>
+            <div class="d-flex align-items-center gap-3">
+                <div class="user-profile-top">
+                    <div class="text-end d-none d-md-block">
+                        <div class="fw-bold">Aashish</div>
+                        <div class="text-muted" style="font-size: 11px;">Admin Role</div>
+                    </div>
+                    <img src="https://i.pravatar.cc/150?u=aashish" alt="User">
+                </div>
+            </div>
+        </header>
+
+        <div class="page-wrapper">
+            <div class="page-header">
+                <div>
+                    <h3 class="fw-bold mb-1">Completed Tasks</h3>
+                    <p class="text-muted mb-0">View and manage all finished assignments</p>
+                </div>
+                <div class="dropdown">
+                    <button class="btn btn-outline-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown">
+                        <i class="bi bi-funnel"></i> Filter
+                    </button>
+                    <ul class="dropdown-menu">
+                        <li><a class="dropdown-item" href="#">This Week</a></li>
+                        <li><a class="dropdown-item" href="#">This Month</a></li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Task List Container -->
+            <div id="taskList">
+                <!-- Task Item 1 -->
+                <div class="completed-card">
+                    <div class="task-info-grid">
+                        <div class="task-detail-item task-title-full">
+                            <span class="detail-label">Task Title</span>
+                            <span class="detail-value fw-bold fs-6">Dashboard UI Design</span>
+                        </div>
+                        <div class="task-detail-item">
+                            <span class="detail-label">Assigned To</span>
+                            <span class="detail-value"><img src="https://i.pravatar.cc/150?u=aashish" width="20" class="rounded-circle"> Aashish</span>
+                        </div>
+                        <div class="task-detail-item">
+                            <span class="detail-label">Completion Date</span>
+                            <span class="detail-value"><i class="bi bi-calendar-check text-muted"></i> 15 May, 2026</span>
+                        </div>
+                        <div class="task-detail-item">
+                            <span class="detail-label">Time Taken</span>
+                            <span class="detail-value"><i class="bi bi-clock-history text-muted"></i> 5 Hours</span>
+                        </div>
+                        <div class="task-detail-item">
+                            <span class="detail-label">Status</span>
+                            <span class="status-badge"><i class="bi bi-check-circle-fill"></i> Completed</span>
+                        </div>
+                    </div>
+                    <div class="action-buttons">
+                        <button class="btn-action view-btn" title="View Details" onclick="viewDetails('Dashboard UI Design', 'Aashish', '15 May, 2026', '5 Hours')"><i class="bi bi-eye"></i></button>
+                        <button class="btn-action download-btn" title="Download Report" onclick="downloadReport('Dashboard UI Design')"><i class="bi bi-download"></i></button>
+                        <button class="btn-action" title="Archive" onclick="removeTask(this, 'Archived')"><i class="bi bi-archive"></i></button>
+                        <button class="btn-action btn-delete" title="Delete" onclick="removeTask(this, 'Deleted')"><i class="bi bi-trash3"></i></button>
+                    </div>
+                </div>
+
+                <!-- Task Item 2 -->
+                <div class="completed-card">
+                    <div class="task-info-grid">
+                        <div class="task-detail-item task-title-full">
+                            <span class="detail-label">Task Title</span>
+                            <span class="detail-value fw-bold fs-6">API Authentication Setup</span>
+                        </div>
+                        <div class="task-detail-item">
+                            <span class="detail-label">Assigned To</span>
+                            <span class="detail-value"><img src="https://i.pravatar.cc/150?u=rahul" width="20" class="rounded-circle"> Rahul K.</span>
+                        </div>
+                        <div class="task-detail-item">
+                            <span class="detail-label">Completion Date</span>
+                            <span class="detail-value"><i class="bi bi-calendar-check text-muted"></i> 12 May, 2026</span>
+                        </div>
+                        <div class="task-detail-item">
+                            <span class="detail-label">Time Taken</span>
+                            <span class="detail-value"><i class="bi bi-clock-history text-muted"></i> 12 Hours</span>
+                        </div>
+                        <div class="task-detail-item">
+                            <span class="detail-label">Status</span>
+                            <span class="status-badge"><i class="bi bi-check-circle-fill"></i> Completed</span>
+                        </div>
+                    </div>
+                    <div class="action-buttons">
+                        <button class="btn-action view-btn" title="View Details" onclick="viewDetails('API Authentication Setup', 'Rahul K.', '12 May, 2026', '12 Hours')"><i class="bi bi-eye"></i></button>
+                        <button class="btn-action download-btn" title="Download Report" onclick="downloadReport('API Authentication Setup')"><i class="bi bi-download"></i></button>
+                        <button class="btn-action" title="Archive" onclick="removeTask(this, 'Archived')"><i class="bi bi-archive"></i></button>
+                        <button class="btn-action btn-delete" title="Delete" onclick="removeTask(this, 'Deleted')"><i class="bi bi-trash3"></i></button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- View Details Modal -->
+    <div class="modal fade" id="taskModal" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header border-0 pb-0">
+                    <h5 class="modal-title fw-bold" id="modalTaskTitle">Task Details</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="mb-3">
+                        <label class="text-muted small text-uppercase fw-bold">Assigned To</label>
+                        <p id="modalAssignee" class="fw-medium mb-0"></p>
+                    </div>
+                    <div class="row mb-3">
+                        <div class="col-6">
+                            <label class="text-muted small text-uppercase fw-bold">Completed On</label>
+                            <p id="modalDate" class="fw-medium mb-0"></p>
+                        </div>
+                        <div class="col-6">
+                            <label class="text-muted small text-uppercase fw-bold">Time Logged</label>
+                            <p id="modalTime" class="fw-medium mb-0"></p>
+                        </div>
+                    </div>
+                    <div class="mb-3">
+                        <label class="text-muted small text-uppercase fw-bold">Final Status</label><br>
+                        <span class="badge bg-success rounded-pill px-3 py-2 mt-1">Successfully Completed</span>
+                    </div>
+                </div>
+                <div class="modal-footer border-0 pt-0">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Bootstrap Bundle with Popper (Required for Modals & Dropdowns) -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+
+    <!-- Interactive JavaScript -->
+    <script>
+        // Mobile Sidebar Toggle
+        const menuToggle = document.getElementById("menuToggle");
+        const sidebar = document.getElementById("sidebar");
+        const overlay = document.getElementById("sidebarOverlay");
+
+        function toggleSidebar() {
+            sidebar.classList.toggle("show");
+            overlay.classList.toggle("show");
+        }
+        menuToggle.addEventListener("click", toggleSidebar);
+        overlay.addEventListener("click", toggleSidebar);
+
+        // View Details Logic (Opens Modal with dynamic data)
+        const taskModal = new bootstrap.Modal(document.getElementById('taskModal'));
+        function viewDetails(title, assignee, date, time) {
+            document.getElementById('modalTaskTitle').innerText = title;
+            document.getElementById('modalAssignee').innerText = assignee;
+            document.getElementById('modalDate').innerText = date;
+            document.getElementById('modalTime').innerText = time;
+            taskModal.show();
+        }
+
+        // Download Report Simulation
+        function downloadReport(title) {
+            alert("Report for '" + title + "' is downloading... 📥");
+        }
+
+        // Archive / Delete Logic
+        function removeTask(buttonElement, action) {
+            if(confirm("Are you sure you want to " + action.toLowerCase() + " this task?")) {
+                const card = buttonElement.closest('.completed-card');
+                card.style.opacity = '0';
+                setTimeout(() => {
+                    card.remove();
+                }, 300); // Wait for fade effect
+            }
+        }
+
+        // Search Filter Logic
+        document.getElementById('searchInput').addEventListener('keyup', function(e) {
+            const term = e.target.value.toLowerCase();
+            const cards = document.querySelectorAll('.completed-card');
+            
+            cards.forEach(card => {
+                const title = card.querySelector('.fs-6').innerText.toLowerCase();
+                if(title.includes(term)) {
+                    card.style.display = 'flex';
+                } else {
+                    card.style.display = 'none';
+                }
+            });
+        });
+    </script>
+</body>
+</html>
