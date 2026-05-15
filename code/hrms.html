@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HRMS Pro | Employee Management System</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link href="hrms-style.css" rel="stylesheet">
+
+</head>
+<body>
+
+    <aside class="sidebar shadow-sm" id="sidebar">
+        <div class="d-flex align-items-center mb-5 px-2">
+            <div class="bg-primary text-white rounded-3 p-2 me-2">
+                <i class="bi bi-person-badge-fill"></i>
+            </div>
+            <a href="index.html" class="nav-link">
+            <h4 class="fw-bold mb-0 text-primary">HRMS Pro</h4></a>
+        </div>
+        
+        <nav class="nav flex-column">
+            <a href="#" class="nav-link active"><i class="bi bi-house-door"></i>Dashboard</a>
+            <a href="employee-hrms.html" class="nav-link"><i class="bi bi-people"></i>Employees</a>
+            <a href="add-emp-hrms.html" class="nav-link"><i class="bi bi-person-plus"></i>Add Employees</a>
+            
+            <hr>
+            <a href="#" class="nav-link text-danger mt-auto"><i class="bi bi-power"></i>Logout</a>
+        </nav>
+    </aside>
+
+    <main class="main-content">
+        <div class="d-flex justify-content-between align-items-center mb-5">
+            <div>
+                <h3 class="fw-bold mb-1">Welcome back, Admin!</h3>
+                <p class="text-muted small">Here's what's happening in your company today.</p>
+            </div>
+            <div class="d-flex gap-3 align-items-center">
+                <button class="btn btn-white hrms-card py-2 px-3 border-0 shadow-sm" title="Notifications">
+                    <i class="bi bi-bell text-primary"></i>
+                </button>
+                <button class="btn btn-check-in shadow" onclick="toggleCheckIn(this)">
+                    <i class="bi bi-geo-alt-fill me-2"></i>Check In
+                </button>
+            </div>
+        </div>
+
+        <div class="row g-4 mb-5">
+            <div class="col-md-3">
+                <div class="hrms-card">
+                    <div class="d-flex justify-content-between mb-3">
+                        <div class="stat-icon bg-indigo-light"><i class="bi bi-people"></i></div>
+                        <span class="text-success small fw-bold">+4%</span>
+                    </div>
+                    <h4 class="fw-bold mb-0">1,240</h4>
+                    <p class="text-muted small mb-0">Total Employees</p>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="hrms-card">
+                    <div class="d-flex justify-content-between mb-3">
+                        <div class="stat-icon bg-emerald-light"><i class="bi bi-calendar-event"></i></div>
+                        <span class="text-muted small fw-bold">85%</span>
+                    </div>
+                    <h4 class="fw-bold mb-0">1,054</h4>
+                    <p class="text-muted small mb-0">Attendance Today</p>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="hrms-card">
+                    <div class="d-flex justify-content-between mb-3">
+                        <div class="stat-icon bg-amber-light"><i class="bi bi-envelope-paper"></i></div>
+                        <span class="text-danger small fw-bold">12</span>
+                    </div>
+                    <h4 class="fw-bold mb-0">24</h4>
+                    <p class="text-muted small mb-0">Leave Requests</p>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="hrms-card">
+                    <div class="d-flex justify-content-between mb-3">
+                        <div class="stat-icon bg-rose-light"><i class="bi bi-currency-dollar"></i></div>
+                        <i class="bi bi-arrow-up-right text-success"></i>
+                    </div>
+                    <h4 class="fw-bold mb-0">$45.2k</h4>
+                    <p class="text-muted small mb-0">Payroll Processed</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="row g-4">
+            <div class="col-lg-8">
+                <div class="hrms-card h-100">
+                    <div class="d-flex justify-content-between align-items-center mb-4">
+                        <h5 class="fw-bold mb-0">Pending Leave Approvals</h5>
+                        <button class="btn btn-sm btn-outline-primary">View All</button>
+                    </div>
+                    <div class="table-responsive">
+                        <table class="table table-hover align-middle">
+                            <thead class="table-light border-0">
+                                <tr>
+                                    <th>Employee</th>
+                                    <th>Leave Type</th>
+                                    <th>Duration</th>
+                                    <th>Status</th>
+                                    <th>Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>
+                                        <div class="d-flex align-items-center">
+                                            <div class="rounded-circle bg-soft-blue me-2 d-flex align-items-center justify-content-center" style="width: 32px; height: 32px; background: #e0e7ff;">A</div>
+                                            <div><span class="fw-600 d-block">Aashish</span><small class="text-muted">Full Stack Dev</small></div>
+                                        </div>
+                                    </td>
+                                    <td><span class="badge bg-info-subtle text-info status-badge">Sick Leave</span></td>
+                                    <td>May 15 - May 17</td>
+                                    <td><span class="badge bg-warning-subtle text-warning status-badge">Pending</span></td>
+                                    <td>
+                                        <button class="btn btn-sm btn-success rounded-pill px-3" onclick="alert('Approved!')">Approve</button>
+                                        <button class="btn btn-sm btn-outline-danger rounded-pill px-3">Reject</button>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <div class="d-flex align-items-center">
+                                            <div class="rounded-circle bg-soft-blue me-2 d-flex align-items-center justify-content-center" style="width: 32px; height: 32px; background: #d1fae5;">R</div>
+                                            <div><span class="fw-600 d-block">Rahul Sharma</span><small class="text-muted">UI Designer</small></div>
+                                        </div>
+                                    </td>
+                                    <td><span class="badge bg-purple-subtle text-primary status-badge">Casual Leave</span></td>
+                                    <td>May 20 (1 Day)</td>
+                                    <td><span class="badge bg-warning-subtle text-warning status-badge">Pending</span></td>
+                                    <td>
+                                        <button class="btn btn-sm btn-success rounded-pill px-3">Approve</button>
+                                        <button class="btn btn-sm btn-outline-danger rounded-pill px-3">Reject</button>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-lg-4">
+                <div class="hrms-card mb-4">
+                    <h5 class="fw-bold mb-3">Quick Actions</h5>
+                    <div class="d-grid gap-2">
+                        <a href="add-emp-hrms.html" class="btn btn-light text-start py-3"><i class="bi bi-person-plus me-2 text-primary"></i> Add New Employee</a>
+                        <!-- <button class="btn btn-light text-start py-3"><i class="bi bi-cash-stack me-2 text-success"></i> Generate Payslips</button> -->
+                        <!-- <button class="btn btn-light text-start py-3"><i class="bi bi-megaphone me-2 text-warning"></i> Post Announcement</button> -->
+                    </div>
+                </div>
+
+                <!-- <div class="hrms-card">
+                    <h5 class="fw-bold mb-3">Birthday Reminders 🎂</h5>
+                    <div class="d-flex align-items-center gap-3">
+                        <div class="rounded-circle bg-primary text-white p-2">JD</div>
+                        <div>
+                            <p class="mb-0 fw-bold">John Doe</p>
+                            <small class="text-muted">Turning 26 tomorrow!</small>
+                        </div>
+                    </div>
+                </div> -->
+            </div>
+        </div>
+    </main>
+
+    <div class="modal fade" id="addEmpModal" tabindex="-1">
+        <div class="modal-dialog modal-dialog-centered shadow-lg">
+            <div class="modal-content border-0 hrms-card">
+                <div class="modal-header border-0">
+                    <h5 class="fw-bold">Register New Employee</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body">
+                    <!-- <form>
+                        <div class="mb-3"><label class="form-label small fw-bold">Full Name</label><input type="text" class="form-control" placeholder="Aashish ..."></div>
+                        <div class="row mb-3">
+                            <div class="col-md-6"><label class="form-label small fw-bold">Department</label><select class="form-select"><option>IT / Tech</option><option>HR</option></select></div>
+                            <div class="col-md-6"><label class="form-label small fw-bold">Role</label><input type="text" class="form-control" placeholder="Software Engineer"></div>
+                        </div>
+                        <div class="mb-3"><label class="form-label small fw-bold">Joining Date</label><input type="date" class="form-control"></div>
+                        <button type="submit" class="btn btn-primary w-100 py-2">Create Profile</button>
+                    </form> -->
+                    
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        function toggleCheckIn(btn) {
+            if (btn.innerText.includes("Check In")) {
+                btn.innerHTML = '<i class="bi bi-geo-alt me-2"></i>Check Out';
+                btn.classList.replace("btn-check-in", "btn-danger");
+                alert("Checked In Successfully!");
+            } else {
+                btn.innerHTML = '<i class="bi bi-geo-alt-fill me-2"></i>Check In';
+                btn.classList.replace("btn-danger", "btn-check-in");
+                alert("Checked Out Successfully!");
+            }
+        }
+    </script>
+</body>
+</html>

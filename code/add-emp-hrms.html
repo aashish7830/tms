@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Add Employee | HRMS Pro</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
+    <link rel="stylesheet" href="hrms-style.css">
+   
+</head>
+<body>
+     <aside class="sidebar shadow-sm" id="sidebar">
+        <div class="d-flex align-items-center mb-5 px-2">
+            <div class="bg-primary text-white rounded-3 p-2 me-2">
+                <i class="bi bi-person-badge-fill"></i>
+            </div>
+            <a href="index.html" class="nav-link">
+            <h4 class="fw-bold mb-0 text-primary">HRMS Pro</h4></a>
+        </div>
+        
+        <nav class="nav flex-column">
+            <a href="#" class="nav-link active"><i class="bi bi-house-door"></i>Dashboard</a>
+            <a href="employee-hrms.html" class="nav-link"><i class="bi bi-people"></i>Employees</a>
+            <a href="add-emp-hrms.html" class="nav-link"><i class="bi bi-person-plus"></i>Add Employees</a>
+            
+            <hr>
+            <a href="#" class="nav-link text-danger mt-auto"><i class="bi bi-power"></i>Logout</a>
+        </nav>
+    </aside>
+
+    <div class="main-content container">
+        <div class="d-flex justify-content-between align-items-center mb-4">
+            <div>
+                <h3 class="fw-bold"><i class="bi bi-person-plus-fill me-2 text-primary"></i>Add New Employee</h3>
+                <nav aria-label="breadcrumb">
+                    <ol class="breadcrumb mb-0">
+                        <li class="breadcrumb-item"><a href="hrms.html">HRMS</a></li>
+                        <li class="breadcrumb-item active">Employee Management</li>
+                    </ol>
+                </nav>
+            </div>
+            <button class="btn btn-outline-secondary rounded-pill px-4" onclick="history.back()">Cancel</button>
+        </div>
+
+        <form action="#" method="POST" enctype="multipart/form-data">
+            <div class="form-card mb-4">
+                
+                <div class="row mb-4">
+                    <div class="col-12">
+                        <span class="section-title">1. Basic Information</span>
+                    </div>
+                    <div class="col-md-2 mb-3 d-flex justify-content-center">
+                        <div class="photo-upload" onclick="document.getElementById('profilePhoto').click()">
+                            <i class="bi bi-camera"></i>
+                            <span style="font-size: 10px;">Upload Photo</span>
+                            <input type="file" id="profilePhoto" hidden accept="image/*">
+                        </div>
+                    </div>
+                    <div class="col-md-10">
+                        <div class="row g-3">
+                            <div class="col-md-4">
+                                <label class="form-label fw-semibold small">Full Name</label>
+                                <input type="text" class="form-control" placeholder="e.g. Aashish Saini" required>
+                            </div>
+                            <div class="col-md-4">
+                                <label class="form-label fw-semibold small">Employee ID (Generated)</label>
+                                <input type="text" class="form-control bg-light" value="EMP-2026-001" readonly>
+                            </div>
+                            <div class="col-md-4">
+                                <label class="form-label fw-semibold small">Gender</label>
+                                <select class="form-select">
+                                    <option selected>Select</option>
+                                    <option>Male</option>
+                                    <option>Female</option>
+                                    <option>Other</option>
+                                </select>
+                            </div>
+                            <div class="col-md-6">
+                                <label class="form-label fw-semibold small">Email Address</label>
+                                <input type="email" class="form-control" placeholder="aashish@company.com">
+                            </div>
+                            <div class="col-md-6">
+                                <label class="form-label fw-semibold small">Phone Number</label>
+                                <input type="tel" class="form-control" placeholder="+91 98765 43210">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row mb-4">
+                    <div class="col-12"><span class="section-title">2. Professional & System Details</span></div>
+                    <div class="col-md-3 mb-3">
+                        <label class="form-label fw-semibold small">Department</label>
+                        <select class="form-select">
+                            <option>IT / Technology</option>
+                            <option>Human Resources</option>
+                            <option>Marketing</option>
+                            <option>Operations</option>
+                        </select>
+                    </div>
+                    <div class="col-md-3 mb-3">
+                        <label class="form-label fw-semibold small">Designation/Role</label>
+                        <input type="text" class="form-control" placeholder="e.g. Frontend Developer">
+                    </div>
+                    <div class="col-md-3 mb-3">
+                        <label class="form-label fw-semibold small">Reporting Manager</label>
+                        <input type="text" class="form-control" placeholder="Manager Name">
+                    </div>
+                    <div class="col-md-3 mb-3">
+                        <label class="form-label fw-semibold small">User Role</label>
+                        <select class="form-select">
+                            <option>Employee</option>
+                            <option>Manager</option>
+                            <option>HR Admin</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="row mb-4">
+                    <div class="col-12"><span class="section-title">3. Banking & Salary (Payroll)</span></div>
+                    <div class="col-md-3 mb-3">
+                        <label class="form-label fw-semibold small">Monthly Basic Salary</label>
+                        <div class="input-group">
+                            <span class="input-group-text border-0 bg-light">₹</span>
+                            <input type="number" class="form-control" placeholder="0.00">
+                        </div>
+                    </div>
+                    <div class="col-md-3 mb-3">
+                        <label class="form-label fw-semibold small">Bank Name</label>
+                        <input type="text" class="form-control" placeholder="e.g. HDFC Bank">
+                    </div>
+                    <div class="col-md-3 mb-3">
+                        <label class="form-label fw-semibold small">Account Number</label>
+                        <input type="password" class="form-control" placeholder="•••• •••• ••••">
+                    </div>
+                    <div class="col-md-3 mb-3">
+                        <label class="form-label fw-semibold small">IFSC Code</label>
+                        <input type="text" class="form-control" placeholder="HDFC0001234">
+                    </div>
+                </div>
+
+                <div class="row mb-4">
+                    <div class="col-12"><span class="section-title">4. Documents Upload</span></div>
+                    <div class="col-md-4 mb-3">
+                        <label class="form-label fw-semibold small">Resume (PDF)</label>
+                        <input type="file" class="form-control">
+                    </div>
+                    <div class="col-md-4 mb-3">
+                        <label class="form-label fw-semibold small">Aadhaar Card</label>
+                        <input type="file" class="form-control">
+                    </div>
+                    <div class="col-md-4 mb-3">
+                        <label class="form-label fw-semibold small">PAN Card</label>
+                        <input type="file" class="form-control">
+                    </div>
+                </div>
+
+                <hr class="my-4">
+
+                <div class="d-flex justify-content-end gap-2">
+                    <button type="reset" class="btn btn-light px-4">Reset Form</button>
+                    <button type="submit" class="btn btn-save px-5">Create Employee Profile</button>
+                </div>
+
+            </div>
+        </form>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
