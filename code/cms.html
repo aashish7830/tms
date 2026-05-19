@@ -3,265 +3,393 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>CMS Dashboard | Admin Panel</title>
+    <title>TMS | Contact Management System</title>
+    <!-- Bootstrap 5 & Google Fonts -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
-    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <style>
         :root {
-            --cms-primary: #2563eb;
-            --cms-bg: #f3f4f6;
-            --sidebar-width: 260px;
+            --primary-color: #4e73df;
+            --sidebar-width: 250px;
         }
 
         body {
-            font-family: 'Outfit', sans-serif;
-            background-color: var(--cms-bg);
-            color: #1f2937;
+            font-family: 'Inter', sans-serif;
+            overflow-x: hidden;
         }
 
-        /* Sidebar Glassmorphism */
         .sidebar {
             width: var(--sidebar-width);
             height: 100vh;
             position: fixed;
             background: #ffffff;
-            border-right: 1px solid #e5e7eb;
-            padding: 24px;
             z-index: 1000;
+            transition: all 0.3s;
+        }
+
+        .main-content {
+            margin-left: var(--sidebar-width);
+            transition: all 0.3s;
+            min-height: 100vh;
         }
 
         .nav-link {
-            color: #6b7280;
-            padding: 12px 16px;
-            border-radius: 10px;
+            color: #5a5c69;
+            padding: 12px 15px;
+            border-radius: 8px;
             margin-bottom: 5px;
-            display: flex;
-            align-items: center;
-            transition: all 0.3s;
-            font-weight: 500;
+            transition: 0.2s;
         }
 
         .nav-link:hover, .nav-link.active {
-            background: rgba(37, 99, 235, 0.1);
-            color: var(--cms-primary) !important;
+            background: #f8f9fc;
+            color: var(--primary-color);
         }
 
-        .nav-link i { margin-right: 12px; font-size: 1.1rem; }
-
-        .main-content { margin-left: var(--sidebar-width); padding: 40px; }
-
-        /* Modern Card Style */
-        .cms-card {
-            background: white;
-            border-radius: 16px;
-            border: 1px solid #e5e7eb;
-            padding: 24px;
-            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
+        .star-rating {
+            color: #f6c23e;
         }
 
-        /* Status Badges */
-        .badge-published { background: #dcfce7; color: #166534; border: 1px solid #bbf7d0; }
-        .badge-draft { background: #f3f4f6; color: #4b5563; border: 1px solid #e5e7eb; }
-
-        /* Media Thumbnail */
-        .media-thumb {
-            width: 50px;
-            height: 50px;
-            border-radius: 8px;
-            object-fit: cover;
-            background: #f3f4f6;
-        }
-
-        .btn-publish {
-            background: var(--cms-primary);
-            color: white;
-            border-radius: 10px;
-            padding: 10px 20px;
+        .step-circle {
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            background-color: #e3e6f0;
+            color: #5a5c69;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
             font-weight: 600;
-            border: none;
-            transition: transform 0.2s;
+            font-size: 0.85rem;
+        }
+        
+        .step-circle.active {
+            background-color: var(--primary-color);
+            color: white;
         }
 
-        .btn-publish:hover { transform: translateY(-2px); color: white; opacity: 0.9; }
+        /* Responsive adjustment */
+        @media (max-width: 768px) {
+            .sidebar { margin-left: calc(-1 * var(--sidebar-width)); }
+            .main-content { margin-left: 0; }
+            .sidebar.active { margin-left: 0; }
+        }
     </style>
 </head>
-<body>
+<body class="bg-light">
 
-    <aside class="sidebar shadow-sm">
-        <div class="d-flex align-items-center mb-5 px-2">
-            <div class="bg-primary text-white rounded-3 p-2 me-2">
-                <i class="bi bi-stack"></i>
-            </div>
-            <h4 class="fw-bold mb-0 text-dark">CMS<span class="text-primary">Flow</span></h4>
+    <!-- Sidebar -->
+    <div class="sidebar shadow" id="sidebar">
+        <div class="p-4">
+           <a href="index.html" class="text-decoration-none"> <h4 class="text-primary fw-bold"><i class="bi bi-layers-half me-2"></i>CMS Pro</h4></a>
         </div>
-        
-        <nav class="nav flex-column">
-            <a href="#" class="nav-link"><i class="bi bi-speedometer2"></i>Dashboard</a>
-            <a href="#" class="nav-link active"><i class="bi bi-file-earmark-richtext"></i>Pages</a>
-            <a href="#" class="nav-link"><i class="bi bi-pencil-square"></i>Blog Posts</a>
-            <a href="#" class="nav-link"><i class="bi bi-images"></i>Media Library</a>
-            <a href="#" class="nav-link"><i class="bi bi-folder"></i>Categories</a>
+        <nav class="nav flex-column px-3">
+            <a href="index.html" class="nav-link"><i class="bi bi-grid-1x2-fill me-3"></i>Dashboard</a>
+            <!-- <a href="hrms.html" class="nav-link"> <i class="bi bi-plus-lg me-1"></i>>Add New Contact</a> -->
+              <a class="nav-link" data-bs-toggle="modal" data-bs-target="#addContactModal" style="cursor:pointer;">
+                    <i class="bi bi-plus-lg me-1"></i> Add New Contact
+              </a>
+            <!-- <a href="task.html" class="nav-link"><i class="bi bi-list-check me-3"></i>TMS</a> -->
+            <!-- <a href="cms.html" class="nav-link active"><i class="bi bi-collection me-3"></i>CMS</a> -->
             <hr>
-            <a href="#" class="nav-link"><i class="bi bi-people"></i>Users</a>
-            <a href="#" class="nav-link"><i class="bi bi-gear"></i>Settings</a>
-            <a href="#" class="nav-link text-danger mt-5"><i class="bi bi-box-arrow-left"></i>Logout</a>
+            <a href="#" class="nav-link"><i class="bi bi-gear me-3"></i>Settings</a>
         </nav>
-    </aside>
+    </div>
 
-    <main class="main-content">
-        <div class="d-flex justify-content-between align-items-center mb-5">
-            <div>
-                <h3 class="fw-bold mb-1">Content Management</h3>
-                <p class="text-muted small">Update your website pages and posts effortlessly.</p>
+    <!-- Main Content -->
+    <div class="main-content" id="content">
+        <!-- Top Navbar -->
+        <nav class="navbar navbar-expand-lg navbar-white bg-white border-bottom sticky-top px-4">
+            <button class="btn btn-light d-md-none" id="sidebarToggle"><i class="bi bi-list"></i></button>
+            <div class="ms-auto d-flex align-items-center">
+                <div class="search-box me-4 d-none d-md-block">
+                    <input type="text" class="form-control form-control-sm" placeholder="Search...">
+                </div>
+                <div class="position-relative me-3">
+                    <i class="bi bi-bell fs-5 cursor-pointer"></i>
+                    <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger" style="font-size: 0.6rem;">3</span>
+                </div>
+                <img src="https://i.pravatar.cc/150?u=admin" class="rounded-circle border" width="35" alt="Profile">
             </div>
-            <div class="d-flex gap-3">
-                <button class="btn btn-outline-secondary rounded-pill px-3"><i class="bi bi-eye me-2"></i>Live Preview</button>
-                <button class="btn btn-publish shadow-sm" data-bs-toggle="modal" data-bs-target="#addPageModal">
-                    <i class="bi bi-plus-lg me-2"></i>Create New Page
+        </nav>
+
+        <div class="container-fluid p-4">
+            <!-- Header section with Action Button -->
+            <div class="d-flex justify-content-between align-items-center mb-4">
+                <div>
+                    <h3 class="fw-bold mb-0">Contact Management System</h3>
+                    <p class="text-muted small mb-0">Manage your parties, contacts, and approval flows seamlessly.</p>
+                </div>
+                <button class="btn btn-primary btn-sm rounded-pill px-3" data-bs-toggle="modal" data-bs-target="#addContactModal">
+                    <i class="bi bi-plus-lg me-1"></i> Add New Contact
                 </button>
             </div>
-        </div>
 
-        <div class="row g-4 mb-4">
-            <div class="col-md-3">
-                <div class="cms-card">
-                    <small class="text-muted fw-600">Total Pages</small>
-                    <h3 class="fw-bold mb-0">24</h3>
+            <!-- Filters Section -->
+            <div class="card border-0 shadow-sm p-3 mb-4">
+                <div class="row g-3 align-items-center">
+                    <div class="col-md-4">
+                        <label class="form-label small fw-semibold text-muted">Search by Title / Party Name</label>
+                        <div class="input-group input-group-sm">
+                            <span class="input-group-text bg-light border-end-0"><i class="bi bi-search text-muted"></i></span>
+                            <input type="text" class="form-control bg-light border-start-0" placeholder="Type name or title...">
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <label class="form-label small fw-semibold text-muted">Filter by Star Rating</label>
+                        <select class="form-select form-select-sm bg-light">
+                            <option value="">All Ratings</option>
+                            <option value="5">⭐⭐⭐⭐⭐ (5 Star)</option>
+                            <option value="4">⭐⭐⭐⭐ (4 Star)</option>
+                            <option value="3">⭐⭐⭐ (3 Star)</option>
+                            <option value="2">⭐⭐ (2 Star)</option>
+                            <option value="1">⭐ (1 Star)</option>
+                        </select>
+                    </div>
+                    <div class="col-md-3">
+                        <label class="form-label small fw-semibold text-muted">Communication Mode</label>
+                        <select class="form-select form-select-sm bg-light">
+                            <option value="">All Modes</option>
+                            <option value="calling">Calling Only</option>
+                            <option value="whatsapp">WhatsApp Only</option>
+                        </select>
+                    </div>
+                    <div class="col-md-2 d-flex align-items-end">
+                        <button class="btn btn-secondary btn-sm w-100"><i class="bi bi-funnel me-1"></i> Reset</button>
+                    </div>
                 </div>
             </div>
-            <div class="col-md-3">
-                <div class="cms-card">
-                    <small class="text-muted fw-600">Drafts</small>
-                    <h3 class="fw-bold mb-0">05</h3>
-                </div>
-            </div>
-            <div class="col-md-3">
-                <div class="cms-card">
-                    <small class="text-muted fw-600">Media Uploads</small>
-                    <h3 class="fw-bold mb-0">1.2k</h3>
-                </div>
-            </div>
-            <div class="col-md-3">
-                <div class="cms-card">
-                    <small class="text-muted fw-600">Site Visitors</small>
-                    <h3 class="fw-bold mb-0">12,840</h3>
-                </div>
-            </div>
-        </div>
 
-        <div class="cms-card">
-            <div class="d-flex justify-content-between align-items-center mb-4">
-                <h5 class="fw-bold mb-0">Recent Pages</h5>
-                <div class="search-box">
-                    <input type="text" class="form-control rounded-pill border-0 bg-light px-4" placeholder="Search pages...">
-                </div>
-            </div>
-            <div class="table-responsive">
-                <table class="table table-hover align-middle">
-                    <thead>
-                        <tr class="text-muted small text-uppercase">
-                            <th>Title</th>
-                            <th>Author</th>
-                            <th>Category</th>
-                            <th>Status</th>
-                            <th>Date Modified</th>
-                            <th class="text-end">Actions</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td>
-                                <div class="d-flex align-items-center">
-                                    <img src="https://via.placeholder.com/50" class="media-thumb me-3" alt="thumb">
-                                    <div>
-                                        <span class="fw-600 d-block">Homepage - TwoDots</span>
-                                        <small class="text-primary">/home</small>
-                                    </div>
-                                </div>
-                            </td>
-                            <td><span class="small fw-500">Admin (Aashish)</span></td>
-                            <td><span class="badge bg-light text-dark">Main Site</span></td>
-                            <td><span class="badge badge-published rounded-pill px-3">Published</span></td>
-                            <td><small class="text-muted">May 15, 2026</small></td>
-                            <td class="text-end">
-                                <button class="btn btn-sm btn-light border-0"><i class="bi bi-pencil"></i></button>
-                                <button class="btn btn-sm btn-light border-0 text-danger"><i class="bi bi-trash"></i></button>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>
-                                <div class="d-flex align-items-center">
-                                    <div class="media-thumb me-3 d-flex align-items-center justify-content-center"><i class="bi bi-file-earmark-text"></i></div>
-                                    <div>
-                                        <span class="fw-600 d-block">Contact Us</span>
-                                        <small class="text-primary">/contact</small>
-                                    </div>
-                                </div>
-                            </td>
-                            <td><span class="small fw-500">Editor (Rahul)</span></td>
-                            <td><span class="badge bg-light text-dark">Support</span></td>
-                            <td><span class="badge badge-draft rounded-pill px-3">Draft</span></td>
-                            <td><small class="text-muted">May 14, 2026</small></td>
-                            <td class="text-end">
-                                <button class="btn btn-sm btn-light border-0"><i class="bi bi-pencil"></i></button>
-                                <button class="btn btn-sm btn-light border-0 text-danger"><i class="bi bi-trash"></i></button>
-                            </td>
-                        </tr>
-                    </tbody>
-                </table>
-            </div>
-        </div>
-    </main>
+            <!-- Contacts Table / List -->
+            <div class="card border-0 shadow-sm">
+                <div class="card-body p-0">
+                    <div class="table-responsive">
+                        <table class="table table-hover align-middle mb-0">
+                            <thead class="table-light text-muted small uppercase">
+                                <tr>
+                                    <th class="ps-4">SL NO</th>
+                                    <th>Title Name / Subtitle</th>
+                                    <th>Party Name</th>
+                                    <th>Contact Details</th>
+                                    <th>Address / Description</th>
+                                    <th>Rating & Route</th>
+                                    <th>Status Flow</th>
+                                    <th class="text-end pe-4">Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <!-- Row 1 -->
+                                <tr>
+                                    <td class="ps-4 fw-semibold text-muted">01</td>
+                                    <td>
+                                        <div class="fw-bold text-dark">Prime Vendor Corp</div>
+                                        <small class="text-muted">Main Raw Material Supplier</small>
+                                    </td>
+                                    <td><span class="badge bg-primary-subtle text-primary px-2.5 py-1.5 rounded">Aashish Kumar</span></td>
+                                    <td>
+                                        <div class="small fw-semibold"><i class="bi bi-telephone me-1 text-muted"></i> +91 98765 43210</div>
+                                        <div class="mt-1">
+                                            <span class="badge bg-success-subtle text-success btn-xs" style="font-size: 0.7rem;"><i class="bi bi-whatsapp"></i> WhatsApp</span>
+                                            <span class="badge bg-info-subtle text-info btn-xs" style="font-size: 0.7rem;"><i class="bi bi-telephone-outbound"></i> Calling</span>
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <div class="text-truncate small" style="max-width: 150px;" title="Sector 62, Noida, UP, India">Sector 62, Noida, UP</div>
+                                        <small class="text-muted text-truncate d-block" style="max-width: 150px;">Deals in premium grade steel plates shipment.</small>
+                                    </td>
+                                    <td>
+                                        <div class="star-rating small mb-1">
+                                            <i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star"></i>
+                                        </div>
+                                        <small class="text-secondary d-block" style="font-size: 0.75rem;"><i class="bi bi-signpost-2 text-primary"></i> Marg: NH-24 Route</small>
+                                    </td>
+                                    <td>
+                                        <!-- Steps & Approval Flow -->
+                                        <div class="d-flex align-items-center gap-1">
+                                            <span class="step-circle active" title="Pata lagane ke liye (Verification)">1</span>
+                                            <i class="bi bi-arrow-right text-muted px-1" style="font-size: 0.75rem;"></i>
+                                            <span class="step-circle active" title="Number Note / Calling">2</span>
+                                            <i class="bi bi-arrow-right text-muted px-1" style="font-size: 0.75rem;"></i>
+                                            <span class="step-circle" title="Finalized">3</span>
+                                        </div>
+                                        <button class="btn btn-outline-primary btn-xs mt-2 py-0 px-2 rounded-pill" style="font-size: 0.7rem;">
+                                            <i class="bi bi-send me-1"></i> Send to Approvals
+                                        </button>
+                                    </td>
+                                    <td class="text-end pe-4">
+                                        <div class="btn-group">
+                                            <button class="btn btn-sm btn-light text-primary" title="View"><i class="bi bi-eye"></i></button>
+                                            <button class="btn btn-sm btn-light text-warning" title="Edit"><i class="bi bi-pencil"></i></button>
+                                            <button class="btn btn-sm btn-light text-danger" title="Delete"><i class="bi bi-trash"></i></button>
+                                        </div>
+                                    </td>
+                                </tr>
 
-    <div class="modal fade" id="addPageModal" tabindex="-1">
-        <div class="modal-dialog modal-lg modal-dialog-centered">
-            <div class="modal-content border-0 cms-card">
-                <div class="modal-header border-0">
-                    <h5 class="fw-bold">Create New Content Page</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
-                </div>
-                <div class="modal-body">
-                    <form>
-                        <div class="mb-3">
-                            <label class="form-label small fw-bold">PAGE TITLE</label>
-                            <input type="text" class="form-control py-2" placeholder="e.g. Services Overview">
-                        </div>
-                        <div class="row mb-3">
-                            <div class="col-md-6">
-                                <label class="form-label small fw-bold">URL SLUG</label>
-                                <div class="input-group">
-                                    <span class="input-group-text bg-light border-0">/</span>
-                                    <input type="text" class="form-control" placeholder="services">
-                                </div>
-                            </div>
-                            <div class="col-md-6">
-                                <label class="form-label small fw-bold">CATEGORY</label>
-                                <select class="form-select">
-                                    <option>Main Navigation</option>
-                                    <option>Footer Links</option>
-                                    <option>Hidden Page</option>
-                                </select>
-                            </div>
-                        </div>
-                        <div class="mb-3">
-                            <label class="form-label small fw-bold">SEO DESCRIPTION</label>
-                            <textarea class="form-control" rows="3" placeholder="Enter meta description for Google search..."></textarea>
-                        </div>
-                        <div class="mb-4">
-                            <label class="form-label small fw-bold">FEATURED IMAGE</label>
-                            <input type="file" class="form-control">
-                        </div>
-                        <div class="d-flex justify-content-end gap-2">
-                            <button type="button" class="btn btn-light px-4">Save as Draft</button>
-                            <button type="submit" class="btn btn-publish px-5">Publish Now</button>
-                        </div>
-                    </form>
+                                <!-- Row 2 -->
+                                <tr>
+                                    <td class="ps-4 fw-semibold text-muted">02</td>
+                                    <td>
+                                        <div class="fw-bold text-dark">Apex Logistics</div>
+                                        <small class="text-muted">North Region Transport</small>
+                                    </td>
+                                    <td><span class="badge bg-primary-subtle text-primary px-2.5 py-1.5 rounded">Rajesh Sharma</span></td>
+                                    <td>
+                                        <div class="small fw-semibold"><i class="bi bi-telephone me-1 text-muted"></i> +91 91122 33445</div>
+                                        <div class="mt-1">
+                                            <span class="badge bg-info-subtle text-info btn-xs" style="font-size: 0.7rem;"><i class="bi bi-telephone-outbound"></i> Calling Only</span>
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <div class="text-truncate small" style="max-width: 150px;" title="Palam Road, New Delhi">Palam Road, New Delhi</div>
+                                        <small class="text-muted text-truncate d-block" style="max-width: 150px;">Handles heavy machinery container transport orders.</small>
+                                    </td>
+                                    <td>
+                                        <div class="star-rating small mb-1">
+                                            <i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i>
+                                        </div>
+                                        <small class="text-secondary d-block" style="font-size: 0.75rem;"><i class="bi bi-signpost-2 text-primary"></i> Marg: Ring Road Route</small>
+                                    </td>
+                                    <td>
+                                        <div class="d-flex align-items-center gap-1">
+                                            <span class="step-circle active" title="Pata lagane ke liye">1</span>
+                                            <i class="bi bi-arrow-right text-muted px-1" style="font-size: 0.75rem;"></i>
+                                            <span class="step-circle active" title="Number Note / Calling">2</span>
+                                            <i class="bi bi-arrow-right text-muted px-1" style="font-size: 0.75rem;"></i>
+                                            <span class="step-circle active" title="Finalized">3</span>
+                                        </div>
+                                        <span class="badge bg-success mt-2 d-inline-block px-2 py-1 rounded-pill" style="font-size: 0.65rem;"><i class="bi bi-check2-all"></i> Approved</span>
+                                    </td>
+                                    <td class="text-end pe-4">
+                                        <div class="btn-group">
+                                            <button class="btn btn-sm btn-light text-primary" title="View"><i class="bi bi-eye"></i></button>
+                                            <button class="btn btn-sm btn-light text-warning" title="Edit"><i class="bi bi-pencil"></i></button>
+                                            <button class="btn btn-sm btn-light text-danger" title="Delete"><i class="bi bi-trash"></i></button>
+                                        </div>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
                 </div>
             </div>
+
         </div>
     </div>
 
+    <!-- Add/Edit Contact Modal Box -->
+   <!-- Add/Edit Contact Modal Box WITH Comments & Media Upload -->
+<div class="modal fade" id="addContactModal" tabindex="-1" aria-hidden="true"  id="addContactModal">
+    <div class="modal-dialog modal-dialog-centered modal-lg">
+        <div class="modal-content border-0 shadow">
+            <div class="modal-header bg-light border-bottom">
+                <h5 class="modal-title fw-bold text-dark" id="modalTitle">Add Contact Details</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body p-4">
+                <form id="contactForm">
+                    <div class="row g-3">
+                        <div class="col-md-6">
+                            <label class="form-label small fw-semibold text-muted">Title Name *</label>
+                            <input type="text" class="form-control form-control-sm" required placeholder="e.g. Corporate Office / Firm Name">
+                        </div>
+                        <div class="col-md-6">
+                            <label class="form-label small fw-semibold text-muted">Party Name *</label>
+                            <input type="text" class="form-control form-control-sm" required placeholder="Contact Person Name">
+                        </div>
+                        <div class="col-md-6">
+                            <label class="form-label small fw-semibold text-muted">Subtitle Name</label>
+                            <input type="text" class="form-control form-control-sm" placeholder="e.g. Wholesaler / Service Head">
+                        </div>
+                        <div class="col-md-6">
+                            <label class="form-label small fw-semibold text-muted">Mobile No *</label>
+                            <input type="tel" class="form-control form-control-sm" required placeholder="Enter 10-digit number">
+                        </div>
+                        <div class="col-md-6">
+                            <label class="form-label small fw-semibold text-muted">Preferred Mode</label>
+                            <div class="d-flex gap-3 mt-1">
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" id="whatsappCheck" checked>
+                                    <label class="form-check-label small" for="whatsappCheck">WhatsApp</label>
+                                </div>
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" id="callingCheck" checked>
+                                    <label class="form-check-label small" for="callingCheck">Calling</label>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <label class="form-label small fw-semibold text-muted">Star Rating</label>
+                            <select class="form-select form-select-sm">
+                                <option value="5">5 Star</option>
+                                <option value="4" selected>4 Star</option>
+                                <option value="3">3 Star</option>
+                                <option value="2">2 Star</option>
+                                <option value="1">1 Star</option>
+                            </select>
+                        </div>
+                        <div class="col-md-6">
+                            <label class="form-label small fw-semibold text-muted">Marg / Route (मार्ग दिया)</label>
+                            <input type="text" class="form-control form-control-sm" placeholder="e.g. NH-24, Transit Route A">
+                        </div>
+                        <div class="col-md-6">
+                            <label class="form-label small fw-semibold text-muted">Address</label>
+                            <input type="text" class="form-control form-control-sm" placeholder="Complete address detail">
+                        </div>
+                        <div class="col-12">
+                            <label class="form-label small fw-semibold text-muted">Description (100-150 words)</label>
+                            <textarea class="form-control form-control-sm" rows="2" maxlength="500" placeholder="Write crucial business notes here..."></textarea>
+                        </div>
+
+                        <!-- NEW: Internal Comments Section -->
+                        <div class="col-12">
+                            <label class="form-label small fw-semibold text-muted"><i class="bi bi-chat-left-text me-1"></i> Add Internal Comment / Note</label>
+                            <textarea class="form-control form-control-sm" rows="2" placeholder="Type any follow-up remarks or special instructions for approval..."></textarea>
+                        </div>
+
+                        <!-- NEW: Media Upload Section -->
+                        <div class="col-12">
+                            <label class="form-label small fw-semibold text-muted"><i class="bi bi-paperclip me-1"></i> Upload Media (Visiting Cards, Documents, Images)</label>
+                            <div class="input-group input-group-sm border rounded bg-light p-2">
+                                <input type="file" class="form-control form-control-sm border-0 bg-transparent" id="contactMedia" multiple>
+                            </div>
+                            <small class="text-muted" style="font-size: 0.75rem;">Supported formats: JPG, PNG, PDF (Max size: 5MB per file)</small>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer bg-light border-top">
+                <button type="button" class="btn btn-secondary btn-sm rounded-pill px-3" data-bs-dismiss="modal">Close</button>
+                <button type="submit" form="contactForm" class="btn btn-primary btn-sm rounded-pill px-4">Save Contact</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+    <!-- Scripts Toggle Mobile Sidebar -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        document.getElementById('sidebarToggle')?.addEventListener('click', function() {
+            document.getElementById('sidebar').classList.toggle('active');
+        });
+    </script>
+    <script>
+document.addEventListener("DOMContentLoaded", function () {
+
+    let modalName = localStorage.getItem("openModal");
+
+    if(modalName === "addContactModal") {
+
+        let myModal = new bootstrap.Modal(
+            document.getElementById("addContactModal")
+        );
+
+        myModal.show();
+
+        localStorage.removeItem("openModal");
+    }
+
+});
+</script>
 </body>
 </html>
