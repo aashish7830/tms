@@ -254,8 +254,8 @@
                 <div class="dropdown-menu dropdown-menu-start shadow animate slideIn" aria-labelledby="hamburgerMenuBtn">
                    
                     <!-- Detailed Sections Mapping inside hamburger -->
-                    <a href="project-dashboard.html" class="menu-detail-item">
-                        <span><i class="bi bi-layers text-primary me-2"></i> Project</span>
+                    <a href="portfolio.html" class="menu-detail-item">
+                        <span><i class="bi bi-layers text-primary me-2"></i> Busines</span>
                         <!-- <span class="badge bg-primary-subtle text-primary rounded-pill">12 Active</span> -->
                     </a>
                     <a href="hrms.html" class="menu-detail-item">
@@ -263,7 +263,7 @@
                         <!-- <span class="badge bg-success-subtle text-success rounded-pill">48 Staff</span> -->
                     </a>
                     <a href="task.html" class="menu-detail-item">
-                        <span><i class="bi bi-check2-square text-warning me-2"></i> Task</span>
+                        <span><i class="bi bi-check2-square text-warning me-2"></i> TMS</span>
                         <!-- <span class="badge bg-warning-subtle text-warning rounded-pill">30 Pending</span> -->
                     </a>
                     <a href="cms.html" class="menu-detail-item">
@@ -287,13 +287,62 @@
                     <i class="bi bi-bell-fill fs-4 text-secondary cursor-pointer"></i>
                     <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger" style="font-size: 0.6rem;">3</span>
                 </div>
-                <div class="d-flex align-items-center border-start ps-3 gap-2">
+                <!-- <div class="d-flex align-items-center border-start ps-3 gap-2">
                     <img src="https://i.pravatar.cc/150?u=admin" class="rounded-circle border" width="40" height="40" alt="Admin Profile">
                     <div class="d-none d-sm-block">
                         <div class="small fw-bold lh-1">Amit Sharma</div>
                         <small class="text-muted" style="font-size: 0.75rem;">Workspace Master</small>
                     </div>
-                </div>
+                </div> -->
+                <div class="dropdown border-start ps-3">
+    <div class="d-flex align-items-center gap-2 dropdown-toggle text-decoration-none" 
+         id="adminProfileMenu" 
+         data-bs-toggle="dropdown" 
+         aria-expanded="false" 
+         style="cursor: pointer;">
+        
+        <img src="https://i.pravatar.cc/150?u=admin" class="rounded-circle border" width="40" height="40" alt="Admin Profile">
+        <div class="d-none d-sm-block text-start">
+            <div class="small fw-bold lh-1 text-dark">Amit Sharma</div>
+            <small class="text-muted" style="font-size: 0.75rem;">Workspace Master</small>
+        </div>
+    </div>
+
+    <ul class="dropdown-menu dropdown-menu-end shadow border-0 mt-2 p-2" 
+        aria-labelledby="adminProfileMenu" 
+        style="border-radius: 14px; min-width: 210px;">
+        
+        <li><h6 class="dropdown-header fw-bold text-xs text-uppercase tracking-wider pb-2">Account Management</h6></li>
+        
+        <li>
+            <a class="dropdown-item d-flex align-items-center rounded-2 py-2 small" href="#">
+                <i class="bi bi-person me-2 text-primary fs-6"></i> My Profile
+            </a>
+        </li>
+        
+        <li>
+            <a class="dropdown-item d-flex align-items-center rounded-2 py-2 small" href="#">
+                <i class="bi bi-gear me-2 text-secondary fs-6"></i> Account Settings
+            </a>
+        </li>
+        
+        <li>
+            <a class="dropdown-item d-flex align-items-center rounded-2 py-2 small" href="#">
+                <i class="bi bi-shield-check me-2 text-success fs-6"></i> Security Status
+            </a>
+        </li>
+        
+        <li><hr class="dropdown-divider my-2"></li>
+        
+        <li>
+            <a class="dropdown-item d-flex align-items-center rounded-2 py-2 small text-danger" 
+               href="javascript:void(0)" 
+               onclick="triggerSystemLogout()">
+                <i class="bi bi-box-arrow-right me-2 fs-6"></i> Logout Account
+            </a>
+        </li>
+    </ul>
+</div>
             </div>
         </div>
     </nav>
@@ -304,7 +353,7 @@
         <!-- Header Title Layout Configuration -->
         <div class="mb-5">
             <h1 class="display-6 fw-bold mb-1">Task Management System</h1>
-            <p class="text-muted fw-semibold">Real-time horizontal business insights, operational metrics, and comprehensive records telemetry.</p>
+            <!-- <p class="text-muted fw-semibold">Real-time horizontal business insights, operational metrics, and comprehensive records telemetry.</p> -->
         </div>
 
         <!-- Metric Scoreboard / Stats Row -->
@@ -318,7 +367,7 @@
             </div>
             <div class="col-xl-3 col-sm-6">
                 <div class="card stat-card p-4 border-start border-success border-5">
-                    <small class="text-muted fw-bold text-uppercase tracking-wider">Completed</small>
+                    <small class="text-muted fw-bold text-uppercase tracking-wider">Completed task</small>
                     <h2 class="display-5 fw-bold my-2">84</h2>
                     <div class="progress mt-3" style="height: 8px; border-radius: 4px;">
                         <div class="progress-bar bg-success" style="width: 67%"></div>
@@ -327,14 +376,14 @@
             </div>
             <div class="col-xl-3 col-sm-6">
                 <div class="card stat-card p-4 border-start border-warning border-5">
-                    <small class="text-muted fw-bold text-uppercase tracking-wider">Operations In Progress</small>
+                    <small class="text-muted fw-bold text-uppercase tracking-wider"> In Progress task</small>
                     <h2 class="display-5 fw-bold my-2">30</h2>
                     <span class="text-warning small fw-bold"><i class="bi bi-clock-history"></i> High Priority Action</span>
                 </div>
             </div>
             <div class="col-xl-3 col-sm-6">
                 <div class="card stat-card p-4 border-start border-danger border-5">
-                    <small class="text-muted fw-bold text-uppercase tracking-wider">Overdue Blockers</small>
+                    <small class="text-muted fw-bold text-uppercase tracking-wider">panding task</small>
                     <h2 class="display-5 fw-bold my-2">10</h2>
                     <span class="text-danger small fw-bold"><i class="bi bi-exclamation-octagon-fill"></i> Attention Required</span>
                 </div>
@@ -452,7 +501,7 @@
        Add Staff
     </a>
 </li>
-            <li><a class="dropdown-item text-dark" href="cms.html"><i class="bi  bi-building-add text-info"></i> Add New Business</a></li>
+            <li><a class="dropdown-item text-dark" href="portfolio.html"><i class="bi  bi-building-add text-info"></i> Add New Business</a></li>
              <li>
     <a class="dropdown-item text-dark"
        href="cms.html"
@@ -567,5 +616,14 @@
             });
         }
     </script>
+    <script>
+    function triggerSystemLogout() {
+        if(confirm("Kya aap session close karke logout karna chahte hain?")) {
+            // Aapka login routing logic yahan aayega
+            alert("Logging out from Workspace Master dashboard... Securely destroying active sessions.");
+            window.location.reload(); 
+        }
+    }
+</script>
 </body>
 </html>

@@ -254,9 +254,9 @@
                 <!-- Top Right Actions -->
                 <div class="ms-auto d-flex align-items-center">
                     <!-- Dark Mode Toggle Button -->
-                    <button class="btn btn-link text-secondary me-2 p-2" id="themeToggle" title="Toggle Theme">
+                    <!-- <button class="btn btn-link text-secondary me-2 p-2" id="themeToggle" title="Toggle Theme">
                         <i class="bi bi-moon-stars fs-5" id="themeIcon"></i>
-                    </button>
+                    </button> -->
 
                     <!-- Notifications Dropdown -->
                     <div class="dropdown me-3">
@@ -276,24 +276,74 @@
                     </div>
                     
                     <!-- User Profile Info -->
-                    <div class="d-flex align-items-center border-start ps-3">
+                    <!-- <div class="d-flex align-items-center border-start ps-3">
                         <div class="text-end me-2 d-none d-sm-block">
                             <p class="mb-0 fw-bold small">Amit Sharma</p>
                             <span class="user-role-tag">Admin Role</span>
                         </div>
                         <img src="https://i.pravatar.cc/150?u=admin" class="rounded-circle border" width="40" height="40" alt="Admin">
-                    </div>
+                    </div> -->
+                    <div class="dropdown border-start ps-3">
+    <div class="d-flex align-items-center gap-2 dropdown-toggle text-decoration-none" 
+         id="adminProfileMenu" 
+         data-bs-toggle="dropdown" 
+         aria-expanded="false" 
+         style="cursor: pointer;">
+        
+        <img src="https://i.pravatar.cc/150?u=admin" class="rounded-circle border" width="40" height="40" alt="Admin Profile">
+        <div class="d-none d-sm-block text-start">
+            <div class="small fw-bold lh-1 text-dark">Amit Sharma</div>
+            <small class="text-muted" style="font-size: 0.75rem;">Workspace Master</small>
+        </div>
+    </div>
+
+    <ul class="dropdown-menu dropdown-menu-end shadow border-0 mt-2 p-2" 
+        aria-labelledby="adminProfileMenu" 
+        style="border-radius: 14px; min-width: 210px;">
+        
+        <li><h6 class="dropdown-header fw-bold text-xs text-uppercase tracking-wider pb-2">Account Management</h6></li>
+        
+        <li>
+            <a class="dropdown-item d-flex align-items-center rounded-2 py-2 small" href="#">
+                <i class="bi bi-person me-2 text-primary fs-6"></i> My Profile
+            </a>
+        </li>
+        
+        <li>
+            <a class="dropdown-item d-flex align-items-center rounded-2 py-2 small" href="#">
+                <i class="bi bi-gear me-2 text-secondary fs-6"></i> Account Settings
+            </a>
+        </li>
+        
+        <li>
+            <a class="dropdown-item d-flex align-items-center rounded-2 py-2 small" href="#">
+                <i class="bi bi-shield-check me-2 text-success fs-6"></i> Security Status
+            </a>
+        </li>
+        
+        <li><hr class="dropdown-divider my-2"></li>
+        
+        <li>
+            <a class="dropdown-item d-flex align-items-center rounded-2 py-2 small text-danger" 
+               href="javascript:void(0)" 
+               onclick="triggerSystemLogout()">
+                <i class="bi bi-box-arrow-right me-2 fs-6"></i> Logout Account
+            </a>
+        </li>
+    </ul>
+</div>
                 </div>
             </div>
         </nav>
 
         <!-- Main Workspace Container -->
+         
         <div class="container-fluid p-4">
             <!-- Page Header -->
             <div class="row align-items-center mb-4">
                 <div class="col-12 col-md">
                     <h3 class="fw-bold mb-0">Project Performance</h3>
-                    <p class="text-muted small mb-0">Welcome back! Here's what's happening today.</p>
+                    <!-- <p class="text-muted small mb-0">Welcome back! Here's what's happening today.</p> -->
                 </div>
                 <div class="col-12 col-md-auto header-buttons d-flex flex-column flex-sm-row gap-2">
                     <!-- Trigger Form Modal -->
@@ -307,50 +357,73 @@
             </div>
 
             <!-- Stats Row Cards -->
-            <div class="row g-3 mb-4">
-                <div class="col-6 col-md-3">
-                    <div class="card stat-card shadow-sm p-3 border-start border-secondary border-4">
-                        <div class="d-flex justify-content-between align-items-center">
-                            <div>
-                                <small class="text-uppercase fw-bold text-muted d-block" style="font-size: 0.65rem;">To Do</small>
-                                <h3 class="fw-bold mb-0">24</h3>
-                            </div>
-                            <i class="bi bi-list-task fs-3 text-secondary opacity-50"></i>
-                        </div>
+            <div class="card content-card border-0 shadow-sm p-3 mb-4 rounded-3">
+                <div class="row g-2 align-items-center">
+                    <div class="col-12 col-sm-6 col-md-3">
+    <label class="form-label small fw-semibold text-muted mb-1" for="filterStartDate">
+        <i class="bi bi-calendar3 me-1 text-success"></i> Start Date
+    </label>
+    <input type="date" class="form-select form-select-sm text-muted" id="filterStartDate">
+</div>
+
+<div class="col-12 col-sm-6 col-md-3">
+    <label class="form-label small fw-semibold text-muted mb-1" for="filterEndDate">
+        <i class="bi bi-calendar3 me-1 text-danger"></i> End Date
+    </label>
+    <input type="date" class="form-select form-select-sm text-muted" id="filterEndDate">
+</div>
+                    <div class="col-12 col-sm-6 col-md-3">
+                        <label class="form-label small fw-semibold text-muted mb-1"><i class="bi bi-building me-1 text-primary"></i> Select Business</label>
+                        <select class="form-select form-select-sm" id="filterBusiness">
+                            <option value="" selected>All Businesses</option>
+                            <option value="corporate">Corporate Office</option>
+                            <option value="retail">Retail Division</option>
+                            <option value="manufacturing">Manufacturing Unit</option>
+                        </select>
                     </div>
-                </div>
-                <div class="col-6 col-md-3">
-                    <div class="card stat-card shadow-sm p-3 border-start border-primary border-4">
-                        <div class="d-flex justify-content-between align-items-center">
-                            <div>
-                                <small class="text-uppercase fw-bold text-primary d-block" style="font-size: 0.65rem;">In Progress</small>
-                                <h3 class="fw-bold mb-0">12</h3>
-                            </div>
-                            <i class="bi bi-gear-wide-connected fs-3 text-primary opacity-50"></i>
-                        </div>
+
+                    <div class="col-12 col-sm-6 col-md-3">
+                        <label class="form-label small fw-semibold text-muted mb-1"><i class="bi bi-geo-alt me-1 text-primary"></i> Select Branch</label>
+                        <select class="form-select form-select-sm" id="filterBranch">
+                            <option value="" selected>All Branches</option>
+                            <option value="delhi">Delhi NCR</option>
+                            <option value="mumbai">Mumbai Hub</option>
+                            <option value="bangalore">Bangalore Tech Park</option>
+                        </select>
                     </div>
-                </div>
-                <div class="col-6 col-md-3">
-                    <div class="card stat-card shadow-sm p-3 border-start border-warning border-4">
-                        <div class="d-flex justify-content-between align-items-center">
-                            <div>
-                                <small class="text-uppercase fw-bold text-warning d-block" style="font-size: 0.65rem;">Review</small>
-                                <h3 class="fw-bold mb-0">08</h3>
-                            </div>
-                            <i class="bi bi-eye fs-3 text-warning opacity-50"></i>
-                        </div>
+
+                    <div class="col-12 col-sm-6 col-md-3">
+                        <label class="form-label small fw-semibold text-muted mb-1"><i class="bi bi-people me-1 text-primary"></i> Select Department</label>
+                        <select class="form-select form-select-sm" id="filterDepartment">
+                            <option value="" selected>All Departments</option>
+                            <option value="hr">Human Resources</option>
+                            <option value="it">IT & Development</option>
+                            <option value="finance">Finance & Accounts</option>
+                            <option value="marketing">Sales & Marketing</option>
+                        </select>
                     </div>
-                </div>
-                <div class="col-6 col-md-3">
-                    <div class="card stat-card shadow-sm p-3 border-start border-success border-4">
-                        <div class="d-flex justify-content-between align-items-center">
-                            <div>
-                                <small class="text-uppercase fw-bold text-success d-block" style="font-size: 0.65rem;">Completed</small>
-                                <h3 class="fw-bold mb-0">142</h3>
-                            </div>
-                            <i class="bi bi-check-circle fs-3 text-success opacity-50"></i>
-                        </div>
+
+                    <div class="col-12 col-sm-6 col-md-3">
+                        <label class="form-label small fw-semibold text-muted mb-1"><i class="bi bi-funnel me-1 text-primary"></i> Select Status</label>
+                        <select class="form-select form-select-sm" id="filterStatus">
+                            <option value="" selected>All Statuses</option>
+                            <option value="todo">To Do</option>
+                            <option value="progress">In Progress</option>
+                            <option value="review">Review Only</option>
+                            <option value="completed">Completed</option>
+                        </select>
                     </div>
+                    <div class="col-12 col-sm-6 col-md-3">
+    <label class="form-label small fw-semibold text-muted mb-1" for="filterUrgency">
+        <i class="bi bi-bell-fill me-1 text-warning"></i> Urgent Tasks
+    </label>
+    <select class="form-select form-select-sm" id="filterUrgency">
+        <option value="" selected>All Priority Status</option>
+        <option value="urgent">⚠️ Urgent (High Priority)</option>
+        <option value="normal">Normal Priority</option>
+        <option value="low">Low Priority</option>
+    </select>
+</div>
                 </div>
             </div>
 
@@ -620,6 +693,15 @@ document.addEventListener("DOMContentLoaded", function () {
     }
 
 });
+</script>
+<script>
+    function triggerSystemLogout() {
+        if(confirm("Kya aap session close karke logout karna chahte hain?")) {
+            // Aapka login routing logic yahan aayega
+            alert("Logging out from Workspace Master dashboard... Securely destroying active sessions.");
+            window.location.reload(); 
+        }
+    }
 </script>
     
 </body>
