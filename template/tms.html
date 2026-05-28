@@ -1,0 +1,1328 @@
+
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Responsive Professional Header with Dropdowns</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="style.css">
+    <style>
+        /* Modal Backdrop Overlay */
+.modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.45);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 2000;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.25s ease;
+}
+
+/* Active State for JS */
+.modal-overlay.active {
+    opacity: 1;
+    pointer-events: auto;
+}
+
+/* Modal Content White Box */
+.modal-box {
+    background-color: #ffffff;
+    width: 100%;
+    max-width: 660px;
+    border-radius: 10px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+    padding: 24px 28px;
+    transform: translateY(-15px);
+    transition: transform 0.25s ease;
+}
+
+.modal-overlay.active .modal-box {
+    transform: translateY(0);
+}
+
+/* Header Sections */
+.modal-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 22px;
+}
+
+.modal-title {
+    font-size: 19px;
+    font-weight: 600;
+    color: #2d3748;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.modal-title i {
+    color: #3b82f6;
+    font-size: 18px;
+}
+
+.close-btn {
+    background: none;
+    border: none;
+    font-size: 26px;
+    color: #a0aec0;
+    cursor: pointer;
+    line-height: 1;
+    transition: color 0.2s;
+}
+
+.close-btn:hover {
+    color: #4a5568;
+}
+
+/* Form Controls Layout */
+.form-group {
+    margin-bottom: 15px;
+}
+
+.form-row {
+    display: flex;
+    gap: 16px;
+}
+
+.form-row .col {
+    flex: 1;
+}
+
+/* Exact Label Matching */
+.form-group label {
+    display: block;
+    font-size: 13.5px;
+    font-weight: 600;
+    color: #4a5568;
+    margin-bottom: 6px;
+}
+
+/* Inputs & Select Elements Style */
+.form-group input[type="text"],
+.form-group input[type="date"],
+.form-group select,
+.form-group textarea {
+    width: 100%;
+    padding: 9px 12px;
+    border: 1px solid #cbd5e0;
+    border-radius: 6px;
+    font-size: 14px;
+    color: #2d3748;
+    outline: none;
+    background-color: #fff;
+    transition: border-color 0.2s, box-shadow 0.2s;
+}
+
+/* Input Focus Glow */
+.form-group input:focus, 
+.form-group select:focus, 
+.form-group textarea:focus {
+    border-color: #3b82f6;
+    box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.15);
+}
+
+/* Custom Design for File Input Row */
+.file-input-wrapper {
+    border: 1px solid #cbd5e0;
+    border-radius: 6px;
+    padding: 5px 8px;
+    background-color: #fff;
+}
+
+.file-input-wrapper input[type="file"] {
+    font-size: 13px;
+    color: #718096;
+}
+
+.help-text {
+    display: block;
+    margin-top: 5px;
+    font-size: 12px;
+    color: #718096;
+}
+
+.form-group textarea {
+    resize: vertical;
+}
+
+/* Screenshot Buttons Theme Matching */
+.modal-footer {
+    display: flex;
+    justify-content: flex-end;
+    gap: 12px;
+    margin-top: 22px;
+}
+
+.btn-cancel {
+    background-color: #f7fafc;
+    color: #2d3748;
+    border: 1px solid #e2e8f0;
+    padding: 8px 20px;
+    border-radius: 6px;
+    font-size: 14px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: background 0.2s;
+}
+
+.btn-cancel:hover {
+    background-color: #edf2f7;
+}
+
+.btn-save {
+    background-color: #1a73e8;
+    color: #ffffff;
+    border: none;
+    padding: 8px 22px;
+    border-radius: 6px;
+    font-size: 14px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: background 0.2s;
+}
+
+.btn-save:hover {
+    background-color: #155cb4;
+}
+
+/* Mobile Responsive Adjustments */
+@media (max-width: 576px) {
+    .form-row {
+        flex-direction: column;
+        gap: 0;
+    }
+    .modal-box {
+        margin: 12px;
+        padding: 20px;
+    }
+    .modal-footer {
+        flex-direction: column-reverse;
+    }
+    .modal-footer button {
+        width: 100%;
+    }
+}
+
+
+
+
+
+
+
+
+
+
+    </style>
+   <style>
+        /* CSS RESET & VARIABLES */
+        :root {
+            --bg-body: #f4f6f9;
+            --bg-card: #ffffff;
+            --text-main: #1f2937;
+            --text-muted: #6b7280;
+            --border-color: #e5e7eb;
+            --primary-blue: #1d63ed;
+            
+            /* Statuses & Priorities */
+            --clr-urgent: #dc2626;
+            --clr-high: #06b6d4;
+            --clr-medium: #f59e0b;
+            --clr-inprogress: #3b82f6;
+            --clr-todo: #6b7280;
+            --clr-review: #f59e0b;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            background-color: var(--bg-body);
+            /* padding: 20px; */
+            font-family: sans-serif;
+        }
+
+        .dashboard-container {
+            max-width: 100%;
+            margin: 0 auto;
+        }
+
+        /* 1. TOP HEADER TITLE SECTION */
+        .page-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 24px;
+            flex-wrap: wrap;
+            gap: 16px;
+        }
+
+        .page-title {
+            font-size: 26px;
+            font-weight: 700;
+        }
+
+        .action-buttons {
+            display: flex;
+            gap: 12px;
+        }
+
+        .btn {
+            padding: 10px 16px;
+            border-radius: 6px;
+            font-size: 14px;
+            font-weight: 600;
+            cursor: pointer;
+            border: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            transition: background-color 0.2s ease;
+        }
+
+        .btn-blue {
+            background-color: var(--primary-blue);
+            color: #ffffff;
+        }
+
+        .btn-blue:hover {
+            background-color: #154ec2;
+        }
+
+        .btn-white {
+            background-color: #ffffff;
+            color: #4b5563;
+            border: 1px solid var(--border-color);
+        }
+
+        .btn-white:hover {
+            background-color: #f9fafb;
+        }
+
+        /* 2. FILTERS PANEL SECTION */
+        .filters-card {
+            background-color: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            padding: 20px;
+            margin-bottom: 24px;
+        }
+
+        .filters-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 16px;
+        }
+
+        .filter-input-group {
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+        }
+
+        .filter-input-group label {
+            font-size: 12px;
+            font-weight: 600;
+            color: var(--text-muted);
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .filter-input-group input,
+        .filter-input-group select {
+            width: 100%;
+            height: 38px;
+            padding: 8px 12px;
+            border: 1px solid var(--border-color);
+            border-radius: 6px;
+            background-color: #ffffff;
+            font-size: 14px;
+            color: var(--text-main);
+            outline: none;
+        }
+
+        /* 3. TWO COLUMN MAIN CONTENT LAYOUT */
+        .main-dashboard-grid {
+            display: grid;
+            grid-template-columns: 2.2fr 1fr;
+            gap: 24px;
+            align-items: start;
+            min-width: 0; /* ✨ FIXED: Grid ko screen ke bahar stretch hone se rokta hai */
+        }
+
+        .panel-card {
+            background-color: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            padding: 20px;
+            overflow: hidden; /* ✨ FIXED: Content ko apne andar samet kar scroll generate karta hai */
+        }
+
+        .panel-card-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+
+        .panel-card-header h3 {
+            font-size: 18px;
+            font-weight: 700;
+        }
+
+        .btn-view-all {
+            color: var(--primary-blue);
+            text-decoration: none;
+            font-size: 13px;
+            font-weight: 600;
+            background-color: #eff6ff;
+            padding: 6px 12px;
+            border-radius: 4px;
+        }
+
+        /* TABLE STYLING */
+        .table-wrapper {
+            width: 100%;
+            overflow-x: auto;
+            -webkit-overflow-scrolling: touch;
+            display: block;
+        }
+
+        .data-table {
+            width: 100%;
+            border-collapse: collapse;
+            text-align: left;
+            font-size: 14px;
+            white-space: nowrap; /* Isse text line break nahi karega aur horizontal scroll chalega */
+        }
+
+        .data-table th {
+            background-color: #f9fafb;
+            color: var(--text-muted);
+            font-size: 11px;
+            font-weight: 700;
+            letter-spacing: 0.5px;
+            padding: 12px 10px;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .data-table td {
+            padding: 14px 10px;
+            border-bottom: 1px solid var(--border-color);
+            vertical-align: middle;
+        }
+
+        .font-semibold {
+            font-weight: 600;
+        }
+
+        .user-info {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .user-avatar {
+            width: 28px;
+            height: 28px;
+            border-radius: 50%;
+            object-fit: cover;
+        }
+
+        /* BADGES & STATUSES */
+        .priority-badge {
+            padding: 4px 8px;
+            border-radius: 4px;
+            font-size: 11px;
+            font-weight: 700;
+            color: #ffffff;
+            display: inline-block;
+        }
+        .p-urgent { background-color: var(--clr-urgent); }
+        .p-medium { background-color: var(--clr-medium); }
+        .p-high { background-color: var(--clr-high); }
+
+        .status-tag {
+            padding: 6px 12px;
+            border-radius: 6px;
+            font-size: 12px;
+            font-weight: 600;
+            color: #ffffff;
+            display: inline-block;
+            text-align: center;
+            min-width: 85px;
+        }
+        .s-inprogress { background-color: var(--clr-inprogress); }
+        .s-todo { background-color: var(--clr-todo); }
+        .s-review { background-color: var(--clr-review); }
+
+        /* RIGHT PANEL: BREAKDOWN & EFFICIENCY */
+        .right-column-stack {
+            display: flex;
+            flex-direction: column;
+            gap: 24px;
+        }
+
+        .chart-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px 0;
+            position: relative;
+        }
+
+        .donut-chart-mock {
+            width: 130px;
+            height: 130px;
+            border-radius: 50%;
+            background: conic-gradient(
+                var(--clr-inprogress) 0% 40%, 
+                var(--clr-medium) 40% 70%, 
+                #e5e7eb 70% 100%
+            );
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .donut-hole {
+            width: 90px;
+            height: 90px;
+            background-color: #ffffff;
+            border-radius: 50%;
+        }
+
+        .chart-legends {
+            display: flex;
+            justify-content: center;
+            gap: 12px;
+            margin-top: 15px;
+            font-size: 12px;
+            color: var(--text-muted);
+            font-weight: 600;
+        }
+
+        .legend-item {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        .dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            display: inline-block;
+        }
+
+        /* Efficiency Block */
+        .efficiency-section {
+            border-top: 1px solid var(--border-color);
+            padding-top: 20px;
+            margin-top: 10px;
+        }
+
+        .efficiency-meta {
+            display: flex;
+            justify-content: space-between;
+            font-weight: 700;
+            font-size: 14px;
+            margin-bottom: 10px;
+        }
+
+        .eff-score {
+            color: #10b981;
+        }
+
+        .bar-track {
+            width: 100%;
+            height: 12px;
+            background-color: #e5e7eb;
+            border-radius: 10px;
+            overflow: hidden;
+        }
+
+        .bar-fill {
+            height: 100%;
+            background: repeating-linear-gradient(
+                45deg,
+                #10b981,
+                #10b981 8px,
+                #059669 8px,
+                #059669 16px
+            );
+            border-radius: 10px;
+        }
+
+        /* RESPONSIVE MEDIA QUERIES */
+        @media (max-width: 1024px) {
+            .filters-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            .main-dashboard-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        @media (max-width: 640px) {
+            .page-header {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+            .action-buttons {
+                width: 100%;
+            }
+            .action-buttons .btn {
+                flex: 1;
+                justify-content: center;
+            }
+            .filters-grid {
+                grid-template-columns: 1fr;
+                gap: 12px;
+            }
+            .filters-card {
+                padding: 14px;
+            }
+            .panel-card {
+                padding: 14px;
+            }
+            .data-table th, .data-table td {
+                padding: 12px 10px;
+                font-size: 14px;    
+            }
+        }
+    </style>
+
+
+
+
+    
+</head>
+<body>
+
+      <header class="main-header">
+        
+        <div class="header-left">
+            <div class="custom-menu-container">
+                <button class="custom-menu-btn" id="menuBtn">
+                    <span class="hamburger-icon">
+                        <span></span>
+                        <span></span>
+                        <span></span>
+                    </span>
+                    <span>Menu</span>
+                </button>
+                
+                <ul class="custom-dropdown" id="dropdownMenu">
+                     <li><a href="index.html"><i class="fa-solid fa-list-check"></i> Dashboard</a></li>
+                    <li><a href="tms.html"><i class="fa-solid fa-list-check"></i> TMS</a></li>
+                    <li><a href="hrms.html"><i class="fa-solid fa-users-gear"></i> HRMS</a></li>
+                    <li><a href="cms.html"><i class="fa-solid fa-folder-open"></i> CMS</a></li>
+                    <li><a href="portfolio-hero.html"><i class="fa-solid fa-chart-pie"></i> Business</a></li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="header-right">
+            
+            <div class="search-container">
+                <input type="text" placeholder="Search..." class="search-input">
+            </div>
+
+            <div class="notification-wrapper">
+                <div class="notification-container" id="notiToggle">
+                    <i class="fa-regular fa-bell bell-icon"></i>
+                    <span class="notification-badge">3</span>
+                </div>
+
+                <div class="notification-dropdown" id="notificationDropdown">
+                    <div class="noti-header">
+                        <h3>Notifications</h3>
+                        <a href="#mark-read" class="mark-all-btn">Mark all as read</a>
+                    </div>
+                    <ul class="noti-list">
+                        <li class="noti-item unread">
+                            <img src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&q=80&w=100" class="noti-avatar" alt="User">
+                            <div class="noti-content">
+                                <span class="noti-text"><strong>Riya Sen</strong> assigned you a task in <strong>HRMS</strong>.</span>
+                                <span class="noti-time">3 mins ago</span>
+                            </div>
+                        </li>
+                        <li class="noti-item unread">
+                            <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&q=80&w=100" class="noti-avatar" alt="User">
+                            <div class="noti-content">
+                                <span class="noti-text"><strong>Rahul Dev</strong> requested approval for <strong>Business</strong> budget.</span>
+                                <span class="noti-time">1 hour ago</span>
+                            </div>
+                        </li>
+                    </ul>
+                    <div class="noti-footer">
+                        <a href="#all-notifications">View all notifications</a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="vertical-divider"></div>
+
+            <div class="user-profile-wrapper">
+                <div class="user-profile" id="profileToggle">
+                    <img src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?auto=format&fit=crop&q=80&w=150" alt="Amit Sharma" class="profile-img">
+                    <div class="user-details">
+                        <span class="user-name">Amit Sharma</span>
+                        <span class="user-role">Workspace Master</span>
+                    </div>
+                    <i class="fa-solid fa-caret-down dropdown-arrow"></i>
+                </div>
+
+                <div class="profile-dropdown-menu" id="profileDropdown">
+                    <div class="dropdown-heading">Account Management</div>
+                    <ul>
+                        <li><a href="#profile"><i class="fa-regular fa-user"></i> My Profile</a></li>
+                        <li><a href="#settings"><i class="fa-solid fa-gear"></i> Account Settings</a></li>
+                        <li><a href="#security"><i class="fa-regular fa-shield-halved"></i> Security Status</a></li>
+                        <div class="dropdown-divider"></div>
+                        <li><a href="#logout" class="logout-link"><i class="fa-solid fa-right-from-bracket"></i> Logout Account</a></li>
+                    </ul>
+                </div>
+            </div>
+
+        </div>
+    </header>
+
+<div class="dashboard-container">
+        
+        <div class="page-header">
+            <h2 class="page-title">TASK MANAGEMENT SYSTEM</h2>
+            <div class="action-buttons">
+                <button class="btn btn-blue" open-task-modal-btn><i class="fa-solid fa-plus"></i> Create New Task</button>
+                <button class="btn btn-white"><i class="fa-solid fa-download"></i> Download Report</button>
+            </div>
+        </div>
+
+        <div class="filters-card">
+            <div class="filters-grid">
+                <div class="filter-input-group">
+                    <label><i class="fa-regular fa-calendar-days lbl-green"></i> Start Date</label>
+                    <input type="date" value="mm/dd/yyyy">
+                </div>
+                <div class="filter-input-group">
+                    <label><i class="fa-regular fa-calendar-days lbl-red"></i> End Date</label>
+                    <input type="date" value="mm/dd/yyyy">
+                </div>
+                <div class="filter-input-group">
+                    <label><i class="fa-solid fa-building lbl-blue"></i> Select Business</label>
+                    <select>
+                        <option>IT</option>
+                        <option>Cold</option>
+                        <option>food</option>
+                    </select>
+                </div>
+                <div class="filter-input-group">
+                    <label><i class="fa-solid fa-location-dot lbl-blue"></i> Select Branch</label>
+                    <select>
+                        <option>cse</option>
+                          <option>it</option>
+                            <option>bio</option>
+                    </select>
+                </div>
+                <div class="filter-input-group">
+                    <label><i class="fa-solid fa-users lbl-blue"></i> Select Department</label>
+                    <select>
+                        <option>All Departments</option>
+                    </select>
+                </div>
+                <div class="filter-input-group">
+                    <label><i class="fa-solid fa-filter lbl-blue"></i> Select Status</label>
+                    <select>
+                        <option>All Statuses</option>
+                    </select>
+                </div>
+                <div class="filter-input-group">
+                    <label><i class="fa-solid fa-bell lbl-orange"></i> Urgent Tasks</label>
+                    <select>
+                        <option>All Priority Status</option>
+                    </select>
+                </div>
+                  <div class="filter-input-group">
+                    <label><i class="fa-solid fa-bell lbl-orange"></i> Review cycle </label>
+                    <select>
+                        <option>All Priority Status</option>
+                    </select>
+                </div>
+                  <div class="filter-input-group">
+                    <label><i class="fa-solid fa-bell lbl-orange"></i> task usefull other business</label>
+                    <select>
+                        <option>All Priority Status</option>
+                    </select>
+                </div>
+                 <div class="filter-input-group">
+                    <label><i class="fa-solid fa-bell lbl-orange"></i>Frequency of Task</label>
+                    <select>
+                        <option>All Priority Status</option>
+                    </select>
+                </div>
+            </div>
+        </div>
+
+       <div class="main-dashboard-grid">
+    <div class="panel-card">
+        <div class="panel-card-header">
+            <h3>Active Assignments</h3>
+            <a href="list-tasks.html" class="btn-view-all">View All</a>
+        </div>
+        <div class="table-wrapper">
+            <table class="data-table">
+                <thead>
+                    <tr>
+                        <th>TASK NAME</th>
+                        <th>ASSIGNEE</th>
+                         <th>Business</th>
+                        <th>Branch</th>
+                        <th>Department</th>
+                        <th>PRIORITY</th>
+                        <th>DEADLINE</th>
+                        <th>STATUS</th>
+                       
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td class="font-semibold">Website UI Redesign</td>
+                        <td>
+                            <div class="user-info">
+                                <img src="https://i.pravatar.cc/150?img=32" alt="Rahul K." class="user-avatar">
+                                <span>Rahul K.</span>
+                            </div>
+                        </td>
+                        <td>COLD</td>
+                        <td>CSE</td>
+                        <td>IT</td>
+                        <td><span class="priority-badge p-urgent">Urgent</span></td>
+                        <td>20 May</td>
+                        <td><span class="status-tag s-inprogress">In Progress</span></td>
+                        
+                    </tr>
+                    <tr>
+                        <td class="font-semibold">API Documentation</td>
+                        <td>
+                            <div class="user-info">
+                                <img src="https://i.pravatar.cc/150?img=68" alt="Priya S." class="user-avatar">
+                                <span>Priya S.</span>
+                            </div>
+                        </td>
+                         <td>COLD</td>
+                        <td>CSE</td>
+                        <td>IT</td>
+                        <td><span class="priority-badge p-medium">Medium</span></td>
+                        <td>22 May</td>
+                        <td><span class="status-tag s-todo">To Do</span></td>
+                       
+                    </tr>
+                    <tr>
+                        <td class="font-semibold">Client Feedback Fixes</td>
+                        <td>
+                            <div class="user-info">
+                                <img src="https://i.pravatar.cc/150?img=47" alt="Team Dev" class="user-avatar">
+                                <span>Team Dev</span>
+                            </div>
+                        </td>
+                         <td>COLD</td>
+                        <td>CSE</td>
+                        <td>IT</td>
+                        <td><span class="priority-badge p-high">High</span></td>
+                        <td>18 May</td>
+                        <td><span class="status-tag s-review">Review</span></td>
+                       
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <div class="right-column-stack">
+        <div class="panel-card">
+            <div class="panel-card-header">
+                <h3>Task Breakdown</h3>
+            </div>
+            <div class="chart-container">
+                <div class="donut-chart-mock">
+                    <div class="donut-hole"></div>
+                </div>
+            </div>
+            <div class="chart-legends">
+                <div class="legend-item"><span class="dot" style="background-color: var(--clr-todo);"></span> To Do</div>
+                <div class="legend-item"><span class="dot" style="background-color: var(--clr-inprogress);"></span> In Progress</div>
+                <div class="legend-item"><span class="dot" style="background-color: #e5e7eb;"></span> Done</div>
+            </div>
+
+            <div class="efficiency-section">
+                <div class="efficiency-meta">
+                    <span>Overall Efficiency</span>
+                    <span class="eff-score">75%</span>
+                </div>
+                <div class="bar-track">
+                    <div class="bar-fill" style="width: 75%;"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+    </div>
+
+     <div class="fab-wrapper">
+        <button class="fab-btn" id="dashboardFab" title="Action Menu">
+            <i class="fa-solid fa-plus"></i>
+        </button>
+        <ul class="fab-menu" id="fabMenu">
+            <!-- <li class="fab-item"><a href="#add-staff"><i class="fa-solid fa-user-plus"></i> Add Staff</a></li> -->
+            <li class="fab-item">
+    <a href="hrms.html?open=staff">
+        <i class="fa-solid fa-user-plus"></i> Add Staff
+    </a>
+</li>
+             <!-- <a href="hrms.html" onclick="localStorage.setItem('openModal','addStaffModal')"> <i class="fa-solid fa-user-plus"></i>  Add Staff </a> -->
+            <li class="fab-item"><a href="portfolio-hero.html"><i class="fa-solid fa-building-user"></i>Business</a></li>
+            <!-- <li class="fab-item"><a href="#add-contacts"><i class="fa-solid fa-address-book"></i> Add Contacts</a></li> -->
+             <li class="fab-item">
+    <a href="cms.html?open=contact">
+        <i class="fa-solid fa-address-book"></i> Add Contacts
+    </a>
+</li>
+                <!-- <li class="fab-item"><a href="#add-task"><i class="fa-solid fa-file-circle-plus"></i> Add New Task</a></li> -->
+                 <li class="fab-item">
+    <a href="tms.html?open=task">
+        <i class="fa-solid fa-file-circle-plus"></i> Add New Task
+    </a>
+</li>
+                
+        </ul>
+    </div>
+   
+
+
+
+
+
+
+ 
+
+<div class="modal-overlay" id="taskModal">
+    <div class="modal-box" style="max-height: 85vh; overflow-y: auto; border-radius: 8px; padding-right: 10px; width: 600px; max-width: 90%;">
+        
+        <div class="modal-header" style="position: sticky; top: 0; background: #fff; z-index: 10; padding-bottom: 15px; margin-top: -5px; display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid #eee;">
+            <h2 class="modal-title" style="margin: 0;">
+                <i class="fa-regular fa-square-plus text-primary"></i> Create New Task 
+                <span id="stepIndicator" style="font-size: 14px; color: #666; font-weight: normal; margin-left: 10px;">(Step 1 of 2)</span>
+            </h2>
+            <button class="close-btn" id="closeModalX" type="button" style="background: none; border: none; font-size: 24px; cursor: pointer;">&times;</button>
+        </div>
+
+        <form id="taskForm" style="padding-top: 15px;">
+            
+            <div id="formStep1" class="form-step">
+                <div class="form-row">
+                    <div class="form-group col">
+                        <label for="taskName">Task Name</label>
+                        <input type="text" id="taskName" placeholder="e.g., Fix Navigation Bug" required>
+                    </div>
+                    <div class="form-group col">
+                        <label for="urgentTask">Urgent Task</label>
+                        <select id="urgentTask">
+                            <option value="yes">Yes</option>
+                            <option value="no" selected>No</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group col">
+                        <label for="selectBusiness">Select Business</label>
+                        <select id="selectBusiness" required>
+                            <option value="" disabled selected>Select Business Type...</option>
+                            <option value="cold">Cold</option>
+                            <option value="shop">Shop</option>
+                            <option value="food">Food</option>
+                            <option value="water">Water</option>
+                        </select>
+                    </div>
+                    <div class="form-group col">
+                        <label for="selectBranch">Select Branch</label>
+                        <select id="selectBranch" required>
+                            <option value="" disabled selected>Select Branch...</option>
+                            <option value="it">IT</option>
+                            <option value="none-it">Non-IT</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group col">
+                        <label for="selectDepartment">Select Department</label>
+                        <select id="selectDepartment" required>
+                            <option value="" disabled selected>Select Department...</option>
+                            <option value="hr">Human Resources (HR)</option>
+                            <option value="it">IT Department</option>
+                            <option value="sales">Sales</option>
+                            <option value="marketing">Marketing</option>
+                            <option value="finance">Finance</option>
+                            <option value="operations">Operations</option>
+                            <option value="support">Customer Support</option>
+                            <option value="admin">Administration</option>
+                        </select>
+                    </div>
+                    <div class="form-group col">
+                        <label for="taskDetail">Detail of Task</label>
+                        <input type="text" id="taskDetail" placeholder="Provide a short breakdown..." required>
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group col">
+                        <label for="approval">Approval Required</label>
+                        <select id="approval">
+                            <option value="yes">Yes</option>
+                            <option value="no" selected>No</option>
+                        </select>
+                    </div>
+                    <div class="form-group col">
+                        <label for="dueTime">Due Time</label>
+                        <input type="time" id="dueTime" required>
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group col">
+    <label for="frequency">Frequency of Task</label>
+    <select id="frequency" onchange="toggleFrequencyOptions()">
+        <option value="daily" selected>Daily</option>
+        <option value="weekly">Weekly</option>
+        <option value="monthly">Monthly</option>
+        <option value="yearly">Yearly</option>
+        <option value="custom">Custom</option>
+    </select>
+</div>
+<div id="daily-options" class="form-group col dynamic-option" style="display: block;">
+    <label for="daily-count">How many times a day?</label>
+    <select id="daily-count">
+        <option value="1">1 time</option>
+        <option value="2">2 times</option>
+        <option value="3">3 times</option>
+        <option value="custom-times">More...</option>
+    </select>
+</div>
+
+<div id="weekly-options" class="form-group col dynamic-option" style="display: none;">
+    <label>Select Days:</label><br>
+    <label><input type="checkbox" value="Mon"> Mon</label>
+    <label><input type="checkbox" value="Tue"> Tue</label>
+    <label><input type="checkbox" value="Wed"> Wed</label>
+    <label><input type="checkbox" value="Thu"> Thu</label>
+    <label><input type="checkbox" value="Fri"> Fri</label>
+    <label><input type="checkbox" value="Sat"> Sat</label>
+    <label><input type="checkbox" value="Sun"> Sun</label>
+</div>
+
+<div id="monthly-options" class="form-group col dynamic-option" style="display: none;">
+    <label for="monthly-date">Select Date of the Month:</label>
+    <input type="number" id="monthly-date" min="1" max="31" placeholder="e.g. 15">
+</div>
+
+<div id="yearly-options" class="form-group col dynamic-option" style="display: none;">
+    <label for="yearly-month">Select Month:</label>
+    <select id="yearly-month">
+        <option value="jan">January</option>
+        <option value="feb">February</option>
+        <option value="dec">December</option>
+    </select>
+</div>
+
+<div id="custom-options" class="form-group col dynamic-option" style="display: none;">
+    <label for="custom-text">Describe your schedule:</label>
+    <input type="text" id="custom-text" placeholder="e.g., Every 45 days / Alternative Tuesdays">
+</div>
+                    <div class="form-group col">
+                        <label for="reviewCycle">Review Cycle of Task</label>
+                        <select id="reviewCycle">
+                            <option value="weekly" selected>Weekly</option>
+                            <option value="monthly">Monthly</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group col">
+                        <label for="businessUse">Task Useful for Other Business?</label>
+                        <select id="businessUse">
+                            <option value="yes">Yes</option>
+                            <option value="no" selected>No</option>
+                        </select>
+                    </div>
+                    <div class="form-group col budget-spacer"></div>
+                </div>
+            </div>
+
+
+            <div id="formStep2" class="form-step" style="display: none;">
+                <div class="form-row">
+                    <div class="form-group col">
+                        <label for="verification">Verification Required</label>
+                        <select id="verification">
+                            <option value="yes">Yes</option>
+                            <option value="no" selected>No</option>
+                        </select>
+                    </div>
+                    <div class="form-group col">
+                        <label for="verifyDepartment">Department (Verification)</label>
+                        <select id="verifyDepartment">
+                            <option value="" selected disabled>Select Department</option>
+                            <option value="hr">Human Resources (HR)</option>
+                            <option value="it">IT Department</option>
+                            <option value="sales">Sales</option>
+                            <option value="marketing">Marketing</option>
+                            <option value="finance">Finance</option>
+                            <option value="operations">Operations</option>
+                            <option value="support">Customer Support</option>
+                            <option value="admin">Administration</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group col">
+                        <label for="verifyDetail">Detail (Verification)</label>
+                        <input type="text" id="verifyDetail" placeholder="Verification details...">
+                    </div>
+                    <div class="form-group col">
+                        <label for="verifyDueTime">Due Time (Verification)</label>
+                        <input type="time" id="verifyDueTime">
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group col">
+                        <label for="verifyFrequency">Frequency (Verification)</label>
+                        <select id="verifyFrequency">
+                            <option value="daily" selected>Daily</option>
+                            <option value="weekly">Weekly</option>
+                            <option value="monthly">Monthly</option>
+                            <option value="yearly">Yearly</option>
+                        </select>
+                    </div>
+                    <div class="form-group col">
+                        <label for="fdRequired">FD Required?</label>
+                        <select id="fdRequired">
+                            <option value="yes">Yes</option>
+                            <option value="no" selected>No</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group col">
+                        <label for="fdDepartment">FD Department</label>
+                        <select id="fdDepartment">
+                            <option value="" selected disabled>Select FD Department</option>
+                            <option value="hr">HR</option>
+                            <option value="it">IT</option>
+                            <option value="sales">Sales</option>
+                        </select>
+                    </div>
+                    <div class="form-group col budget-spacer"></div>
+                </div>
+
+                <div class="form-group" style="margin-top: 15px;">
+                    <label for="attachments">Attachments (Optional)</label>
+                    <div class="file-input-wrapper">
+                        <input type="file" id="attachments" multiple>
+                    </div>
+                    <small class="help-text">Aap multiple files select kar sakte hain.</small>
+                </div>
+
+                <div class="form-group">
+                    <label for="description">Description / Notes</label>
+                    <textarea id="description" rows="4" placeholder="Provide extra details about the task requirements..."></textarea>
+                </div>
+            </div>
+
+
+            <div class="modal-footer" style="position: sticky; bottom: 0; background: #fff; z-index: 10; padding-top: 15px; margin-bottom: -5px; border-top: 1px solid #eee; display: flex; justify-content: flex-end; gap: 10px;">
+                <button type="button" class="btn-cancel" id="closeModalCancel">Cancel</button>
+                <button type="button" class="btn-save" id="nextStepBtn" style="background-color: #007bff; color: white; border: none; padding: 8px 16px; border-radius: 4px; cursor: pointer;">Next</button>
+                
+                <button type="button" class="btn-cancel" id="backStepBtn" style="display: none;">Back</button>
+                <button type="submit" class="btn-save" id="saveTaskBtn" style="display: none;">Save Task</button>
+            </div>
+
+        </form>
+    </div>
+</div>
+
+<script>
+    const step1 = document.getElementById('formStep1');
+    const step2 = document.getElementById('formStep2');
+    const nextBtn = document.getElementById('nextStepBtn');
+    const backBtn = document.getElementById('backStepBtn');
+    const saveBtn = document.getElementById('saveTaskBtn');
+    const cancelBtn = document.getElementById('closeModalCancel');
+    const indicator = document.getElementById('stepIndicator');
+    const modalBox = document.querySelector('.modal-box');
+
+    // Next Button Click Event
+    nextBtn.addEventListener('click', () => {
+        // Step 1 ke required fields check karne ke liye validation trigger
+        const inputs = step1.querySelectorAll('input[required], select[required]');
+        let allValid = true;
+
+        inputs.forEach(input => {
+            if (!input.checkValidity()) {
+                input.reportValidity();
+                allValid = false;
+            }
+        });
+
+        if (allValid) {
+            // Step 1 hide karo, Step 2 show karo
+            step1.style.display = 'none';
+            step2.style.display = 'block';
+            
+            // Footer Buttons transform karo
+            cancelBtn.style.display = 'none';
+            nextBtn.style.display = 'none';
+            backBtn.style.display = 'inline-block';
+            saveBtn.style.display = 'inline-block';
+            
+            // Header text badlo aur scroll ko upar top par scroll karo
+            indicator.textContent = "(Step 2 of 2)";
+            modalBox.scrollTop = 0;
+        }
+    });
+
+    // Back Button Click Event
+    backBtn.addEventListener('click', () => {
+        // Step 2 hide karo, Step 1 show karo
+        step1.style.display = 'block';
+        step2.style.display = 'none';
+        
+        // Footer Buttons purane roop me lao
+        cancelBtn.style.display = 'inline-block';
+        nextBtn.style.display = 'inline-block';
+        backBtn.style.display = 'none';
+        saveBtn.style.display = 'none';
+        
+        // Header text aur scroll position reset karo
+        indicator.textContent = "(Step 1 of 2)";
+        modalBox.scrollTop = 0;
+    });
+</script>
+
+
+
+
+
+
+
+
+
+
+    </body>
+    <script src="script.js"></script>
+    <script>
+        // DOM Elements Setup
+const modal = document.getElementById('taskModal');
+const openModalButtons = document.querySelectorAll('.btn-blue, .open-task-modal-btn');
+const closeModalX = document.getElementById('closeModalX');
+const closeModalCancel = document.getElementById('closeModalCancel');
+const taskForm = document.getElementById('taskForm');
+
+// Sabhi target buttons par click event loop attach kiya taaki kahin se bhi click ho modal trigger ho jaye
+openModalButtons.forEach(button => {
+    button.addEventListener('click', (e) => {
+        e.preventDefault(); 
+        modal.classList.add('active');
+    });
+});
+
+// Modal close tracking logic
+const closeModal = () => {
+    modal.classList.remove('active');
+    taskForm.reset(); 
+};
+
+// Event Triggers for Close Icons
+if (closeModalX) closeModalX.addEventListener('click', closeModal);
+if (closeModalCancel) closeModalCancel.addEventListener('click', closeModal);
+
+// Backdrop Black Area Click close handle
+if (modal) {
+    modal.addEventListener('click', (e) => {
+        if (e.target === modal) {
+            closeModal();
+        }
+    });
+}
+
+// Form Submission Actions
+if (taskForm) {
+    taskForm.addEventListener('submit', (e) => {
+        e.preventDefault();
+        
+        // Aap yahan data backend pipeline me integrate kar sakte hain
+        alert('Task Saved Successfully!');
+        closeModal();
+    });
+}
+    </script>
+    <script>
+window.onload = function(){
+
+    const params = new URLSearchParams(window.location.search);
+
+    if(params.get("open") === "task"){
+
+        document.querySelector("[open-task-modal-btn]").click();
+
+    }
+
+}
+</script>
+<script>
+    function toggleFrequencyOptions() {
+    // 1. Sabhi dynamic options ko select karein
+    const options = document.querySelectorAll('.dynamic-option');
+    
+    // 2. Pehle sabhi options ko hide kar dein
+    options.forEach(option => {
+        option.style.display = 'none';
+    });
+
+    // 3. Jo option select hua hai uski id nikalyein
+    const selectedValue = document.getElementById('frequency').value;
+    const targetId = selectedValue + '-options';
+
+    // 4. Target element ko show karein
+    const targetElement = document.getElementById(targetId);
+    if (targetElement) {
+        targetElement.style.display = 'block';
+    }
+}
+
+// Page load hote hi run karne ke liye takye 'Daily' by default selected dikhe
+document.addEventListener("DOMContentLoaded", function() {
+    toggleFrequencyOptions();
+});
+</script>
+</html>

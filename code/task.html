@@ -209,6 +209,237 @@
             .btn-mobile-full { width: 100%; margin-bottom: 10px; }
         }
     </style>
+    <style>
+        :root {
+            /* Premium Corporate Color Palette */
+            --primary-dark: #1A365D;    /* Deep Royal Blue */
+            --primary-accent: #2B6CB0;  /* Vibrant Blue */
+            --teal-accent: #319795;     /* Emerald Teal */
+            --bg-workspace: #F7FAFC;    /* Ultra Clean Light Gray */
+            --text-dark: #2D3748;       /* Charcoal Text */
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--bg-workspace);
+            color: var(--text-dark);
+            font-weight: 500; /* Mota font configuration */
+            -webkit-font-smoothing: antialiased;
+        }
+
+        /* Bold Text Enhancements */
+        h1, h2, h3, h4, h5, h6, .fw-bold {
+            font-weight: 800 !important;
+            color: var(--primary-dark);
+        }
+
+        /* Horizontal Navbar Styling */
+        .tms-navbar {
+            background: #ffffff !important;
+            border-bottom: 2px solid #E2E8F0;
+            padding: 15px 25px;
+        }
+
+        .navbar-brand {
+            font-size: 1.4rem;
+            letter-spacing: -0.5px;
+        }
+
+        /* Hamburger Navigation Dropdown Adjustments */
+        .nav-menu-dropdown .dropdown-menu {
+            border: none;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+            border-radius: 12px;
+            padding: 10px;
+            min-width: 280px;
+        }
+
+        .menu-detail-item {
+            padding: 10px 15px;
+            border-radius: 8px;
+            transition: all 0.2s ease;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            color: var(--text-dark);
+            text-decoration: none;
+            font-weight: 700;
+        }
+
+        .menu-detail-item:hover {
+            background: rgba(43, 108, 176, 0.08);
+            color: var(--primary-accent);
+        }
+
+        /* Modern Workspace Stat Cards */
+        .stat-card {
+            border: none;
+            border-radius: 16px;
+            background: #ffffff;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.03);
+            transition: transform 0.25s ease, box-shadow 0.25s ease;
+        }
+
+        .stat-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 12px 20px rgba(0, 0, 0, 0.06);
+        }
+
+        /* Floating Actions Plus Menu Button */
+        .floating-action-container {
+            position: fixed;
+            bottom: 35px;
+            right: 35px;
+            z-index: 2000;
+        }
+
+        .btn-floating-plus {
+            width: 65px;
+            height: 65px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, var(--primary-accent), var(--primary-dark));
+            color: #ffffff;
+            font-size: 1.8rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 6px 20px rgba(43, 108, 176, 0.4);
+            border: none;
+            transition: all 0.3s ease;
+        }
+
+        .btn-floating-plus:hover {
+            transform: rotate(90deg);
+            color: #ffffff;
+            box-shadow: 0 8px 25px rgba(43, 108, 176, 0.6);
+        }
+
+        .floating-action-container .dropdown-menu {
+            border: none;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.15);
+            border-radius: 14px;
+            padding: 8px;
+            margin-bottom: 15px !important;
+        }
+
+        .floating-action-container .dropdown-item {
+            font-weight: 700;
+            padding: 10px 18px;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .floating-action-container .dropdown-item:hover {
+            background-color: rgba(49, 151, 149, 0.1);
+            color: var(--teal-accent);
+        }
+
+        /* Form Filter Controls */
+        .filter-card {
+            background: #ffffff;
+            border-radius: 14px;
+            border: 1px solid #E2E8F0;
+        }
+
+        .form-control, .form-select {
+            font-weight: 600;
+            border: 1px solid #CBD5E0;
+            border-radius: 8px;
+            padding: 10px 14px;
+        }
+
+        .form-control:focus, .form-select:focus {
+            border-color: var(--primary-accent);
+            box-shadow: 0 0 0 3px rgba(43, 108, 176, 0.15);
+        }
+
+
+        /* ==========================================================================
+           COMPREHENSIVE MEDIA QUERIES (FOR RESPONSIVE DESIGN)
+           ========================================================================== */
+
+        /* 1. Large Screens / Desktops (Up to 1200px) */
+        @media (max-width: 1200px) {
+            .navbar-brand {
+                font-size: 1.3rem;
+            }
+        }
+
+        /* 2. Tablets and Medium Screens (Up to 992px) */
+        @media (max-width: 992px) {
+            .tms-navbar {
+                padding: 12px 20px; /* Navbar padding thodi kam ki */
+            }
+            .floating-action-container {
+                bottom: 25px;
+                right: 25px; /* Floating container position adjust ki */
+            }
+            .btn-floating-plus {
+                width: 58px;
+                height: 58px;
+                font-size: 1.6rem; /* Button size thoda responsive kiya */
+            }
+        }
+
+        /* 3. Small Screens / Mobile Landscapes (Up to 768px) */
+        @media (max-width: 768px) {
+            h1 { font-size: 2rem !important; }
+            h2 { font-size: 1.6rem !important; }
+            h3 { font-size: 1.4rem !important; }
+            
+            .tms-navbar {
+                padding: 10px 15px;
+            }
+            .navbar-brand {
+                font-size: 18px;
+            }
+        
+            .nav-menu-dropdown .dropdown-menu {
+                min-width: 100%; /* Mobile par menu full width show hoga */
+                position: absolute;
+            }
+            .stat-card {
+                border-radius: 12px; /* Smooth corners for small cards */
+            }
+            .form-control, .form-select {
+                padding: 8px 12px; /* Input controls size optimized for touch */
+                font-size: 0.95rem;
+            }
+        }
+
+        /* 4. Extra Small Screens / Smart Phones (Up to 576px) */
+        @media (max-width: 576px) {
+            body {
+                font-size: 14px; /* Mobile readability update */
+            }
+            h1 { font-size: 1.6rem !important; }
+            h2 { font-size: 1.4rem !important; }
+            h3 { font-size: 1.2rem !important; }
+            
+            /* Floating action code optimization for small screens */
+            .floating-action-container {
+                bottom: 20px;
+                right: 20px;
+            }
+            .btn-floating-plus {
+                width: 52px;
+                height: 52px;
+                font-size: 1.4rem;
+            }
+            .floating-action-container .dropdown-menu {
+                right: 0 !important;
+                left: auto !important;
+                width: 240px;
+            }
+            /* Form Grid padding adjustments */
+            .filter-card {
+                padding: 15px !important;
+                border-radius: 10px;
+            }
+        }
+    </style>
 </head>
 <body>
 
@@ -221,7 +452,7 @@
             <a href="index.html" class="text-decoration-none">
                 <h4 class="text-primary fw-bold mb-0"><i class="bi bi-rocket-takeoff-fill me-2"></i>TMS Pro</h4>
             </a>
-            <button class="btn d-lg-none p-0 border-0" id="closeSidebar"><i class="bi bi-x-lg fs-5"></i></button>
+            <!-- <button class="btn d-lg-none p-0 border-0" id="closeSidebar"><i class="bi bi-x-lg fs-5"></i></button> -->
         </div>
         <nav class="nav flex-column h-100">
             <a href="index.html" class="nav-link active"><i class="bi bi-grid-1x2 me-3"></i>Dashboard</a>
@@ -406,24 +637,44 @@
                     <div class="col-12 col-sm-6 col-md-3">
                         <label class="form-label small fw-semibold text-muted mb-1"><i class="bi bi-funnel me-1 text-primary"></i> Select Status</label>
                         <select class="form-select form-select-sm" id="filterStatus">
-                            <option value="" selected>All Statuses</option>
-                            <option value="todo">To Do</option>
-                            <option value="progress">In Progress</option>
-                            <option value="review">Review Only</option>
-                            <option value="completed">Completed</option>
+                            <option value="" selected>Pending task</option>
+                            <option value="todo">completed task</option>
+                            <option value="progress">In Progress task</option>
+                            <!-- <option value="review">Review Only</option> -->
+                            <!-- <option value="completed">Completed</option> -->
+                        </select>
+                    </div>
+                     <div class="col-12 col-sm-6 col-md-3">
+                        <label class="form-label small fw-semibold text-muted mb-1"><i class="bi bi-funnel me-1 text-primary"></i> Review Cycle</label>
+                        <select class="form-select form-select-sm" id="filterStatus">
+                            <option value="" selected>Pending task</option>
+                            <option value="todo">completed task</option>
+                            <option value="progress">In Progress task</option>
+                            <!-- <option value="review">Review Only</option> -->
+                            <!-- <option value="completed">Completed</option> -->
+                        </select>
+                    </div>
+                     <div class="col-12 col-sm-6 col-md-3">
+                        <label class="form-label small fw-semibold text-muted mb-1"><i class="bi bi-funnel me-1 text-primary"></i>usefull task fee other business</label>
+                        <select class="form-select form-select-sm" id="filterStatus">
+                            <option value="" selected>Pending task</option>
+                            <option value="todo">completed task</option>
+                            <option value="progress">In Progress task</option>
+                            <!-- <option value="review">Review Only</option> -->
+                            <!-- <option value="completed">Completed</option> -->
                         </select>
                     </div>
                     <div class="col-12 col-sm-6 col-md-3">
-    <label class="form-label small fw-semibold text-muted mb-1" for="filterUrgency">
-        <i class="bi bi-bell-fill me-1 text-warning"></i> Urgent Tasks
-    </label>
-    <select class="form-select form-select-sm" id="filterUrgency">
-        <option value="" selected>All Priority Status</option>
-        <option value="urgent">⚠️ Urgent (High Priority)</option>
-        <option value="normal">Normal Priority</option>
-        <option value="low">Low Priority</option>
-    </select>
-</div>
+                       <label class="form-label small fw-semibold text-muted mb-1" for="filterUrgency">
+                             <i class="bi bi-bell-fill me-1 text-warning"></i> Urgent Tasks
+                                       </label>
+                                            <select class="form-select form-select-sm" id="filterUrgency">
+                                           <option value="" selected>All Priority Status</option>
+                                              <option value="urgent">⚠️ Urgent (High Priority)</option>
+                                                    <option value="normal">Normal Priority</option>
+                                                              <option value="low">Low Priority</option>
+                                               </select>
+                                 </div>
                 </div>
             </div>
 
@@ -445,29 +696,41 @@
                                         <th>Priority</th>
                                         <th>Deadline</th>
                                         <th>Status</th>
+                                        <th>Business Name</th>
+                                        <th>Branch</th>
+                                        <th>department</th>
                                     </tr>
                                 </thead>
                                 <tbody class="small">
                                     <tr>
-                                        <td><strong>Website UI Redesign</strong></td>
+                                        <td><strong>UI</strong></td>
                                         <td><img src="https://i.pravatar.cc/30?u=1" class="rounded-circle me-2" alt="Avatar"> Rahul K.</td>
                                         <td><span class="badge bg-danger">Urgent</span></td>
                                         <td>20 May</td>
                                         <td><span class="badge badge-progress px-3 py-2">In Progress</span></td>
+                                         <td>Enquerygate</td>
+                                          <td>developer</td>
+                                           <td>IT</td>
                                     </tr>
-                                    <tr>
-                                        <td><strong>API Documentation</strong></td>
-                                        <td><img src="https://i.pravatar.cc/30?u=2" class="rounded-circle me-2" alt="Avatar"> Priya S.</td>
-                                        <td><span class="badge bg-warning text-dark">Medium</span></td>
-                                        <td>22 May</td>
-                                        <td><span class="badge badge-todo px-3 py-2">To Do</span></td>
+                                     <tr>
+                                        <td><strong>UI</strong></td>
+                                        <td><img src="https://i.pravatar.cc/30?u=1" class="rounded-circle me-2" alt="Avatar"> Rahul K.</td>
+                                        <td><span class="badge bg-danger">Urgent</span></td>
+                                        <td>20 May</td>
+                                        <td><span class="badge badge-progress px-3 py-2">In Progress</span></td>
+                                         <td>Enquerygate</td>
+                                          <td>developer</td>
+                                           <td>IT</td>
                                     </tr>
-                                    <tr>
-                                        <td><strong>Client Feedback Fixes</strong></td>
-                                        <td><img src="https://i.pravatar.cc/30?u=3" class="rounded-circle me-2" alt="Avatar"> Team Dev</td>
-                                        <td><span class="badge bg-info text-dark">High</span></td>
-                                        <td>18 May</td>
-                                        <td><span class="badge badge-review px-3 py-2">Review</span></td>
+                                     <tr>
+                                        <td><strong>UI</strong></td>
+                                        <td><img src="https://i.pravatar.cc/30?u=1" class="rounded-circle me-2" alt="Avatar"> Rahul K.</td>
+                                        <td><span class="badge bg-danger">Urgent</span></td>
+                                        <td>20 May</td>
+                                        <td><span class="badge badge-progress px-3 py-2">In Progress</span></td>
+                                         <td>Enquerygate</td>
+                                          <td>developer</td>
+                                           <td>IT</td>
                                     </tr>
                                 </tbody>
                             </table>
@@ -704,5 +967,11 @@ document.addEventListener("DOMContentLoaded", function () {
     }
 </script>
     
+
+
+
+  
+
+
 </body>
 </html>

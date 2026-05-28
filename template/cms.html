@@ -1,0 +1,951 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Responsive Professional Header with Dropdowns</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+ 
+   <link rel="stylesheet" href="style.css">
+
+  <style>
+        /* --- Global Reset & Variables --- */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Inter', sans-serif;
+}
+
+:root {
+    --bg-primary: #f8f9fa;
+    --bg-white: #ffffff;
+    --text-dark: #1e293b;
+    --text-muted: #64748b;
+    --primary-blue: #0066ff;
+    --primary-hover: #0052cc;
+    --border-color: #e2e8f0;
+    --gray-btn: #64748b;
+    --star-color: #ffb800;
+}
+
+body {
+    background-color: var(--bg-primary);
+    /* color: var(--text-dark); */
+    /* padding: 20px; */
+}
+
+.cms-container {
+    max-width:100%;
+    margin: 0 auto;
+    background: var(--bg-white);
+    padding: 24px;
+    border-radius: 12px;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+}
+
+/* --- Hero Header Section --- */
+.cms-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 1px solid var(--border-color);
+    padding-bottom: 20px;
+    margin-bottom: 20px;
+    gap: 15px;
+}
+
+.header-title h1 {
+    font-size: 24px;
+    font-weight: 700;
+    color: #0f172a;
+}
+
+.header-title p {
+    font-size: 14px;
+    color: var(--text-muted);
+    margin-top: 4px;
+}
+
+/* --- Buttons --- */
+.btn {
+    padding: 10px 18px;
+    border-radius: 8px;
+    font-size: 14px;
+    font-weight: 500;
+    cursor: pointer;
+    border: none;
+    transition: all 0.2s ease;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.btn-primary {
+    background-color: var(--primary-blue);
+    color: white;
+}
+
+.btn-primary:hover {
+    background-color: var(--primary-hover);
+}
+
+.btn-reset {
+    background-color: #64748b;
+    color: white;
+    width: 100%;
+    justify-content: center;
+}
+
+.btn-reset:hover {
+    background-color: #475569;
+}
+
+/* --- Filter Section --- */
+.filter-section {
+    background: var(--bg-primary);
+    padding: 16px;
+    border-radius: 8px;
+    margin-bottom: 24px;
+}
+
+.filter-grid {
+    display: grid;
+    grid-template-columns: 2fr 1fr 1fr auto;
+    gap: 16px;
+    align-items: flex-end;
+}
+
+.filter-group {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+}
+
+.filter-group label {
+    font-size: 13px;
+    font-weight: 600;
+    color: #475569;
+}
+
+.search-input-wrapper {
+    position: relative;
+}
+
+.search-icon {
+    position: absolute;
+    left: 12px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: var(--text-muted);
+    font-size: 14px;
+}
+
+.filter-group input, .filter-group select {
+    width: 100%;
+    padding: 10px 12px;
+    padding-left: 36px;
+    border: 1px solid var(--border-color);
+    border-radius: 6px;
+    background: var(--bg-white);
+    font-size: 14px;
+    color: var(--text-dark);
+    outline: none;
+}
+
+.filter-group select {
+    padding-left: 12px;
+    cursor: pointer;
+}
+
+/* --- Table Styles --- */
+.table-responsive {
+    overflow-x: auto;
+}
+
+.contact-table {
+    width: 100%;
+    border-collapse: collapse;
+    text-align: left;
+}
+
+.contact-table th {
+    background: var(--bg-white);
+    padding: 14px 16px;
+    font-size: 13px;
+    font-weight: 700;
+    color: #334155;
+    border-bottom: 2px solid var(--border-color);
+    text-transform: uppercase;
+}
+
+.contact-table td {
+    padding: 16px;
+    border-bottom: 1px solid var(--border-color);
+    vertical-align: middle;
+    font-size: 14px;
+}
+
+/* Table content details */
+.td-title { font-weight: 600; color: #0f172a; }
+.td-subtitle, .td-subtext { font-size: 12px; color: var(--text-muted); margin-top: 2px; }
+.contact-phone { font-weight: 500; font-size: 13px; margin-bottom: 5px; }
+
+/* --- Badges & Elements --- */
+.badge-container {
+    display: flex;
+    gap: 6px;
+    flex-wrap: wrap;
+}
+
+.badge {
+    padding: 4px 8px;
+    border-radius: 6px;
+    font-size: 11px;
+    font-weight: 600;
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+}
+
+.badge-party { background: #e0ebff; color: #0052cc; border-radius: 4px; padding: 4px 12px; }
+.badge-whatsapp { background: #e6f7ed; color: #1f8b4c; }
+.badge-calling { background: #e0f2fe; color: #0369a1; }
+.badge-approved { background: #dcfce7; color: #15803d; border-radius: 20px; padding: 4px 12px; }
+
+/* Stars & Route */
+.stars { color: #cbd5e1; font-size: 12px; margin-bottom: 4px; }
+.stars .active { color: var(--star-color); }
+.route-info { font-size: 12px; color: #0284c7; font-weight: 500; }
+
+/* Status Flow Steps */
+.status-flow {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    margin-bottom: 6px;
+}
+
+.status-flow .step {
+    width: 24px;
+    height: 24px;
+    border-radius: 50%;
+    background: #e2e8f0;
+    color: #64748b;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 12px;
+    font-weight: 600;
+}
+
+.status-flow .step.active {
+    background: #2563eb;
+    color: white;
+}
+
+.status-flow .arrow { color: #94a3b8; font-size: 12px; }
+
+.btn-approval-action {
+    background: transparent;
+    border: 1px solid #2563eb;
+    color: #2563eb;
+    padding: 4px 10px;
+    border-radius: 20px;
+    font-size: 11px;
+    font-weight: 600;
+    cursor: pointer;
+}
+
+/* Action Utility Buttons */
+.action-buttons { display: flex; gap: 8px; }
+.btn-icon {
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    font-size: 16px;
+    padding: 4px;
+    transition: transform 0.1s;
+}
+.btn-icon:hover { transform: scale(1.15); }
+.btn-view { color: #3b82f6; }
+.btn-edit { color: #f59e0b; }
+.btn-delete { color: #ef4444; }
+
+/* --- POP-UP MODAL STYLES --- */
+.modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.3s ease;
+    z-index: 1000;
+    padding: 15px;
+}
+
+.modal-overlay.show {
+    opacity: 1;
+    pointer-events: auto;
+}
+
+.modal-box {
+    background: var(--bg-white);
+    width: 100%;
+    max-width: 680px;
+    max-height: 90vh;
+    border-radius: 12px;
+    box-shadow: 0 10px 25px rgba(0,0,0,0.15);
+    display: flex;
+    flex-direction: column;
+    animation: slideDown 0.3s ease;
+    overflow: hidden;
+}
+
+@keyframes slideDown {
+    from { transform: translateY(-30px); opacity: 0; }
+    to { transform: translateY(0); opacity: 1; }
+}
+
+.modal-header {
+    padding: 16px 24px;
+    border-bottom: 1px solid var(--border-color);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.modal-header h2 {
+    font-size: 18px;
+    font-weight: 700;
+}
+
+.close-modal-btn {
+    background: none;
+    border: none;
+    font-size: 26px;
+    cursor: pointer;
+    color: var(--text-muted);
+}
+
+.modal-form {
+    padding: 20px 24px;
+    overflow-y: auto;
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+}
+
+.form-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+}
+
+.form-group {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+}
+
+.form-group label {
+    font-size: 13px;
+    font-weight: 600;
+    color: #475569;
+}
+
+.form-group input, .form-group select, .form-group textarea {
+    width: 100%;
+    padding: 10px 12px;
+    border: 1px solid var(--border-color);
+    border-radius: 6px;
+    font-size: 14px;
+    outline: none;
+}
+
+.form-group textarea {
+    resize: vertical;
+}
+
+/* Checkbox Row Styling */
+.checkbox-group {
+    display: flex;
+    gap: 16px;
+    height: 100%;
+    align-items: center;
+}
+
+.custom-checkbox {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 14px;
+    cursor: pointer;
+}
+
+.custom-checkbox input {
+    width: 16px;
+    height: 16px;
+    cursor: pointer;
+}
+
+/* File Upload Mock styling */
+.file-upload-wrapper {
+    position: relative;
+    border: 1px solid var(--border-color);
+    border-radius: 6px;
+    background: #f8f9fa;
+    overflow: hidden;
+}
+
+.file-upload-wrapper input[type="file"] {
+    position: absolute;
+    left: 0; top: 0; opacity: 0;
+    width: 100%; height: 100%;
+    cursor: pointer;
+}
+
+.file-upload-label {
+    display: flex;
+    align-items: center;
+}
+
+.file-btn {
+    background: #e2e8f0;
+    padding: 10px 16px;
+    font-size: 13px;
+    font-weight: 500;
+    border-right: 1px solid var(--border-color);
+}
+
+.file-text {
+    padding-left: 12px;
+    font-size: 13px;
+    color: var(--text-muted);
+}
+
+.help-text {
+    font-size: 11px;
+    color: var(--text-muted);
+    margin-top: 2px;
+}
+
+/* Modal Footer */
+.modal-footer {
+    border-top: 1px solid var(--border-color);
+    padding: 16px 24px;
+    display: flex;
+    justify-content: flex-end;
+    gap: 12px;
+    background: #f8f9fa;
+}
+
+.btn-secondary { background: #64748b; color: white; }
+.btn-secondary:hover { background: #475569; }
+.btn-submit { background: var(--primary-blue); color: white; padding: 10px 24px; }
+.btn-submit:hover { background: var(--primary-hover); }
+
+/* --- RESPONSIVE MEDIA QUERIES (MOBILE FRIENDLY) --- */
+@media (max-width: 992px) {
+    .filter-grid {
+        grid-template-columns: 1fr 1fr;
+    }
+    .filter-actions {
+        grid-column: span 2;
+    }
+}
+
+@media (max-width: 768px) {
+    .cms-header {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+    .btn-primary { width: 100%; justify-content: center; }
+    
+    .filter-grid {
+        grid-template-columns: 1fr;
+    }
+    .filter-actions { grid-column: span 1; }
+
+    .form-row {
+        grid-template-columns: 1fr;
+    }
+
+    /* Stack Table Design for Micro screens */
+    .contact-table thead { display: none; }
+    .contact-table tr {
+        display: block;
+        background: #fff;
+        border: 1px solid var(--border-color);
+        border-radius: 8px;
+        margin-bottom: 12px;
+        padding: 10px;
+    }
+    .contact-table td {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        text-align: right;
+        padding: 8px 10px;
+        border-bottom: 1px dashed #f1f5f9;
+    }
+    .contact-table td:last-child { border-bottom: none; }
+    .contact-table td::before {
+        content: attr(data-label);
+        font-weight: 700;
+        font-size: 12px;
+        color: var(--text-muted);
+        text-transform: uppercase;
+        text-align: left;
+    }
+    .badge-container, .status-flow, .action-buttons {
+        justify-content: flex-end;
+    }
+}
+    </style>
+
+
+</head>
+<body>
+
+     <header class="main-header">
+        
+        <div class="header-left">
+            <div class="custom-menu-container">
+                <button class="custom-menu-btn" id="menuBtn">
+                    <span class="hamburger-icon">
+                        <span></span>
+                        <span></span>
+                        <span></span>
+                    </span>
+                    <span>Menu</span>
+                </button>
+                
+                <ul class="custom-dropdown" id="dropdownMenu">
+                     <li><a href="index.html"><i class="fa-solid fa-list-check"></i> Dashboard</a></li>
+                    <li><a href="tms.html"><i class="fa-solid fa-list-check"></i> TMS</a></li>
+                    <li><a href="hrms.html"><i class="fa-solid fa-users-gear"></i> HRMS</a></li>
+                    <li><a href="cms.html"><i class="fa-solid fa-folder-open"></i> CMS</a></li>
+                    <li><a href="portfolio-hero.html"><i class="fa-solid fa-chart-pie"></i> Business</a></li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="header-right">
+            
+            <div class="search-container">
+                <input type="text" placeholder="Search..." class="search-input">
+            </div>
+
+            <div class="notification-wrapper">
+                <div class="notification-container" id="notiToggle">
+                    <i class="fa-regular fa-bell bell-icon"></i>
+                    <span class="notification-badge">3</span>
+                </div>
+
+                <div class="notification-dropdown" id="notificationDropdown">
+                    <div class="noti-header">
+                        <h3>Notifications</h3>
+                        <a href="#mark-read" class="mark-all-btn">Mark all as read</a>
+                    </div>
+                    <ul class="noti-list">
+                        <li class="noti-item unread">
+                            <img src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&q=80&w=100" class="noti-avatar" alt="User">
+                            <div class="noti-content">
+                                <span class="noti-text"><strong>Riya Sen</strong> assigned you a task in <strong>HRMS</strong>.</span>
+                                <span class="noti-time">3 mins ago</span>
+                            </div>
+                        </li>
+                        <li class="noti-item unread">
+                            <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&q=80&w=100" class="noti-avatar" alt="User">
+                            <div class="noti-content">
+                                <span class="noti-text"><strong>Rahul Dev</strong> requested approval for <strong>Business</strong> budget.</span>
+                                <span class="noti-time">1 hour ago</span>
+                            </div>
+                        </li>
+                    </ul>
+                    <div class="noti-footer">
+                        <a href="#all-notifications">View all notifications</a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="vertical-divider"></div>
+
+            <div class="user-profile-wrapper">
+                <div class="user-profile" id="profileToggle">
+                    <img src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?auto=format&fit=crop&q=80&w=150" alt="Amit Sharma" class="profile-img">
+                    <div class="user-details">
+                        <span class="user-name">Amit Sharma</span>
+                        <span class="user-role">Workspace Master</span>
+                    </div>
+                    <i class="fa-solid fa-caret-down dropdown-arrow"></i>
+                </div>
+
+                <div class="profile-dropdown-menu" id="profileDropdown">
+                    <div class="dropdown-heading">Account Management</div>
+                    <ul>
+                        <li><a href="#profile"><i class="fa-regular fa-user"></i> My Profile</a></li>
+                        <li><a href="#settings"><i class="fa-solid fa-gear"></i> Account Settings</a></li>
+                        <li><a href="#security"><i class="fa-regular fa-shield-halved"></i> Security Status</a></li>
+                        <div class="dropdown-divider"></div>
+                        <li><a href="#logout" class="logout-link"><i class="fa-solid fa-right-from-bracket"></i> Logout Account</a></li>
+                    </ul>
+                </div>
+            </div>
+
+        </div>
+    </header>
+
+
+ <div class="cms-container">
+        <header class="cms-header">
+            <div class="header-title">
+                <h1>Contact Management System</h1>
+                <p>Manage your parties, contacts, and approval flows seamlessly.</p>
+            </div>
+            <button class="btn btn-primary" id="openModalBtn">
+                <i class="fa-solid fa-plus"></i> Add New Contact
+            </button>
+        </header>
+
+        <section class="filter-section">
+            <div class="filter-grid">
+                <div class="filter-group">
+                    <label>Search by Title / Party Name</label>
+                    <div class="search-input-wrapper">
+                        <i class="fa-solid fa-magnifying-glass search-icon"></i>
+                        <input type="text" placeholder="Type name or title...">
+                    </div>
+                </div>
+                <div class="filter-group">
+                    <label>Filter by Star Rating</label>
+                    <select>
+                        <option>All Ratings</option>
+                        <option>5 Star</option>
+                        <option>4 Star</option>
+                        <option>3 Star</option>
+                    </select>
+                </div>
+                <div class="filter-group">
+                    <label>Communication Mode</label>
+                    <select>
+                        <option>All Modes</option>
+                        <option>WhatsApp</option>
+                        <option>Calling</option>
+                    </select>
+                </div>
+                <div class="filter-actions">
+                    <button class="btn btn-reset"><i class="fa-solid fa-arrow-rotate-left"></i> Reset</button>
+                </div>
+            </div>
+        </section>
+
+        <section class="table-responsive">
+            <table class="contact-table">
+                <thead>
+                    <tr>
+                        <th>SL NO</th>
+                        <th>Title Name / Subtitle</th>
+                        <th>Party Name</th>
+                        <th>Contact Details</th>
+                        <th>Address / Description</th>
+                        <th>Rating & Route</th>
+                        <th>Status Flow</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td data-label="SL NO" class="fw-medium">01</td>
+                        <td data-label="Title Name / Subtitle">
+                            <div class="td-title">Prime Vendor Corp</div>
+                            <div class="td-subtitle">Main Raw Material Supplier</div>
+                        </td>
+                        <td data-label="Party Name">
+                            <span class="badge badge-party">Aashish Kumar</span>
+                        </td>
+                        <td data-label="Contact Details">
+                            <div class="contact-phone"><i class="fa-solid fa-phone"></i> +91 98765 43210</div>
+                            <div class="badge-container">
+                                <span class="badge badge-whatsapp"><i class="fa-brands fa-whatsapp"></i> WhatsApp</span>
+                                <span class="badge badge-calling"><i class="fa-solid fa-phone-flip"></i> Calling</span>
+                            </div>
+                        </td>
+                        <td data-label="Address / Description">
+                            <div class="td-text">Sector 62, Noida, UP</div>
+                            <div class="td-subtext">Deals in premium gr...</div>
+                        </td>
+                        <td data-label="Rating & Route">
+                            <div class="stars">
+                                <i class="fa-solid fa-star active"></i>
+                                <i class="fa-solid fa-star active"></i>
+                                <i class="fa-solid fa-star active"></i>
+                                <i class="fa-solid fa-star active"></i>
+                                <i class="fa-solid fa-star"></i>
+                            </div>
+                            <div class="route-info"><i class="fa-solid fa-road"></i> Marg: NH-24 Route</div>
+                        </td>
+                        <td data-label="Status Flow">
+                            <div class="status-flow">
+                                <span class="step active">1</span>
+                                <span class="arrow">→</span>
+                                <span class="step active">2</span>
+                                <span class="arrow">→</span>
+                                <span class="step">3</span>
+                            </div>
+                            <button class="btn-approval-action"><i class="fa-regular fa-paper-plane"></i> Send to Approvals</button>
+                        </td>
+                        <td data-label="Actions">
+                            <div class="action-buttons">
+                                <button class="btn-icon btn-view" title="View"><i class="fa-regular fa-eye"></i></button>
+                                <button class="btn-icon btn-edit" title="Edit"><i class="fa-regular fa-pen-to-square"></i></button>
+                                <button class="btn-icon btn-delete" title="Delete"><i class="fa-regular fa-trash-can"></i></button>
+                            </div>
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <td data-label="SL NO" class="fw-medium">02</td>
+                        <td data-label="Title Name / Subtitle">
+                            <div class="td-title">Apex Logistics</div>
+                            <div class="td-subtitle">North Region Transport</div>
+                        </td>
+                        <td data-label="Party Name">
+                            <span class="badge badge-party">Rajesh Sharma</span>
+                        </td>
+                        <td data-label="Contact Details">
+                            <div class="contact-phone"><i class="fa-solid fa-phone"></i> +91 91122 33445</div>
+                            <div class="badge-container">
+                                <span class="badge badge-calling"><i class="fa-solid fa-phone-flip"></i> Calling Only</span>
+                            </div>
+                        </td>
+                        <td data-label="Address / Description">
+                            <div class="td-text">Palam Road, New D...</div>
+                            <div class="td-subtext">Handles heavy mac...</div>
+                        </td>
+                        <td data-label="Rating & Route">
+                            <div class="stars">
+                                <i class="fa-solid fa-star active"></i>
+                                <i class="fa-solid fa-star active"></i>
+                                <i class="fa-solid fa-star active"></i>
+                                <i class="fa-solid fa-star active"></i>
+                                <i class="fa-solid fa-star active"></i>
+                            </div>
+                            <div class="route-info"><i class="fa-solid fa-road"></i> Marg: Ring Road Route</div>
+                        </td>
+                        <td data-label="Status Flow">
+                            <div class="status-flow">
+                                <span class="step active">1</span>
+                                <span class="arrow">→</span>
+                                <span class="step active">2</span>
+                                <span class="arrow">→</span>
+                                <span class="step active">3</span>
+                            </div>
+                            <span class="badge badge-approved"><i class="fa-solid fa-check"></i> Approved</span>
+                        </td>
+                        <td data-label="Actions">
+                            <div class="action-buttons">
+                                <button class="btn-icon btn-view" title="View"><i class="fa-regular fa-eye"></i></button>
+                                <button class="btn-icon btn-edit" title="Edit"><i class="fa-regular fa-pen-to-square"></i></button>
+                                <button class="btn-icon btn-delete" title="Delete"><i class="fa-regular fa-trash-can"></i></button>
+                            </div>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </section>
+    </div>
+
+    <div class="modal-overlay" id="contactModal">
+        <div class="modal-box">
+            <div class="modal-header">
+                <h2>Add Contact Details</h2>
+                <button class="close-modal-btn" id="closeModalBtn">&times;</button>
+            </div>
+            <form class="modal-form">
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>Title Name *</label>
+                        <input type="text" placeholder="e.g. Corporate Office / Firm Name" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Party Name *</label>
+                        <input type="text" placeholder="Contact Person Name" required>
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>Subtitle Name</label>
+                        <input type="text" placeholder="e.g. Wholesaler / Service Head">
+                    </div>
+                    <div class="form-group">
+                        <label>Mobile No *</label>
+                        <input type="tel" placeholder="Enter 10-digit number" required>
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>Preferred Mode</label>
+                        <div class="checkbox-group">
+                            <label class="custom-checkbox">
+                                <input type="checkbox" checked>
+                                <span>WhatsApp</span>
+                            </label>
+                            <label class="custom-checkbox">
+                                <input type="checkbox" checked>
+                                <span>Calling</span>
+                            </label>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label>Star Rating</label>
+                        <select>
+                            <option>1 Star</option>
+                            <option>2 Star</option>
+                            <option>3 Star</option>
+                            <option selected>4 Star</option>
+                            <option>5 Star</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>Marg / Route (मार्ग दिया)</label>
+                        <input type="text" placeholder="e.g. NH-24, Transit Route A">
+                    </div>
+                    <div class="form-group">
+                        <label>Address</label>
+                        <input type="text" placeholder="Complete address detail">
+                    </div>
+                </div>
+
+                <div class="form-group full-width">
+                    <label>Description (100-150 words)</label>
+                    <textarea rows="3" placeholder="Write crucial business notes here..."></textarea>
+                </div>
+
+                <div class="form-group full-width">
+                    <label><i class="fa-regular fa-comment-dots"></i> Add Internal Comment / Note</label>
+                    <textarea rows="2" placeholder="Type any follow-up remarks or special instructions for approval..."></textarea>
+                </div>
+
+                <div class="form-group full-width">
+                    <label><i class="fa-solid fa-paperclip"></i> Upload Media (Visiting Cards, Documents, Images)</label>
+                    <div class="file-upload-wrapper">
+                        <input type="file" id="fileInput">
+                        <label for="fileInput" class="file-upload-label">
+                            <span class="file-btn">Choose Files</span>
+                            <span class="file-text" id="fileText">No file chosen</span>
+                        </label>
+                    </div>
+                    <small class="help-text">Supported formats: JPG, PNG, PDF (Max size: 5MB per file)</small>
+                </div>
+
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" id="cancelModalBtn">Close</button>
+                    <button type="submit" class="btn btn-submit">Save Contact</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+
+
+      <div class="fab-wrapper">
+        <button class="fab-btn" id="dashboardFab" title="Action Menu">
+            <i class="fa-solid fa-plus"></i>
+        </button>
+        <ul class="fab-menu" id="fabMenu">
+            <!-- <li class="fab-item"><a href="#add-staff"><i class="fa-solid fa-user-plus"></i> Add Staff</a></li> -->
+            <li class="fab-item">
+    <a href="hrms.html?open=staff">
+        <i class="fa-solid fa-user-plus"></i> Add Staff
+    </a>
+</li>
+             <!-- <a href="hrms.html" onclick="localStorage.setItem('openModal','addStaffModal')"> <i class="fa-solid fa-user-plus"></i>  Add Staff </a> -->
+            <li class="fab-item"><a href="portfolio-hero.html"><i class="fa-solid fa-building-user"></i>Business</a></li>
+            <!-- <li class="fab-item"><a href="#add-contacts"><i class="fa-solid fa-address-book"></i> Add Contacts</a></li> -->
+             <li class="fab-item">
+    <a href="cms.html?open=contact">
+        <i class="fa-solid fa-address-book"></i> Add Contacts
+    </a>
+</li>
+                <!-- <li class="fab-item"><a href="#add-task"><i class="fa-solid fa-file-circle-plus"></i> Add New Task</a></li> -->
+                 <li class="fab-item">
+    <a href="tms.html?open=task">
+        <i class="fa-solid fa-file-circle-plus"></i> Add New Task
+    </a>
+</li>
+                
+        </ul>
+    </div>
+
+    
+
+<script src="script.js"></script>
+
+</body>
+<script>
+    // Modal Element Targets
+const modal = document.getElementById('contactModal');
+const openModalBtn = document.getElementById('openModalBtn');
+const closeModalBtn = document.getElementById('closeModalBtn');
+const cancelModalBtn = document.getElementById('cancelModalBtn');
+const fileInput = document.getElementById('fileInput');
+const fileText = document.getElementById('fileText');
+
+// Function to Open Modal
+openModalBtn.addEventListener('click', () => {
+    modal.classList.add('show');
+    document.body.style.overflow = 'hidden'; // Behind page scroll prevent karega
+});
+
+// Function to Close Modal
+const closeModal = () => {
+    modal.classList.remove('show');
+    document.body.style.overflow = 'auto'; // Page scroll wapas enable karega
+};
+
+closeModalBtn.addEventListener('click', closeModal);
+cancelModalBtn.addEventListener('click', closeModal);
+
+// Close Modal when clicking outside the main white box
+window.addEventListener('click', (e) => {
+    if (e.target === modal) {
+        closeModal();
+    }
+});
+
+// Update File Name Dynamic View on Selection
+fileInput.addEventListener('change', (e) => {
+    if (e.target.files.length > 0) {
+        fileText.textContent = e.target.files[0].name;
+    } else {
+        fileText.textContent = "No file chosen";
+    }
+});
+</script>
+<script>
+window.onload = function () {
+
+    const params = new URLSearchParams(window.location.search);
+
+    if(params.get("open") === "contact"){
+
+        document.getElementById("openModalBtn").click();
+
+    }
+
+}
+</script>
+</html>

@@ -1,1 +1,843 @@
- 
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Responsive Professional Header with Dropdowns</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="style.css">
+    <style>
+          :root {
+            --bg-body: #f4f6f9;
+            --bg-card: #ffffff;
+            --text-main: #1f2937;
+            --text-muted: #6b7280;
+            --border-color: #e5e7eb;
+            --primary-blue: #1d63ed;
+            
+            /* Statuses & Priorities */
+            --clr-urgent: #dc2626;
+            --clr-high: #06b6d4;
+            --clr-medium: #f59e0b;
+            --clr-inprogress: #3b82f6;
+            --clr-todo: #6b7280;
+            --clr-review: #f59e0b;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+       
+
+        .dashboard-container {
+            max-width: 100%;
+            margin: 0 auto;
+        }
+
+        /* 1. TOP HEADER TITLE SECTION */
+        .page-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 24px;
+            flex-wrap: wrap;
+            gap: 16px;
+        }
+
+        .page-title {
+            font-size: 26px;
+            font-weight: 700;
+        }
+
+        .action-buttons {
+            display: flex;
+            gap: 12px;
+        }
+
+        .btn {
+            padding: 10px 16px;
+            border-radius: 6px;
+            font-size: 14px;
+            font-weight: 600;
+            cursor: pointer;
+            border: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            transition: background-color 0.2s ease;
+        }
+
+        .btn-blue {
+            background-color: var(--primary-blue);
+            color: #ffffff;
+        }
+
+        .btn-blue:hover {
+            background-color: #154ec2;
+        }
+
+        .btn-white {
+            background-color: #ffffff;
+            color: #4b5563;
+            border: 1px solid var(--border-color);
+        }
+
+        .btn-white:hover {
+            background-color: #f9fafb;
+        }
+
+        /* 2. FILTERS PANEL SECTION */
+        .filters-card {
+            background-color: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            padding: 20px;
+            margin-bottom: 24px;
+        }
+
+        .filters-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 16px;
+        }
+
+        .filter-input-group {
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+        }
+
+        .filter-input-group label {
+            font-size: 12px;
+            font-weight: 600;
+            color: var(--text-muted);
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .filter-input-group label i {
+            font-size: 14px;
+        }
+
+        /* Icon Colors Matching Image */
+        .lbl-green { color: #10b981 !important; }
+        .lbl-red { color: #ef4444 !important; }
+        .lbl-blue { color: #3b82f6 !important; }
+        .lbl-orange { color: #f59e0b !important; }
+
+        .filter-input-group input,
+        .filter-input-group select {
+            width: 100%;
+            height: 38px;
+            padding: 8px 12px;
+            border: 1px solid var(--border-color);
+            border-radius: 6px;
+            background-color: #ffffff;
+            font-size: 14px;
+            color: var(--text-main);
+            outline: none;
+        }
+
+        /* 3. TWO COLUMN MAIN CONTENT LAYOUT */
+        .main-dashboard-grid {
+            display: grid;
+            grid-template-columns: 2.2fr 1fr;
+            gap: 24px;
+            align-items: start;
+        }
+
+        .panel-card {
+            background-color: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            padding: 20px;
+        }
+
+        .panel-card-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+
+        .panel-card-header h3 {
+            font-size: 18px;
+            font-weight: 700;
+        }
+
+        .btn-view-all {
+            color: var(--primary-blue);
+            text-decoration: none;
+            font-size: 13px;
+            font-weight: 600;
+            background-color: #eff6ff;
+            padding: 6px 12px;
+            border-radius: 4px;
+        }
+
+        /* TABLE STYLING */
+        .table-wrapper {
+            overflow-x: auto;
+        }
+
+        .data-table {
+            width: 100%;
+            border-collapse: collapse;
+            text-align: left;
+            font-size: 14px;
+        }
+
+        .data-table th {
+            background-color: #f9fafb;
+            color: var(--text-muted);
+            font-size: 11px;
+            font-weight: 700;
+            letter-spacing: 0.5px;
+            padding: 12px 10px;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .data-table td {
+            padding: 14px 10px;
+            border-bottom: 1px solid var(--border-color);
+            vertical-align: middle;
+        }
+
+        .font-semibold {
+            font-weight: 600;
+        }
+
+        .user-info {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .user-avatar {
+            width: 28px;
+            height: 28px;
+            border-radius: 50%;
+            object-fit: cover;
+        }
+
+        /* BADGES & STATUSES */
+        .priority-badge {
+            padding: 4px 8px;
+            border-radius: 4px;
+            font-size: 11px;
+            font-weight: 700;
+            color: #ffffff;
+            display: inline-block;
+        }
+        .p-urgent { background-color: var(--clr-urgent); }
+        .p-medium { background-color: var(--clr-medium); }
+        .p-high { background-color: var(--clr-high); }
+
+        .status-tag {
+            padding: 6px 12px;
+            border-radius: 6px;
+            font-size: 12px;
+            font-weight: 600;
+            color: #ffffff;
+            display: inline-block;
+            text-align: center;
+            min-width: 85px;
+        }
+        .s-inprogress { background-color: var(--clr-inprogress); }
+        .s-todo { background-color: var(--clr-todo); }
+        .s-review { background-color: var(--clr-review); }
+
+        /* RIGHT PANEL: BREAKDOWN & EFFICIENCY */
+        .right-column-stack {
+            display: flex;
+            flex-direction: column;
+            gap: 24px;
+        }
+
+        /* Donut Chart Visual Representation */
+        .chart-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px 0;
+            position: relative;
+        }
+
+        .donut-chart-mock {
+            width: 130px;
+            height: 130px;
+            border-radius: 50%;
+            background: conic-gradient(
+                var(--clr-inprogress) 0% 40%, 
+                var(--clr-medium) 40% 70%, 
+                #e5e7eb 70% 100%
+            );
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .donut-hole {
+            width: 90px;
+            height: 90px;
+            background-color: #ffffff;
+            border-radius: 50%;
+        }
+
+        /* Chart Legends */
+        .chart-legends {
+            display: flex;
+            justify-content: center;
+            gap: 12px;
+            margin-top: 15px;
+            font-size: 12px;
+            color: var(--text-muted);
+            font-weight: 600;
+        }
+
+        .legend-item {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        .dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            display: inline-block;
+        }
+
+        /* Efficiency Block */
+        .efficiency-section {
+            border-top: 1px solid var(--border-color);
+            padding-top: 20px;
+            margin-top: 10px;
+        }
+
+        .efficiency-meta {
+            display: flex;
+            justify-content: space-between;
+            font-weight: 700;
+            font-size: 14px;
+            margin-bottom: 10px;
+        }
+
+        .eff-score {
+            color: #10b981;
+        }
+
+        .bar-track {
+            width: 100%;
+            height: 12px;
+            background-color: #e5e7eb;
+            border-radius: 10px;
+            overflow: hidden;
+        }
+
+        .bar-fill {
+            height: 100%;
+            background: repeating-linear-gradient(
+                45deg,
+                #10b981,
+                #10b981 8px,
+                #059669 8px,
+                #059669 16px
+            );
+            border-radius: 10px;
+        }
+
+        /* 4. FLOATING ACTION ACTION MENU & FAB */
+        .fab-container {
+            position: fixed;
+            bottom: 25px;
+            right: 25px;
+            z-index: 999;
+            display: flex;
+            flex-direction: column;
+            align-items: flex-end;
+        }
+
+        .fab-trigger {
+            width: 50px;
+            height: 50px;
+            background-color: #0f46b3;
+            border-radius: 50%;
+            color: #ffffff;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 20px;
+            cursor: pointer;
+            box-shadow: 0 4px 12px rgba(15, 70, 179, 0.3);
+            transition: transform 0.2s ease;
+        }
+
+        .fab-trigger:hover {
+            transform: scale(1.05);
+        }
+
+        /* Action Menu Popup Box */
+        .action-popup-menu {
+            background-color: #ffffff;
+            border-radius: 12px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.15);
+            padding: 12px;
+            width: 220px;
+            margin-bottom: 10px;
+            border: 1px solid var(--border-color);
+        }
+
+        .menu-item {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 10px 8px;
+            color: #1f2937;
+            text-decoration: none;
+            font-size: 14px;
+            font-weight: 600;
+            border-radius: 6px;
+            transition: background-color 0.15s ease;
+        }
+
+        .menu-item:hover {
+            background-color: #f3f4f6;
+        }
+
+        .menu-left-content {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .menu-left-content i {
+            font-size: 16px;
+            width: 20px;
+        }
+
+        .badge-counter {
+            background-color: #374151;
+            color: #ffffff;
+            font-size: 11px;
+            padding: 2px 6px;
+            border-radius: 10px;
+            font-weight: 700;
+        }
+
+        /* Colors for popup menu items icons */
+        .icon-staff { color: #10b981; }
+        .icon-biz { color: #2563eb; }
+        .icon-contact { color: #06b6d4; }
+        .icon-task { color: #f59e0b; }
+
+        /* ===================================================
+           RESPONSIVE MEDIA QUERIES (MOBILE FRIENDLY RULES)
+           =================================================== */
+        
+        /* Tablets Screen Rules */
+        @media (max-width: 1024px) {
+            .filters-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            .main-dashboard-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        /* Mobile Screens Rules */
+        @media (max-width: 640px) {
+            
+            .page-header {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+            .action-buttons {
+                width: 100%;
+            }
+            .action-buttons .btn {
+                flex: 1;
+                justify-content: center;
+            }
+            .filters-grid {
+                grid-template-columns: 1fr;
+                gap: 12px;
+            }
+            .filters-card {
+                padding: 14px;
+            }
+            .panel-card {
+                padding: 14px;
+            }
+            .data-table th, .data-table td {
+                padding: 10px 6px;
+                font-size: 13px;
+            }
+        }
+      
+    </style>
+</head>
+<body>
+
+    <header class="main-header">
+        <div class="header-left">
+            <div class="custom-menu-container">
+                <button class="custom-menu-btn" id="menuBtn">
+                    <span class="hamburger-icon">
+                        <span></span>
+                        <span></span>
+                        <span></span>
+                    </span>
+                    <span>Menu</span>
+                </button>
+                
+                <ul class="custom-dropdown" id="dropdownMenu">
+                    <li><a href="index.html"><i class="fa-solid fa-list-check"></i> Dashboard</a></li>
+                    <li><a href="tms.html"><i class="fa-solid fa-list-check"></i> TMS</a></li>
+                    <li><a href="hrms.html"><i class="fa-solid fa-users-gear"></i> HRMS</a></li>
+                    <li><a href="cms.html"><i class="fa-solid fa-folder-open"></i> CMS</a></li>
+                    <li><a href="portfolio-hero.html"><i class="fa-solid fa-chart-pie"></i> Business</a></li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="header-right">
+            <div class="search-container">
+                <input type="text" placeholder="Search..." class="search-input">
+            </div>
+
+            <div class="notification-wrapper">
+                <div class="notification-container" id="notiToggle">
+                    <i class="fa-regular fa-bell bell-icon"></i>
+                    <span class="notification-badge">3</span>
+                </div>
+
+                <div class="notification-dropdown" id="notificationDropdown">
+                    <div class="noti-header">
+                        <h3>Notifications</h3>
+                        <a href="#mark-read" class="mark-all-btn">Mark all as read</a>
+                    </div>
+                    <ul class="noti-list">
+                        <li class="noti-item unread">
+                            <img src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&q=80&w=100" class="noti-avatar" alt="User">
+                            <div class="noti-content">
+                                <span class="noti-text"><strong>Riya Sen</strong> assigned you a task in <strong>HRMS</strong>.</span>
+                                <span class="noti-time">3 mins ago</span>
+                            </div>
+                        </li>
+                        <li class="noti-item unread">
+                            <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&q=80&w=100" class="noti-avatar" alt="User">
+                            <div class="noti-content">
+                                <span class="noti-text"><strong>Rahul Dev</strong> requested approval for <strong>Business</strong> budget.</span>
+                                <span class="noti-time">1 hour ago</span>
+                            </div>
+                        </li>
+                    </ul>
+                    <div class="noti-footer">
+                        <a href="#all-notifications">View all notifications</a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="vertical-divider"></div>
+
+            <div class="user-profile-wrapper">
+                <div class="user-profile" id="profileToggle">
+                    <img src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?auto=format&fit=crop&q=80&w=150" alt="Amit Sharma" class="profile-img">
+                    <div class="user-details">
+                        <span class="user-name">Amit Sharma</span>
+                        <span class="user-role">Workspace Master</span>
+                    </div>
+                    <i class="fa-solid fa-caret-down dropdown-arrow"></i>
+                </div>
+
+                <div class="profile-dropdown-menu" id="profileDropdown">
+                    <div class="dropdown-heading">Account Management</div>
+                    <ul>
+                        <li><a href="#profile"><i class="fa-regular fa-user"></i> My Profile</a></li>
+                        <li><a href="#settings"><i class="fa-solid fa-gear"></i> Account Settings</a></li>
+                        <li><a href="#security"><i class="fa-regular fa-shield-halved"></i> Security Status</a></li>
+                        <div class="dropdown-divider"></div>
+                        <li><a href="#logout" class="logout-link"><i class="fa-solid fa-right-from-bracket"></i> Logout Account</a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <div class="dashboard-container">
+        <div class="page-header">
+            <h2 class="page-title">Project Performance</h2>
+            <div class="action-buttons">
+                <button class="btn btn-blue open-task-modal-btn"><i class="fa-solid fa-plus"></i> Create New Task</button>
+                <button class="btn btn-white"><i class="fa-solid fa-download"></i> Download Report</button>
+            </div>
+        </div>
+
+        <div class="filters-card">
+            <div class="filters-grid">
+                <div class="filter-input-group">
+                    <label><i class="fa-regular fa-calendar-days lbl-green"></i> Start Date</label>
+                    <input type="date" value="mm/dd/yyyy">
+                </div>
+                <div class="filter-input-group">
+                    <label><i class="fa-regular fa-calendar-days lbl-red"></i> End Date</label>
+                    <input type="date" value="mm/dd/yyyy">
+                </div>
+                <div class="filter-input-group">
+                    <label><i class="fa-solid fa-building lbl-blue"></i> Select Business</label>
+                    <select>
+                        <option>All Businesses</option>
+                    </select>
+                </div>
+                <div class="filter-input-group">
+                    <label><i class="fa-solid fa-location-dot lbl-blue"></i> Select Branch</label>
+                    <select>
+                        <option>All Branches</option>
+                    </select>
+                </div>
+                <div class="filter-input-group">
+                    <label><i class="fa-solid fa-users lbl-blue"></i> Select Department</label>
+                    <select>
+                        <option>All Departments</option>
+                    </select>
+                </div>
+                <div class="filter-input-group">
+                    <label><i class="fa-solid fa-filter lbl-blue"></i> Select Status</label>
+                    <select>
+                        <option>All Statuses</option>
+                    </select>
+                </div>
+                <div class="filter-input-group">
+                    <label><i class="fa-solid fa-bell lbl-orange"></i> Urgent Tasks</label>
+                    <select>
+                        <option>All Priority Status</option>
+                    </select>
+                </div>
+            </div>
+        </div>
+
+        <div class="main-dashboard-grid">
+            <div class="panel-card">
+                <div class="panel-card-header">
+                    <h3>Active Assignments</h3>
+                    <a href="#" class="btn-view-all">View All</a>
+                </div>
+                <div class="table-wrapper">
+                    <table class="data-table">
+                        <thead>
+                            <tr>
+                                <th>TASK NAME</th>
+                                <th>ASSIGNEE</th>
+                                <th>PRIORITY</th>
+                                <th>DEADLINE</th>
+                                <th>STATUS</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td class="font-semibold">Website UI Redesign</td>
+                                <td>
+                                    <div class="user-info">
+                                        <img src="https://i.pravatar.cc/150?img=32" alt="Rahul K." class="user-avatar">
+                                        <span>Rahul K.</span>
+                                    </div>
+                                </td>
+                                <td><span class="priority-badge p-urgent">Urgent</span></td>
+                                <td>20 May</td>
+                                <td><span class="status-tag s-inprogress">In Progress</span></td>
+                            </tr>
+                            <tr>
+                                <td class="font-semibold">API Documentation</td>
+                                <td>
+                                    <div class="user-info">
+                                        <img src="https://i.pravatar.cc/150?img=68" alt="Priya S." class="user-avatar">
+                                        <span>Priya S.</span>
+                                    </div>
+                                </td>
+                                <td><span class="priority-badge p-medium">Medium</span></td>
+                                <td>22 May</td>
+                                <td><span class="status-tag s-todo">To Do</span></td>
+                            </tr>
+                            <tr>
+                                <td class="font-semibold">Client Feedback Fixes</td>
+                                <td>
+                                    <div class="user-info">
+                                        <img src="https://i.pravatar.cc/150?img=47" alt="Team Dev" class="user-avatar">
+                                        <span>Team Dev</span>
+                                    </div>
+                                </td>
+                                <td><span class="priority-badge p-high">High</span></td>
+                                <td>18 May</td>
+                                <td><span class="status-tag s-review">Review</span></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <div class="right-column-stack">
+                <div class="panel-card">
+                    <div class="panel-card-header">
+                        <h3>Task Breakdown</h3>
+                    </div>
+                    <div class="chart-container">
+                        <div class="donut-chart-mock">
+                            <div class="donut-hole"></div>
+                        </div>
+                    </div>
+                    <div class="chart-legends">
+                        <div class="legend-item"><span class="dot" style="background-color: var(--clr-todo);"></span> To Do</div>
+                        <div class="legend-item"><span class="dot" style="background-color: var(--clr-inprogress);"></span> In Progress</div>
+                        <div class="legend-item"><span class="dot" style="background-color: #e5e7eb;"></span> Done</div>
+                    </div>
+
+                    <div class="efficiency-section">
+                        <div class="efficiency-meta">
+                            <span>Workspace Efficiency</span>
+                            <span class="eff-score">75%</span>
+                        </div>
+                        <div class="bar-track">
+                            <div class="bar-fill" style="width: 75%;"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="fab-wrapper">
+        <button class="fab-btn" id="dashboardFab" title="Action Menu">
+            <i class="fa-solid fa-plus"></i>
+        </button>
+        <ul class="fab-menu" id="fabMenu">
+            <li class="fab-item"><a href="#add-staff"><i class="fa-solid fa-user-plus"></i> Add Staff</a></li>
+            <li class="fab-item"><a href="#add-business"><i class="fa-solid fa-building-user"></i> Add New Business</a></li>
+            <li class="fab-item"><a href="#add-contacts"><i class="fa-solid fa-address-book"></i> Add Contacts</a></li>
+            <li class="fab-item"><a href="#add-task" class="open-task-modal-btn"><i class="fa-solid fa-file-circle-plus"></i> Add New Task</a></li>
+        </ul>
+    </div>
+
+    <div class="modal-overlay" id="taskModal">
+        <div class="modal-box">
+            <div class="modal-header">
+                <h2 class="modal-title">
+                    <i class="fa-regular fa-square-plus text-primary"></i> Create New Task
+                </h2>
+                <button class="close-btn" id="closeModalX">&times;</button>
+            </div>
+
+            <form id="taskForm">
+                <div class="form-group">
+                    <label for="taskName">Task Name</label>
+                    <input type="text" id="taskName" placeholder="e.g., Fix Navigation Bug" required>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group col">
+                        <label for="assignee">Assignee</label>
+                        <select id="assignee" required>
+                            <option value="" disabled selected>Choose team member...</option>
+                            <option value="rahul">Rahul Sharma</option>
+                            <option value="amit">Amit Verma</option>
+                            <option value="priya">Priya Singh</option>
+                        </select>
+                    </div>
+                    <div class="form-group col">
+                        <label for="priority">Priority Level</label>
+                        <select id="priority">
+                            <option value="low">Low</option>
+                            <option value="medium" selected>Medium</option>
+                            <option value="high">High</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group col">
+                        <label for="deadline">Deadline Date</label>
+                        <input type="date" id="deadline" required>
+                    </div>
+                    <div class="form-group col">
+                        <label for="status">Initial Status</label>
+                        <select id="status">
+                            <option value="todo" selected>To Do</option>
+                            <option value="inprogress">In Progress</option>
+                            <option value="completed">Completed</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="attachments">Attachments (Optional)</label>
+                    <div class="file-input-wrapper">
+                        <input type="file" id="attachments" multiple>
+                    </div>
+                    <small class="help-text">Aap multiple files select kar sakte hain.</small>
+                </div>
+
+                <div class="form-group">
+                    <label for="description">Description / Notes</label>
+                    <textarea id="description" rows="4" placeholder="Provide extra details about the task requirements..."></textarea>
+                </div>
+
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-light" id="closeModalCancel">Cancel</button>
+                    <button type="submit" class="btn btn-blue-submit">Save Task</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+
+    <script>
+        // DOM Elements Selection
+        const modal = document.getElementById('taskModal');
+        const openModalButtons = document.querySelectorAll('.open-task-modal-btn');
+        const closeModalX = document.getElementById('closeModalX');
+        const closeModalCancel = document.getElementById('closeModalCancel');
+        const taskForm = document.getElementById('taskForm');
+
+        // Open modal event dynamically for all matches
+        openModalButtons.forEach(button => {
+            button.addEventListener('click', (e) => {
+                e.preventDefault(); // Prevent default link behaviors if clicked via FAB menu
+                modal.classList.add('active');
+            });
+        });
+
+        // Function to close modal
+        const closeModal = () => {
+            modal.classList.remove('active');
+            taskForm.reset(); 
+        };
+
+        // Close event listeners
+        if (closeModalX) closeModalX.addEventListener('click', closeModal);
+        if (closeModalCancel) closeModalCancel.addEventListener('click', closeModal);
+
+        // Outside modal space click backdrop close
+        if (modal) {
+            modal.addEventListener('click', (e) => {
+                if (e.target === modal) {
+                    closeModal();
+                }
+            });
+        }
+
+        // Form Submit Actions
+        if (taskForm) {
+            taskForm.addEventListener('submit', (e) => {
+                e.preventDefault();
+                alert('Task Saved Successfully!');
+                closeModal();
+            });
+        }
+    </script>
+</body>
+</html>

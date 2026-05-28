@@ -1,380 +1,822 @@
- <!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Aashish Group | Enterprise Portfolio Hub</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
+    <title>Contact Management System - CMS</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     
     <style>
+        /* CSS RESET & VARIABLES */
         :root {
-            --primary-color: #4e73df;
-            --primary-gradient: linear-gradient(135deg, #4e73df 0%, #224abe 100%);
-            --body-bg: #f8f9fc;
-            --card-bg: #ffffff;
-            --navbar-bg: #ffffff;
-            --text-main: #2d3748;
-            --text-muted: #718096;
-            --border-color: rgba(227, 230, 240, 0.8);
-            --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            --bg-body: #f4f6f9;
+            --bg-card: #ffffff;
+            --text-main: #1f2937;
+            --text-muted: #6b7280;
+            --border-color: #e5e7eb;
+            --primary-blue: #1d63ed;
+            --danger-red: #dc2626;
+            --success-green: #10b981;
+            
+            /* Party Name Badge Colors */
+            --bg-badge-ashish: #eff6ff;
+            --text-badge-ashish: #2563eb;
+            --bg-badge-rajesh: #f0fdf4;
+            --text-badge-rajesh: #16a34a;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
         }
 
         body {
-            font-family: 'Inter', sans-serif;
-            background-color: var(--body-bg);
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: var(--bg-body);
             color: var(--text-main);
+            display: flex;
+            min-height: 100vh;
+        }
+
+        /* SIDEBAR NAVIGATION PANEL */
+        .sidebar-panel {
+            width: 240px;
+            background-color: #ffffff;
+            border-right: 1px solid var(--border-color);
+            padding: 24px 16px;
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .nav-item {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 12px 16px;
+            color: #4b5563;
+            text-decoration: none;
+            font-size: 14px;
+            font-weight: 600;
+            border-radius: 6px;
+            transition: all 0.2s ease;
+        }
+
+        .nav-item:hover, .nav-item.active {
+            background-color: #f3f4f6;
+            color: var(--primary-blue);
+        }
+
+        .sidebar-divider {
+            height: 1px;
+            background-color: var(--border-color);
+            margin: 16px 0;
+        }
+
+        /* MAIN CONTENT AREA CONTAINER */
+        .main-content-wrapper {
+            flex: 1;
+            padding: 24px 32px;
             overflow-x: hidden;
         }
 
-        /* --- NAVIGATION HEADER STYLING --- */
-        .custom-navbar {
-            background-color: var(--navbar-bg);
-            border-bottom: 1px solid var(--border-color);
-            padding: 12px 24px;
-            backdrop-filter: blur(10px);
+        /* 1. TOP HEADER SECTION */
+        .page-header-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 24px;
+            flex-wrap: wrap;
+            gap: 16px;
         }
 
-        .brand-logo-container {
-            font-weight: 800;
-            font-size: 1.3rem;
-            letter-spacing: -0.5px;
-            color: var(--primary-color);
+        .title-block h2 {
+            font-size: 24px;
+            font-weight: 700;
+            color: #111827;
+        }
+
+        .title-block p {
+            font-size: 14px;
+            color: var(--text-muted);
+            margin-top: 4px;
+        }
+
+        .btn {
+            padding: 10px 18px;
+            border-radius: 6px;
+            font-size: 14px;
+            font-weight: 600;
+            cursor: pointer;
+            border: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            transition: background-color 0.15s ease;
+        }
+
+        .btn-blue {
+            background-color: var(--primary-blue);
+            color: #ffffff;
+        }
+
+        .btn-blue:hover {
+            background-color: #154ec2;
+        }
+
+        /* 2. LIVE FILTER CARDS SECTION */
+        .filters-container-card {
+            background-color: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            padding: 20px;
+            margin-bottom: 24px;
+        }
+
+        .filters-inner-grid {
+            display: flex;
+            align-items: flex-end;
+            gap: 16px;
+            flex-wrap: wrap;
+        }
+
+        .filter-input-group {
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+            flex: 1;
+            min-width: 220px;
+        }
+
+        .filter-input-group label {
+            font-size: 13px;
+            font-weight: 600;
+            color: #374151;
+        }
+
+        .search-input-box {
+            position: relative;
+        }
+
+        .search-input-box i {
+            position: absolute;
+            left: 12px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--text-muted);
+        }
+
+        .search-input-box input {
+            padding-left: 36px !important;
+        }
+
+        .filter-input-group input,
+        .filter-input-group select {
+            width: 100%;
+            height: 38px;
+            padding: 8px 12px;
+            border: 1px solid var(--border-color);
+            border-radius: 6px;
+            background-color: #ffffff;
+            font-size: 14px;
+            outline: none;
+            color: var(--text-main);
+        }
+
+        .btn-reset {
+            background-color: #4b5563;
+            color: #ffffff;
+            height: 38px;
+        }
+
+        .btn-reset:hover {
+            background-color: #374151;
+        }
+
+        /* 3. CMS DATA TABLE SECTION */
+        .data-table-card {
+            background-color: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            overflow: hidden;
+        }
+
+        .table-scroll {
+            overflow-x: auto;
+        }
+
+        .cms-table {
+            width: 100%;
+            border-collapse: collapse;
+            text-align: left;
+            font-size: 14px;
+        }
+
+        .cms-table th {
+            background-color: #f9fafb;
+            color: #111827;
+            font-size: 12px;
+            font-weight: 700;
+            text-transform: uppercase;
+            padding: 14px 16px;
+            border-bottom: 2px solid var(--border-color);
+        }
+
+        .cms-table td {
+            padding: 16px;
+            border-bottom: 1px solid var(--border-color);
+            vertical-align: middle;
+        }
+
+        /* Custom cell layout decorations */
+        .text-bold-title {
+            font-weight: 700;
+            font-size: 15px;
+            color: #111827;
+        }
+
+        .text-sub {
+            font-size: 12px;
+            color: var(--text-muted);
+            margin-top: 4px;
+            display: block;
+        }
+
+        /* Party badges */
+        .badge-party {
+            padding: 4px 10px;
+            border-radius: 12px;
+            font-size: 12px;
+            font-weight: 600;
+            display: inline-block;
+        }
+        .party-ashish { background-color: var(--bg-badge-ashish); color: var(--text-badge-ashish); }
+        .party-rajesh { background-color: var(--bg-badge-rajesh); color: var(--text-badge-rajesh); }
+
+        .contact-link-row {
             display: flex;
             align-items: center;
-        }
-
-        /* Custom Styles for Nav Buttons */
-        .nav-link-custom {
-            font-weight: 500;
-            color: var(--text-main);
-            padding: 8px 16px !important;
-            border-radius: 8px;
-            transition: var(--transition);
-        }
-
-        .nav-link-custom:hover, .nav-link-custom.active {
-            color: var(--primary-color) !important;
-            background-color: rgba(78, 115, 223, 0.05);
-        }
-
-        .user-role-tag {
-            font-size: 0.7rem;
-            color: #858796;
-            background: #eaecf4;
-            padding: 2px 10px;
-            border-radius: 20px;
+            gap: 6px;
             font-weight: 600;
+            color: #1f2937;
+            text-decoration: none;
+            margin-bottom: 4px;
         }
 
-        .cursor-pointer {
-            cursor: pointer;
+        /* Comm mode tags */
+        .comm-tag {
+            font-size: 11px;
+            font-weight: 700;
+            padding: 2px 6px;
+            border-radius: 4px;
+            display: inline-flex;
+            align-items: center;
+            gap: 4px;
+        }
+        .tag-whatsapp { background-color: #dcfce7; color: #16a34a; }
+        .tag-calling { background-color: #e0f2fe; color: #0284c7; }
+
+        /* Star rating */
+        .stars-gold {
+            color: #fbbf24;
+            font-size: 13px;
         }
 
-        /* --- HERO HEADLINE PANEL --- */
-        .hero-banner {
-            text-align: center;
-            padding: 50px 0 30px 0;
+        /* Flow steps styling */
+        .flow-steps-wrapper {
+            display: flex;
+            align-items: center;
+            gap: 6px;
         }
 
-        .hero-title {
-            font-size: 2.5rem;
-            font-weight: 800;
-            letter-spacing: -0.5px;
-            background: linear-gradient(45deg, #1a202c, var(--primary-color));
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
+        .step-circle {
+            width: 24px;
+            height: 24px;
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 11px;
+            font-weight: 700;
+            background-color: #e5e7eb;
+            color: #6b7280;
         }
 
-        /* --- GLASSMORPHISM BUSINESS CARDS --- */
-        .business-card {
-            background: var(--card-bg);
-            border: 1px solid var(--border-color);
-            border-radius: 20px;
-            padding: 30px;
-            height: 100%;
-            transition: var(--transition);
-            position: relative;
-            overflow: hidden;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.03);
+        .step-circle.active {
+            background-color: var(--primary-blue);
+            color: #ffffff;
         }
 
-        .business-card::before {
-            content: '';
-            position: absolute;
-            top: 0; left: 0; width: 100%; height: 5px;
-            background: var(--primary-gradient);
-            opacity: 0;
-            transition: opacity 0.3s ease;
+        .step-arrow {
+            font-size: 11px;
+            color: #9ca3af;
         }
 
-        .business-card:hover {
-            transform: translateY(-8px);
-            box-shadow: 0 20px 40px rgba(78, 115, 223, 0.1);
-            border-color: rgba(78, 115, 223, 0.25);
+        .badge-approved {
+            background-color: var(--success-green);
+            color: #ffffff;
+            font-size: 11px;
+            font-weight: 700;
+            padding: 3px 8px;
+            border-radius: 4px;
+            display: inline-flex;
+            align-items: center;
+            gap: 4px;
+            margin-top: 6px;
         }
 
-        .business-card:hover::before {
-            opacity: 1;
-        }
-
-        .icon-wrapper {
-            width: 60px;
-            height: 60px;
-            border-radius: 16px;
+        /* Action buttons row */
+        .table-actions {
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 1.6rem;
-            margin-bottom: 20px;
-            background: rgba(78, 115, 223, 0.08);
-            color: var(--primary-color);
-            transition: var(--transition);
+            gap: 8px;
         }
 
-        .business-card:hover .icon-wrapper {
-            background: var(--primary-gradient);
-            color: #ffffff;
-            transform: scale(1.05);
-        }
-
-        .industry-tag {
-            font-size: 0.72rem;
-            font-weight: 700;
-            text-transform: uppercase;
-            padding: 4px 12px;
-            border-radius: 30px;
-            display: inline-block;
-            margin-bottom: 15px;
-        }
-
-        .btn-action {
-            border-radius: 12px;
-            font-weight: 500;
-            padding: 10px 20px;
-        }
-
-        .modal-content {
-            border-radius: 24px;
+        .action-icon-btn {
+            background: none;
             border: none;
+            cursor: pointer;
+            padding: 6px;
+            border-radius: 4px;
+            font-size: 14px;
+            transition: background-color 0.15s;
+        }
+        .act-view { color: #3b82f6; }
+        .act-view:hover { background-color: #eff6ff; }
+        .act-edit { color: #f59e0b; }
+        .act-edit:hover { background-color: #fffbeb; }
+        .act-del { color: #ef4444; }
+        .act-del:hover { background-color: #fef2f2; }
+
+
+        /* ===================================================
+           4. MODAL DIALOG POPUP BOX SYSTEM STYLING
+           =================================================== */
+        .modal-backdrop-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.4);
+            z-index: 2000;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.25s ease-in-out;
+        }
+
+        .modal-backdrop-overlay.active {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .modal-content-window {
+            background-color: #ffffff;
+            width: 100%;
+            max-width: 680px;
+            border-radius: 10px;
+            box-shadow: 0 12px 30px rgba(0,0,0,0.15);
+            overflow: hidden;
+            transform: translateY(-20px);
+            transition: transform 0.25s ease-in-out;
+            max-height: 90vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .modal-backdrop-overlay.active .modal-content-window {
+            transform: translateY(0);
+        }
+
+        .modal-top-bar {
+            padding: 16px 24px;
+            border-bottom: 1px solid var(--border-color);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .modal-header-title {
+            font-size: 18px;
+            font-weight: 700;
+            color: #111827;
+        }
+
+        .modal-close-cross {
+            background: none;
+            border: none;
+            font-size: 20px;
+            color: #9ca3af;
+            cursor: pointer;
+        }
+
+        /* Form Body Scrollable setup */
+        .modal-scrollable-body {
+            padding: 24px;
+            overflow-y: auto;
+            flex: 1;
+        }
+
+        .form-grid-2col {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 16px;
+            margin-bottom: 16px;
+        }
+
+        .form-input-group {
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+            margin-bottom: 16px;
+        }
+
+        .form-input-group label {
+            font-size: 13px;
+            font-weight: 600;
+            color: #374151;
+        }
+
+        .form-input-group label span {
+            color: #ef4444;
+            margin-left: 2px;
+        }
+
+        .form-input-group input[type="text"],
+        .form-input-group input[type="tel"],
+        .form-input-group select,
+        .form-input-group textarea {
+            width: 100%;
+            height: 38px;
+            padding: 8px 12px;
+            border: 1px solid #d1d5db;
+            border-radius: 6px;
+            font-size: 14px;
+            outline: none;
+            background-color: #ffffff;
+            color: var(--text-main);
+        }
+
+        .form-input-group textarea {
+            height: 80px;
+            resize: vertical;
+        }
+
+        /* Checkboxes row */
+        .checkbox-options-row {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            height: 38px;
+        }
+
+        .checkbox-item {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            font-size: 14px;
+            font-weight: 600;
+            cursor: pointer;
+        }
+
+        /* Upload File Element Box */
+        .file-upload-dropzone {
+            border: 1px solid #d1d5db;
+            border-radius: 6px;
+            padding: 8px 12px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            background-color: #ffffff;
+        }
+
+        .file-upload-dropzone input[type="file"] {
+            font-size: 13px;
+            color: var(--text-muted);
+        }
+
+        .upload-hints-text {
+            font-size: 12px;
+            color: var(--text-muted);
+            margin-top: 4px;
+        }
+
+        /* Modal Action Bottom Strip */
+        .modal-action-footer {
+            padding: 16px 24px;
+            background-color: #f9fafb;
+            border-top: 1px solid var(--border-color);
+            display: flex;
+            justify-content: flex-end;
+            gap: 12px;
+        }
+
+        .btn-gray {
+            background-color: #6b7280;
+            color: #ffffff;
+        }
+        .btn-gray:hover { background-color: #4b5563; }
+
+
+        /* ===================================================
+           RESPONSIVE CONFIGURATIONS FOR RESPONSIVE VIEWPORTS
+           =================================================== */
+        @media (max-width: 991px) {
+            body { flex-direction: column; }
+            .sidebar-panel { width: 100%; border-right: none; border-bottom: 1px solid var(--border-color); flex-direction: row; overflow-x: auto; padding: 12px; }
+            .sidebar-divider { display: none; }
+            .main-content-wrapper { padding: 16px; }
+        }
+
+        @media (max-width: 640px) {
+            .form-grid-2col { grid-template-columns: 1fr; gap: 0; }
+            .modal-action-footer { flex-direction: column-reverse; }
+            .modal-action-footer .btn { width: 100%; justify-content: center; }
         }
     </style>
 </head>
 <body>
 
-    <nav class="navbar navbar-expand-lg custom-navbar sticky-top shadow-sm">
-        <div class="container-fluid">
-            <a href="#" class="navbar-brand brand-logo-container me-4">
-                <i class="bi bi-rocket-takeoff-fill me-2"></i>
-                <span>Aashish Group</span>
-            </a>
+    <div class="sidebar-panel">
+        <a href="#" class="nav-item"><i class="fa-solid fa-chart-pie"></i> Dashboard</a>
+        <a href="#" class="nav-item active"><i class="fa-solid fa-address-book"></i> CMS Portal</a>
+        <div class="sidebar-divider"></div>
+        <a href="#" class="nav-item"><i class="fa-solid fa-gear"></i> Settings</a>
+    </div>
 
-            <button class="navbar-toggler border-0" type="button" data-bs-toggle="collapse" data-bs-target="#headerNavbarContent">
-                <i class="bi bi-list fs-3"></i>
-            </button>
-
-            <div class="collapse navbar-collapse" id="headerNavbarContent">
-                
-                <ul class="navbar-nav me-auto mb-2 mb-lg-0 gap-1">
-                    <li class="nav-item">
-                        <a class="nav-link nav-link-custom active" href="#"><i class="bi bi-house-door me-1"></i> Home</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link nav-link-custom" href="#"><i class="bi bi-info-circle me-1"></i> About</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link nav-link-custom" href="#"><i class="bi bi-briefcase me-1"></i> Services</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link nav-link-custom" href="#"><i class="bi bi-envelope me-1"></i> Contact</a>
-                    </li>
-                </ul>
-
-                <form class="d-flex my-2 my-lg-0 me-3">
-                    <div class="input-group">
-                        <span class="input-group-text bg-light border-0"><i class="bi bi-search text-muted"></i></span>
-                        <input class="form-control form-control-sm border-0 bg-light" type="search" placeholder="Search businesses..." style="width: 200px; border-radius: 0 8px 8px 0;">
-                    </div>
-                </form>
-
-                <div class="d-flex align-items-center gap-3 justify-content-end">
-                    
-                    <div class="dropdown">
-                        <div class="position-relative cursor-pointer p-2" data-bs-toggle="dropdown" aria-expanded="false">
-                            <i class="bi bi-bell fs-5 text-dark"></i>
-                            <span class="position-absolute top-0 start-50 translate-middle badge rounded-pill bg-danger" style="font-size: 0.58rem; margin-top: 5px;">
-                                4+
-                            </span>
-                        </div>
-                        <ul class="dropdown-menu dropdown-menu-end shadow border-0 mt-3 p-2" style="width: 290px; border-radius: 16px;">
-                            <li><h6 class="dropdown-header fw-bold">Recent Alerts Hub</h6></li>
-                            <li><a class="dropdown-item rounded py-2 small" href="#"><i class="bi bi-graph-up-arrow text-success me-2"></i>JNRS Hotels revenue up by 14%</a></li>
-                            <li><a class="dropdown-item rounded py-2 small" href="#"><i class="bi bi-code-square text-primary me-2"></i>TwoDots backend integration active</a></li>
-                            <li><hr class="dropdown-divider"></li>
-                            <li><a class="dropdown-item text-center small text-muted text-decoration-none" href="#">Mark all read</a></li>
-                        </ul>
-                    </div>
-
-                    <div class="dropdown border-start ps-3">
-                        <div class="d-flex align-items-center cursor-pointer dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
-                            <div class="text-end me-2 d-none d-sm-block">
-                                <p class="mb-0 fw-bold small text-dark">Aashish Sharma</p>
-                                <span class="user-role-tag">Founder & CEO</span>
-                            </div>
-                            <img src="https://i.pravatar.cc/150?u=aashish" class="rounded-circle border" width="38" height="38" alt="User Avatar">
-                        </div>
-                        <ul class="dropdown-menu dropdown-menu-end shadow border-0 mt-3 p-2" style="border-radius: 16px; min-width: 200px;">
-                            <li><a class="dropdown-item rounded py-2 small" href="#"><i class="bi bi-person me-2"></i>My Profile</a></li>
-                            <li><a class="dropdown-item rounded py-2 small" href="#"><i class="bi bi-gear me-2"></i>Account Settings</a></li>
-                            <li><a class="dropdown-item rounded py-2 small" href="#"><i class="bi bi-shield-check me-2"></i>Security</a></li>
-                            <li><hr class="dropdown-divider"></li>
-                            <li><a class="dropdown-item rounded py-2 small text-danger" href="javascript:void(0)" onclick="handleLogout()">
-                                <i class="bi bi-box-arrow-right me-2"></i>Logout Account
-                            </a></li>
-                        </ul>
-                    </div>
-
-                </div>
-            </div>
-        </div>
-    </nav>
-
-    <main class="container my-5">
+    <div class="main-content-wrapper">
         
-        <section class="hero-banner">
-            <h1 class="hero-title">Ecosystem Portfolio Dashboard</h1>
-            <p class="text-muted mx-auto" style="max-width: 620px; font-size: 1.05rem;">
-                Manage corporate architecture metrics across multi-operational business verticals in real time.
-            </p>
-        </section>
+        <div class="page-header-row">
+            <div class="title-block">
+                <h2>Contact Management System</h2>
+                <p>Manage your parties, contacts, and approval flows seamlessly.</p>
+            </div>
+            <button class="btn btn-blue" id="triggerOpenModalBtn"><i class="fa-solid fa-plus"></i> Add New Contact</button>
+        </div>
 
-        <div class="row g-4 justify-content-center mt-2">
+        <div class="filters-container-card">
+            <div class="filters-inner-grid">
+                <div class="filter-input-group">
+                    <label>Search by Title / Party Name</label>
+                    <div class="search-input-box">
+                        <i class="fa-solid fa-magnifying-glass"></i>
+                        <input type="text" placeholder="Type name or title...">
+                    </div>
+                </div>
+                <div class="filter-input-group">
+                    <label>Filter by Star Rating</label>
+                    <select>
+                        <option>All Ratings</option>
+                    </select>
+                </div>
+                <div class="filter-input-group">
+                    <label>Communication Mode</label>
+                    <select>
+                        <option>All Modes</option>
+                    </select>
+                </div>
+                <button class="btn btn-reset"><i class="fa-solid fa-filter-circle-xmark"></i> Reset</button>
+            </div>
+        </div>
+
+        <div class="data-table-card">
+            <div class="table-scroll">
+                <table class="cms-table">
+                    <thead>
+                        <tr>
+                            <th>SL NO</th>
+                            <th>Title Name / Subtitle</th>
+                            <th>Party Name</th>
+                            <th>Contact Details</th>
+                            <th>Address / Description</th>
+                            <th>Rating & Route</th>
+                            <th>Status Flow</th>
+                            <th style="text-align: center;">Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td style="font-weight: 600; color: var(--text-muted);">01</td>
+                            <td>
+                                <div class="text-bold-title">Prime Vendor Corp</div>
+                                <span class="text-sub">Main Raw Material Supplier</span>
+                            </td>
+                            <td><span class="badge-party party-ashish">Ashish Kumar</span></td>
+                            <td>
+                                <a href="tel:+919876543210" class="contact-link-row"><i class="fa-solid fa-phone" style="font-size: 12px; color: var(--text-muted);"></i> +91 98765 43210</a>
+                                <div style="display: flex; gap: 4px;">
+                                    <span class="comm-tag tag-whatsapp"><i class="fa-brands fa-whatsapp"></i> WhatsApp</span>
+                                    <span class="comm-tag tag-calling"><i class="fa-solid fa-phone"></i> Calling</span>
+                                </div>
+                            </td>
+                            <td>
+                                <div style="font-weight: 500;">Sector 62, Noida, UP</div>
+                                <span class="text-sub">Deals in premium grade metals</span>
+                            </td>
+                            <td>
+                                <div class="stars-gold">
+                                    <i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-regular fa-star"></i>
+                                </div>
+                                <span class="text-sub" style="color: var(--text-badge-ashish); font-weight: 600;"><i class="fa-solid fa-route"></i> Marg: NH-24 Route</span>
+                            </td>
+                            <td>
+                                <div class="flow-steps-wrapper">
+                                    <div class="step-circle active">1</div>
+                                    <i class="fa-solid fa-arrow-right step-arrow"></i>
+                                    <div class="step-circle active">2</div>
+                                    <i class="fa-solid fa-arrow-right step-arrow"></i>
+                                    <div class="step-circle">3</div>
+                                </div>
+                                <a href="#" class="text-sub" style="color: var(--primary-blue); font-weight: 600; text-decoration: none;"><i class="fa-regular fa-paper-plane"></i> Send to Approvals</a>
+                            </td>
+                            <td>
+                                <div class="table-actions">
+                                    <button class="action-icon-btn act-view" title="View"><i class="fa-regular fa-eye"></i></button>
+                                    <button class="action-icon-btn act-edit" title="Edit"><i class="fa-regular fa-pen-to-square"></i></button>
+                                    <button class="action-icon-btn act-del" title="Delete"><i class="fa-regular fa-trash-can"></i></button>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td style="font-weight: 600; color: var(--text-muted);">02</td>
+                            <td>
+                                <div class="text-bold-title">Apex Logistics</div>
+                                <span class="text-sub">North Region Transport</span>
+                            </td>
+                            <td><span class="badge-party party-rajesh">Rajesh Sharma</span></td>
+                            <td>
+                                <a href="tel:+919112233445" class="contact-link-row"><i class="fa-solid fa-phone" style="font-size: 12px; color: var(--text-muted);"></i> +91 91122 33445</a>
+                                <span class="comm-tag tag-calling"><i class="fa-solid fa-phone"></i> Calling Only</span>
+                            </td>
+                            <td>
+                                <div style="font-weight: 500;">Palam Road, New Delhi</div>
+                                <span class="text-sub">Handles heavy machinery fleets</span>
+                            </td>
+                            <td>
+                                <div class="stars-gold">
+                                    <i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i>
+                                </div>
+                                <span class="text-sub" style="color: var(--primary-blue); font-weight: 600;"><i class="fa-solid fa-route"></i> Marg: Ring Road Route</span>
+                            </td>
+                            <td>
+                                <div class="flow-steps-wrapper">
+                                    <div class="step-circle active">1</div>
+                                    <i class="fa-solid fa-arrow-right step-arrow"></i>
+                                    <div class="step-circle active">2</div>
+                                    <i class="fa-solid fa-arrow-right step-arrow"></i>
+                                    <div class="step-circle active">3</div>
+                                </div>
+                                <span class="badge-approved"><i class="fa-regular fa-circle-check"></i> Approved</span>
+                            </td>
+                            <td>
+                                <div class="table-actions">
+                                    <button class="action-icon-btn act-view" title="View"><i class="fa-regular fa-eye"></i></button>
+                                    <button class="action-icon-btn act-edit" title="Edit"><i class="fa-regular fa-pen-to-square"></i></button>
+                                    <button class="action-icon-btn act-del" title="Delete"><i class="fa-regular fa-trash-can"></i></button>
+                                </div>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+    </div>
+
+
+    <div class="modal-backdrop-overlay" id="addContactModal">
+        <div class="modal-content-window">
             
-            <div class="col-12 col-md-6 col-lg-4">
-                <div class="card business-card">
-                    <span class="industry-tag" style="background: rgba(78,115,223,0.1); color: #4e73df;">Entertainment</span>
-                    <div class="icon-wrapper">
-                        <i class="bi bi-film"></i>
+            <div class="modal-top-bar">
+                <div class="modal-header-title">Add Contact Details</div>
+                <button class="modal-close-cross" id="closeCrossTop"><i class="fa-solid fa-xmark"></i></button>
+            </div>
+            
+            <div class="modal-scrollable-body">
+                <form id="contactSubmissionForm" onsubmit="event.preventDefault();">
+                    
+                    <div class="form-grid-2col">
+                        <div class="form-input-group">
+                            <label>Title Name <span>*</span></label>
+                            <input type="text" placeholder="e.g. Corporate Office / Firm Name" required>
+                        </div>
+                        <div class="form-input-group">
+                            <label>Party Name <span>*</span></label>
+                            <input type="text" placeholder="Contact Person Name" required>
+                        </div>
                     </div>
-                    <h4 class="fw-bold mb-2">TwoDots Films</h4>
-                    <p class="text-muted small mb-4">
-                        Cinematic processing house managing smart digital automated media delivery architectures via custom pipelines.
-                    </p>
-                    <button class="btn btn-outline-primary btn-sm btn-action w-100" data-bs-toggle="modal" data-bs-target="#modalTwoDots">
-                        Manage Terminal <i class="bi bi-arrow-up-right ms-1"></i>
-                    </button>
-                </div>
-            </div>
 
-            <div class="col-12 col-md-6 col-lg-4">
-                <div class="card business-card">
-                    <span class="industry-tag" style="background: rgba(28,200,138,0.1); color: #1cc88a;">Hospitality</span>
-                    <div class="icon-wrapper" style="color: #1cc88a; background: rgba(28,200,138,0.08);">
-                        <i class="bi bi-buildings"></i>
+                    <div class="form-grid-2col">
+                        <div class="form-input-group">
+                            <label>Subtitle Name</label>
+                            <input type="text" placeholder="e.g. Wholesaler / Service Head">
+                        </div>
+                        <div class="form-input-group">
+                            <label>Mobile No <span>*</span></label>
+                            <input type="tel" placeholder="Enter 10-digit number" pattern="[0-9]{10}" required>
+                        </div>
                     </div>
-                    <h4 class="fw-bold mb-2">JNRS Group</h4>
-                    <p class="text-muted small mb-4">
-                        Premium chain of resort complexes integrated with cross-platform automated booking logic configurations.
-                    </p>
-                    <button class="btn btn-outline-primary btn-sm btn-action w-100" data-bs-toggle="modal" data-bs-target="#modalJNRS">
-                        Manage Terminal <i class="bi bi-arrow-up-right ms-1"></i>
-                    </button>
-                </div>
-            </div>
 
-            <div class="col-12 col-md-6 col-lg-4">
-                <div class="card business-card">
-                    <span class="industry-tag" style="background: rgba(54,185,204,0.1); color: #36b9cc;">SaaS Platform</span>
-                    <div class="icon-wrapper" style="color: #36b9cc; background: rgba(54,185,204,0.08);">
-                        <i class="bi bi-layers-half"></i>
+                    <div class="form-grid-2col">
+                        <div class="form-input-group">
+                            <label>Preferred Mode</label>
+                            <div class="checkbox-options-row">
+                                <label class="checkbox-item">
+                                    <input type="checkbox" checked> WhatsApp
+                                </label>
+                                <label class="checkbox-item">
+                                    <input type="checkbox" checked> Calling
+                                </label>
+                            </div>
+                        </div>
+                        <div class="form-input-group">
+                            <label>Star Rating</label>
+                            <select>
+                                <option>4 Star</option>
+                                <option>5 Star</option>
+                                <option>3 Star</option>
+                            </select>
+                        </div>
                     </div>
-                    <h4 class="fw-bold mb-2">TMS Pro</h4>
-                    <p class="text-muted small mb-4">
-                        Comprehensive administrative workspace monitoring software engineered for optimization scaling operations.
-                    </p>
-                    <button class="btn btn-outline-primary btn-sm btn-action w-100" data-bs-toggle="modal" data-bs-target="#modalTMS">
-                        Manage Terminal <i class="bi bi-arrow-up-right ms-1"></i>
-                    </button>
-                </div>
-            </div>
 
-            <div class="col-12 col-md-6 col-lg-4">
-                <div class="card business-card">
-                    <span class="industry-tag" style="background: rgba(111,66,193,0.1); color: #6f42c1;">Machine Learning</span>
-                    <div class="icon-wrapper" style="color: #6f42c1; background: rgba(111,66,193,0.08);">
-                        <i class="bi bi-cpu-fill"></i>
+                    <div class="form-grid-2col">
+                        <div class="form-input-group">
+                            <label>Marg / Route (मार्ग दिया)</label>
+                            <input type="text" placeholder="e.g. NH-24, Transit Route A">
+                        </div>
+                        <div class="form-input-group">
+                            <label>Address</label>
+                            <input type="text" placeholder="Complete address detail">
+                        </div>
                     </div>
-                    <h4 class="fw-bold mb-2">Market Intel AI</h4>
-                    <p class="text-muted small mb-4">
-                        Algorithmic parsing tools managing automated data scrapers alongside advanced business tracking setups.
-                    </p>
-                    <button class="btn btn-outline-primary btn-sm btn-action w-100" data-bs-toggle="modal" data-bs-target="#modalAI">
-                        Manage Terminal <i class="bi bi-arrow-up-right ms-1"></i>
-                    </button>
-                </div>
-            </div>
 
-            <div class="col-12 col-md-6 col-lg-4">
-                <div class="card business-card">
-                    <span class="industry-tag" style="background: rgba(246,194,62,0.1); color: #f6c23e;">EdTech Infrastructure</span>
-                    <div class="icon-wrapper" style="color: #f6c23e; background: rgba(246,194,62,0.08);">
-                        <i class="bi bi-mortarboard-fill"></i>
+                    <div class="form-input-group">
+                        <label>Description (100-150 words)</label>
+                        <textarea placeholder="Write crucial business notes here..."></textarea>
                     </div>
-                    <h4 class="fw-bold mb-2">EduCore ERP</h4>
-                    <p class="text-muted small mb-4">
-                        Lifecycle enterprise network tracking data registers, automated fees workflows, and admissions indexing systems.
-                    </p>
-                    <button class="btn btn-outline-primary btn-sm btn-action w-100" data-bs-toggle="modal" data-bs-target="#modalERP">
-                        Manage Terminal <i class="bi bi-arrow-up-right ms-1"></i>
-                    </button>
-                </div>
+
+                    <div class="form-input-group">
+                        <label><i class="fa-regular fa-comment-dots"></i> Add Internal Comment / Note</label>
+                        <textarea placeholder="Type any follow-up remarks or special instructions for approval..."></textarea>
+                    </div>
+
+                    <div class="form-input-group">
+                        <label><i class="fa-solid fa-paperclip"></i> Upload Media (Visiting Cards, Documents, Images)</label>
+                        <div class="file-upload-dropzone">
+                            <input type="file">
+                        </div>
+                        <span class="upload-hints-text">Supported formats: JPG, PNG, PDF (Max size: 5MB per file)</span>
+                    </div>
+
+                </form>
             </div>
 
-        </div>
-    </main>
-
-    <div class="modal fade" id="modalTwoDots" tabindex="-1" aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered">
-            <div class="modal-content shadow-lg p-3">
-                <div class="modal-header border-0 pb-0">
-                    <h5 class="fw-bold"><i class="bi bi-film text-primary me-2"></i> TwoDots Films Engine</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <div class="modal-body text-muted small">
-                    <p>This pipeline tracks ongoing movie production stages, raw asset rendering statuses, and live automated media configurations.</p>
-                    <a href="#" class="btn btn-primary btn-sm w-100 mt-2 rounded-3 py-2">Open Video Management Interface</a>
-                </div>
+            <div class="modal-action-footer">
+                <button type="button" class="btn btn-gray" id="closeBtnBottom">Close</button>
+                <button type="submit" form="contactSubmissionForm" class="btn btn-blue">Save Contact</button>
             </div>
+
         </div>
     </div>
 
-    <div class="modal fade" id="modalJNRS" tabindex="-1" aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered">
-            <div class="modal-content shadow-lg p-3">
-                <div class="modal-header border-0 pb-0">
-                    <h5 class="fw-bold text-success"><i class="bi bi-buildings me-2"></i> JNRS Luxury Terminal</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <div class="modal-body text-muted small">
-                    <p>Check property management records, active checking dates, room optimization grids, and guest billing logs.</p>
-                    <a href="#" class="btn btn-success text-white btn-sm w-100 mt-2 rounded-3 py-2">Open Property System Console</a>
-                </div>
-            </div>
-        </div>
-    </div>
 
-    <div class="modal fade" id="modalTMS" tabindex="-1" aria-hidden="true"><div class="modal-dialog modal-dialog-centered"><div class="modal-content p-3"><div class="modal-header border-0"><h5 class="fw-bold text-info">TMS Matrix Terminal</h5><button type="button" class="btn-close" data-bs-dismiss="modal"></button></div><div class="modal-body text-muted small">Systems monitoring interface routing module active.<br><br><a href="#" class="btn btn-info text-white btn-sm w-100 rounded-3">Access Console</a></div></div></div></div>
-    <div class="modal fade" id="modalAI" tabindex="-1" aria-hidden="true"><div class="modal-dialog modal-dialog-centered"><div class="modal-content p-3"><div class="modal-header border-0"><h5 class="fw-bold" style="color: #6f42c1;">Market Intel System</h5><button type="button" class="btn-close" data-bs-dismiss="modal"></button></div><div class="modal-body text-muted small">Web-scraping extraction models parsing configurations dashboard.<br><br><a href="#" class="btn btn-sm text-white w-100 rounded-3" style="background-color: #6f42c1;">Launch Analytics Pipeline</a></div></div></div></div>
-    <div class="modal fade" id="modalERP" tabindex="-1" aria-hidden="true"><div class="modal-dialog modal-dialog-centered"><div class="modal-content p-3"><div class="modal-header border-0"><h5 class="fw-bold text-warning">EduCore Database Terminal</h5><button type="button" class="btn-close" data-bs-dismiss="modal"></button></div><div class="modal-body text-muted small">Enterprise student system registers tracking active state metrics.<br><br><a href="#" class="btn btn-warning btn-sm text-dark w-100 rounded-3">Open ERP Matrix</a></div></div></div></div>
-
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
     <script>
-        function handleLogout() {
-            if(confirm("Are you sure you want to exit the Business Ecosystem Hub?")) {
-                alert("Terminating secure sessions... Redirecting to master dashboard console.");
-            }
+        // Select DOM Elements
+        const modalOverlay = document.getElementById('addContactModal');
+        const triggerOpenBtn = document.getElementById('triggerOpenModalBtn');
+        const closeCrossTop = document.getElementById('closeCrossTop');
+        const closeBtnBottom = document.getElementById('closeBtnBottom');
+
+        // Open Modal Dialog Box
+        function showModal() {
+            modalOverlay.classList.add('active');
+            document.body.style.overflow = 'hidden'; // Base layer window container level scroll lock
         }
+
+        // Close Modal Dialog Box
+        function hideModal() {
+            modalOverlay.classList.remove('active');
+            document.body.style.overflow = 'auto'; // Re-allow scrolling
+        }
+
+        // Attach Trigger Events Click Listeners
+        triggerOpenBtn.addEventListener('click', showModal);
+        closeCrossTop.addEventListener('click', hideModal);
+        closeBtnBottom.addEventListener('click', hideModal);
+
+        // Hide overlay drawer when user clicks out of the active window wrapper perimeter
+        window.addEventListener('click', (e) => {
+            if (e.target === modalOverlay) {
+                hideModal();
+            }
+        });
     </script>
+
 </body>
 </html>

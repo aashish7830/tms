@@ -1,0 +1,348 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Responsive Professional Header with Dropdowns</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+ 
+   <link rel="stylesheet" href="style.css">
+
+<style>
+    /* Normal State: Jab anchor tag par hover na ho */
+.card-title {
+    color: #2c3e50;            /* Default dark color */
+    text-decoration: none;     /* Default underline ko hatane ke liye */
+    font-size: 1.25rem;
+    font-weight: 600;
+    transition: color 0.3s ease; /* Rang badalne me jhatka na lage, smoothly ho */
+    position: relative;        /* Underline animation ke liye zaroori hai */
+}
+
+/* Hover State: Jab user mouse upar le jaaye */
+.card-title:hover {
+    color: #3498db;            /* Hover karne par blue rang */
+}
+
+/* Optional: Ek smooth bottom underline animation ke liye */
+.card-title::after {
+    content: '';
+    position: absolute;
+    width: 100%;
+    transform: scaleX(0);
+    height: 2px;
+    bottom: -2px;
+    left: 0;
+    background-color: #3498db; /* Underline ka color */
+    transform-origin: bottom right;
+    transition: transform 0.25s ease-out;
+}
+
+.card-title:hover::after {
+    transform: scaleX(1);
+    transform-origin: bottom left;
+}
+</style>
+
+
+</head>
+<body>
+
+    <header class="main-header">
+        
+        <div class="header-left">
+            <div class="custom-menu-container">
+                <button class="custom-menu-btn" id="menuBtn">
+                    <span class="hamburger-icon">
+                        <span></span>
+                        <span></span>
+                        <span></span>
+                    </span>
+                    <span>Menu</span>
+                </button>
+                
+                <ul class="custom-dropdown" id="dropdownMenu">
+                     <li><a href="index.html"><i class="fa-solid fa-list-check"></i> Dashboard</a></li>
+                    <li><a href="tms.html"><i class="fa-solid fa-list-check"></i> TMS</a></li>
+                    <li><a href="hrms.html"><i class="fa-solid fa-users-gear"></i> HRMS</a></li>
+                    <li><a href="cms.html"><i class="fa-solid fa-folder-open"></i> CMS</a></li>
+                    <li><a href="portfolio-hero.html"><i class="fa-solid fa-chart-pie"></i> Business</a></li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="header-right">
+            
+            <div class="search-container">
+                <input type="text" placeholder="Search..." class="search-input">
+            </div>
+
+            <div class="notification-wrapper">
+                <div class="notification-container" id="notiToggle">
+                    <i class="fa-regular fa-bell bell-icon"></i>
+                    <span class="notification-badge">3</span>
+                </div>
+
+                <div class="notification-dropdown" id="notificationDropdown">
+                    <div class="noti-header">
+                        <h3>Notifications</h3>
+                        <a href="#mark-read" class="mark-all-btn">Mark all as read</a>
+                    </div>
+                    <ul class="noti-list">
+                        <li class="noti-item unread">
+                            <img src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&q=80&w=100" class="noti-avatar" alt="User">
+                            <div class="noti-content">
+                                <span class="noti-text"><strong>Riya Sen</strong> assigned you a task in <strong>HRMS</strong>.</span>
+                                <span class="noti-time">3 mins ago</span>
+                            </div>
+                        </li>
+                        <li class="noti-item unread">
+                            <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&q=80&w=100" class="noti-avatar" alt="User">
+                            <div class="noti-content">
+                                <span class="noti-text"><strong>Rahul Dev</strong> requested approval for <strong>Business</strong> budget.</span>
+                                <span class="noti-time">1 hour ago</span>
+                            </div>
+                        </li>
+                    </ul>
+                    <div class="noti-footer">
+                        <a href="#all-notifications">View all notifications</a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="vertical-divider"></div>
+
+            <div class="user-profile-wrapper">
+                <div class="user-profile" id="profileToggle">
+                    <img src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?auto=format&fit=crop&q=80&w=150" alt="Amit Sharma" class="profile-img">
+                    <div class="user-details">
+                        <span class="user-name">Amit Sharma</span>
+                        <span class="user-role">Workspace Master</span>
+                    </div>
+                    <i class="fa-solid fa-caret-down dropdown-arrow"></i>
+                </div>
+
+                <div class="profile-dropdown-menu" id="profileDropdown">
+                    <div class="dropdown-heading">Account Management</div>
+                    <ul>
+                        <li><a href="#profile"><i class="fa-regular fa-user"></i> My Profile</a></li>
+                        <li><a href="#settings"><i class="fa-solid fa-gear"></i> Account Settings</a></li>
+                        <li><a href="#security"><i class="fa-regular fa-shield-halved"></i> Security Status</a></li>
+                        <div class="dropdown-divider"></div>
+                        <li><a href="#logout" class="logout-link"><i class="fa-solid fa-right-from-bracket"></i> Logout Account</a></li>
+                    </ul>
+                </div>
+            </div>
+
+        </div>
+    </header>
+
+
+
+<section class="dashboard-container">
+    
+    <div class="hero-section">
+        <h1 class="hero-title">Task Management System</h1>
+        <!-- <button class="urgent-btn">
+            Urgent Tasks (2) <i class="fa-solid fa-bell"></i>
+        </button> -->
+    </div>
+
+    <div class="stats-grid">
+        <a class="card-title" href="#">
+        <div class="stat-card active-tasks">
+            <div>
+                <div class="stat-label">Total Active Tasks</div>
+                <div class="stat-value">124</div>
+            </div>
+            <div class="stat-footer" style="color: #16a34a;">
+                <i class="fa-solid fa-chart-line"></i> +12% This Week
+            </div>
+        </div>
+        </a>
+         <a class="card-title" href="#">
+        <div class="stat-card completed-tasks">
+            <div>
+                <div class="stat-label">Completed Task</div>
+                <div class="stat-value">84</div>
+            </div>
+            <div>
+                <div class="card-progress-container">
+                    <div class="card-progress-bar" style="width: 70%;"></div>
+                </div>
+            </div>
+        </div></a>
+         <a class="card-title" href="#">
+        <div class="stat-card progress-tasks">
+            <div>
+                <div class="stat-label">In Progress Task</div>
+                <div class="stat-value">30</div>
+            </div>
+            <div class="stat-footer" style="color: #d97706;">
+                <i class="fa-regular fa-clock"></i> High Priority Action
+            </div>
+        </div></a>
+         <a class="card-title" href="#">
+        <div class="stat-card pending-tasks">
+            <div>
+                <div class="stat-label">Panding Task</div>
+                <div class="stat-value">10</div>
+            </div>
+            <div class="stat-footer" style="color: #dc2626;">
+                <i class="fa-solid fa-circle-exclamation"></i> Attention Required
+            </div>
+        </div></a>
+         <a class="card-title" href="#">
+         <div class="stat-card pending-tasks">
+            <div>
+                <div class="stat-label">Urgent task</div>
+                <div class="stat-value">10</div>
+            </div>
+            <div class="stat-footer" style="color: #dc2626;">
+                <i class="fa-solid fa-circle-exclamation"></i> Attention Required
+            </div>
+        </div></a>
+    </div>
+
+    <div class="charts-row">
+        <div class="chart-card">
+            <div class="chart-header">
+                <div class="chart-title"><i class="fa-solid fa-chart-simple" style="color:var(--primary-blue)"></i> Project Progress Performance</div>
+                <span class="live-badge">Updated Live</span>
+            </div>
+            <div class="mock-bar-chart">
+                <div class="bar-group"><div class="bar-fill" style="height: 45%;"></div><span class="bar-label">Jan</span></div>
+                <div class="bar-group"><div class="bar-fill" style="height: 58%;"></div><span class="bar-label">Feb</span></div>
+                <div class="bar-group"><div class="bar-fill" style="height: 80%;"></div><span class="bar-label">Mar</span></div>
+                <div class="bar-group"><div class="bar-fill" style="height: 82%;"></div><span class="bar-label">Apr</span></div>
+                <div class="bar-group"><div class="bar-fill" style="height: 65%;"></div><span class="bar-label">May</span></div>
+                <div class="bar-group"><div class="bar-fill" style="height: 95%;"></div><span class="bar-label">Jun</span></div>
+            </div>
+        </div>
+
+        <div class="chart-card">
+            <div class="chart-header">
+                <div class="chart-title"><i class="fa-solid fa-chart-pie" style="color:#2d9796"></i> Task Distribution</div>
+            </div>
+            <div class="donut-wrapper">
+                <div class="donut-chart">
+                    <div class="donut-hole"></div>
+                </div>
+            </div>
+            <div class="chart-legends">
+                <div class="legend-item"><div class="legend-color" style="background-color: var(--danger-red);"></div>To Do</div>
+                <div class="legend-item"><div class="legend-color" style="background-color: var(--primary-blue);"></div>In Progress</div>
+                <div class="legend-item"><div class="legend-color" style="background-color: #2d9796;"></div>Done</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- <div class="tms-section">
+        <div class="tms-header">
+            <div class="chart-title" style="font-size: 18px;"></div>
+            <button class="ledger-btn">Master Ledger</button>
+        </div>
+
+        <div class="filters-grid">
+            <div class="filter-group">
+                <label>From Date</label>
+                <input type="date" class="filter-control">
+            </div>
+            <div class="filter-group">
+                <label>To Date</label>
+                <input type="date" class="filter-control">
+            </div>
+            <div class="filter-group">
+                <label>Status Classification</label>
+                <select class="filter-control">
+                    <option>All Status Records</option>
+                    <option>Completed</option>
+                    <option>In Progress</option>
+                    <option>Overdue</option>
+                </select>
+            </div>
+            <div class="filter-group">
+                <label>Keyword Match</label>
+                <div class="search-wrapper">
+                    <i class="fa-solid fa-filter"></i>
+                    <input type="text" placeholder="Search item title..." class="filter-control">
+                </div>
+            </div>
+        </div>
+
+        <div class="table-responsive">
+            <table class="data-table">
+                <thead>
+                    <tr>
+                        <th>Record / Task Target</th>
+                        <th>Business</th>
+                        <th>Timeline Date</th>
+                        <th>Operational Status</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td class="task-title">HRMS Dashboard Construction</td>
+                        <td><span class="badge-pill hrms">HRMS Portal</span></td>
+                        <td style="font-weight: 600; color:#475569;">10 May 2026</td>
+                        <td><span class="status-tag completed">Completed</span></td>
+                    </tr>
+                    <tr>
+                        <td class="task-title">TwoDots Films Backend Sync</td>
+                        <td><span class="badge-pill engine">Task Engine</span></td>
+                        <td style="font-weight: 600; color:#475569;">15 May 2026</td>
+                        <td><span class="status-tag in-progress">In Progress</span></td>
+                    </tr>
+                    <tr>
+                        <td class="task-title">JNRS Client Billing Portal</td>
+                        <td><span class="badge-pill finance">Finance / CMS</span></td>
+                        <td style="font-weight: 600; color:#475569;">18 May 2026</td>
+                        <td><span class="status-tag overdue">Overdue</span></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div> -->
+
+    <div class="fab-wrapper">
+        <button class="fab-btn" id="dashboardFab" title="Action Menu">
+            <i class="fa-solid fa-plus"></i>
+        </button>
+        <ul class="fab-menu" id="fabMenu">
+            <!-- <li class="fab-item"><a href="#add-staff"><i class="fa-solid fa-user-plus"></i> Add Staff</a></li> -->
+            <li class="fab-item">
+    <a href="hrms.html?open=staff">
+        <i class="fa-solid fa-user-plus"></i> Add Staff
+    </a>
+</li>
+             <!-- <a href="hrms.html" onclick="localStorage.setItem('openModal','addStaffModal')"> <i class="fa-solid fa-user-plus"></i>  Add Staff </a> -->
+            <li class="fab-item"><a href="portfolio-hero.html"><i class="fa-solid fa-building-user"></i>Business</a></li>
+            <!-- <li class="fab-item"><a href="#add-contacts"><i class="fa-solid fa-address-book"></i> Add Contacts</a></li> -->
+             <li class="fab-item">
+    <a href="cms.html?open=contact">
+        <i class="fa-solid fa-address-book"></i> Add Contacts
+    </a>
+</li>
+                <!-- <li class="fab-item"><a href="#add-task"><i class="fa-solid fa-file-circle-plus"></i> Add New Task</a></li> -->
+                 <li class="fab-item">
+    <a href="tms.html?open=task">
+        <i class="fa-solid fa-file-circle-plus"></i> Add New Task
+    </a>
+</li>
+                
+        </ul>
+    </div>
+
+</section>
+
+
+
+
+
+ 
+
+
+<script src="script.js"></script>
+
+</body>
+</html>
